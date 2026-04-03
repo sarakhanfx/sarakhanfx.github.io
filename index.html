@@ -1,117 +1,16 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sarakhan FX | Professional Forex Trader</title>
-
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-
-<!-- Styles -->
-<style>
-body{margin:0;font-family:'Montserrat',sans-serif;background:#0b0f1a;color:white;}
-a{text-decoration:none;color:white;}
-header{height:90vh;background:linear-gradient(90deg,#0f2027,#203a43,#2c5364);display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:20px;}
-header h1{font-size:50px;margin:10px;}
-header h2{font-size:24px;color:#FFD700;margin:10px;}
-header p{font-size:18px;max-width:700px;margin:10px;}
-button.cta{background:#FFD700;color:#0b0f1a;border:none;padding:15px 30px;font-size:18px;font-weight:bold;border-radius:8px;cursor:pointer;margin-top:20px;transition:0.3s;}
-button.cta:hover{background:#e6c200;}
-section{padding:60px 20px;max-width:1200px;margin:auto;}
-h2.section-title{color:#FFD700;font-size:32px;margin-bottom:40px;text-align:center;}
-.service-cards{display:flex;flex-wrap:wrap;justify-content:center;gap:30px;}
-.card{background:#111827;padding:30px;border-radius:12px;flex:1 1 280px;box-shadow:0 0 15px rgba(0,0,0,0.5);transition:0.3s;}
-.card:hover{transform:translateY(-5px);}
-.card h3{color:#FFD700;margin-bottom:15px;}
-.card p{line-height:1.6;}
-.analysis-cards{display:flex;flex-wrap:wrap;justify-content:center;gap:30px;}
-.analysis-card{background:#111827;padding:20px;border-radius:12px;flex:1 1 300px;box-shadow:0 0 15px rgba(0,0,0,0.5);}
-footer{padding:40px 20px;text-align:center;background:#020617;}
-@media(max-width:900px){.service-cards,.analysis-cards{flex-direction:column;}}
-</style>
-</head>
-<body>
-
-<!-- Hero Section -->
-<header>
-<h1>Sarakhan FX</h1>
-<h2>Professional Forex Trader</h2>
-<p>Signals | Fund Management | Live Classes | Technical Analysis</p>
-<button class="cta" onclick="window.location.href='#contact'">Contact Me</button>
-
-<!-- TradingView Live Pairs Widget -->
-<div style="margin-top:40px;width:100%;max-width:900px;">
-<!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container">
-  <div id="tradingview_12345"></div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
-  {
-  "symbols": [
-    {"proName":"FOREXCOM:EURUSD","title":"EUR/USD"},
-    {"proName":"FOREXCOM:GBPUSD","title":"GBP/USD"},
-    {"proName":"OANDA:XAUUSD","title":"Gold"},
-    {"proName":"OANDA:XAGUSD","title":"Silver"}
-  ],
-  "colorTheme":"dark",
-  "isTransparent":true,
-  "showSymbolLogo":true,
-  "locale":"en"
-  }
-  </script>
-</div>
-<!-- TradingView Widget END -->
-</div>
-</header>
-
-<!-- Services Section -->
-<section id="services">
-<h2 class="section-title">Our Services</h2>
-<div class="service-cards">
-  <div class="card">
-    <h3>Signal Service</h3>
-    <p>Receive real-time trading signals with detailed entry, exit, and risk levels.</p>
-  </div>
-  <div class="card">
-    <h3>Fund Management</h3>
-    <p>Professional management of your trading account to maximize growth and minimize risk.</p>
-  </div>
-  <div class="card">
-    <h3>Live Classes</h3>
-    <p>Interactive classes to teach Forex trading, strategies, and technical analysis live.</p>
-  </div>
-</div>
-</section>
-
-<!-- Daily Technical Analysis -->
-<section id="analysis">
-<h2 class="section-title">Daily Technical Analysis</h2>
-<div class="analysis-cards">
-  <div class="analysis-card">
-    <h3>EUR/USD</h3>
-    <p>Strong bullish trend observed. Watch support at 1.0980, resistance at 1.1050. Possible breakout today.</p>
-  </div>
-  <div class="analysis-card">
-    <h3>Gold (XAU/USD)</h3>
-    <p>Gold facing consolidation. Key levels: 1950 support, 1985 resistance. RSI indicates slight overbought.</p>
-  </div>
-  <div class="analysis-card">
-    <h3>GBP/USD</h3>
-    <p>Pair showing reversal pattern. Support: 1.2470, Resistance: 1.2560. Monitor for potential short-term trades.</p>
-  </div>
-</div>
-</section>
-
-<!-- Contact Section -->
-<section id="contact">
-<h2 class="section-title">Contact Me</h2>
-<p style="text-align:center;">Email: your@email.com | WhatsApp: +92XXXXXXX</p>
-</section>
-
-<!-- Footer -->
-<footer>
-<p>© 2026 Sarakhan FX | Professional Forex Trader</p>
-</footer>
-
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sara Khan FX | Professional Forex Trading</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
+
