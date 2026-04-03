@@ -4,1642 +4,623 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sarakhan FX – Trade with Confidence</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
 <style>
-/* ===== CSS VARIABLES ===== */
-:root {
-  --gold: #C9A84C;
-  --gold-light: #E8C96D;
-  --gold-dim: #8A6A28;
-  --navy: #050D1A;
-  --navy-2: #0A1628;
-  --navy-3: #0F2040;
-  --blue: #1A4A8A;
-  --blue-bright: #2563EB;
-  --white: #F5F0E8;
-  --white-dim: #A8A090;
-  --red: #E53935;
-  --green: #00C853;
-  --border: rgba(201,168,76,0.18);
-  --glass: rgba(10,22,40,0.82);
-  --font-display: 'Cormorant Garamond', serif;
-  --font-body: 'DM Sans', sans-serif;
-  --font-mono: 'Space Mono', monospace;
-}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#060e1c;color:#f0ebe0;font-family:'Inter',sans-serif;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:'Inter',sans-serif}
+:root{--g:#c9a84c;--g2:#e8c96d;--g3:#7a5c1e;--n:#060e1c;--n2:#0c1a2e;--n3:#112040;--w:#f0ebe0;--wd:#8a8070;--red:#e53935;--grn:#00c853;--bdr:rgba(201,168,76,.16)}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#0c1a2e}::-webkit-scrollbar-thumb{background:#7a5c1e;border-radius:3px}
 
-/* ===== RESET & BASE ===== */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
-body {
-  background: var(--navy);
-  color: var(--white);
-  font-family: var(--font-body);
-  line-height: 1.7;
-  overflow-x: hidden;
-}
-a { color: inherit; text-decoration: none; }
-img { max-width: 100%; }
-button { cursor: pointer; font-family: var(--font-body); }
-section { position: relative; }
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:900;height:68px;padding:0 5%;display:flex;align-items:center;justify-content:space-between;background:rgba(6,14,28,.96);border-bottom:1px solid var(--bdr);backdrop-filter:blur(12px)}
+.logo{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;cursor:pointer}
+.logo span{color:var(--g)}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{font-size:.82rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--wd);transition:color .2s;cursor:pointer}
+.nav-links a:hover{color:var(--g)}
+.nbtn{background:linear-gradient(135deg,var(--g2),var(--g));color:#060e1c!important;padding:.38rem 1.1rem;border-radius:3px;font-weight:600}
+.ham{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;cursor:pointer}
+.ham span{display:block;width:22px;height:2px;background:#f0ebe0}
+.mobnav{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(6,14,28,.98);border-bottom:1px solid var(--bdr);padding:1.5rem 5%;flex-direction:column;gap:1.2rem;z-index:899}
+.mobnav.on{display:flex}
+.mobnav a{font-size:.9rem;text-transform:uppercase;letter-spacing:.06em;color:var(--wd);padding:.4rem 0;border-bottom:1px solid var(--bdr);cursor:pointer}
+.mobnav a:hover{color:var(--g)}
 
-/* ===== PAGE MANAGEMENT ===== */
-.page { display: none; }
-.page.active { display: block; }
+/* PAGES */
+.pg{display:none}.pg.on{display:block}
 
-/* ===== SCROLLBAR ===== */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--navy-2); }
-::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.45rem;padding:.8rem 1.8rem;border-radius:3px;font-size:.88rem;font-weight:600;letter-spacing:.04em;border:none;cursor:pointer;transition:all .22s;text-decoration:none}
+.bgold{background:linear-gradient(135deg,var(--g2),var(--g));color:#060e1c}
+.bgold:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(201,168,76,.4)}
+.boutline{background:transparent;border:1px solid rgba(255,255,255,.22);color:var(--w)}
+.boutline:hover{border-color:var(--g);color:var(--g);transform:translateY(-2px)}
+.bgreen{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff}
+.bgreen:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(37,211,102,.3)}
 
-/* ===== NAV ===== */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  background: rgba(5,13,26,0.95);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 5%;
-  height: 70px;
-  display: flex; align-items: center; justify-content: space-between;
-  transition: all 0.3s;
-}
-.nav-logo {
-  font-family: var(--font-display);
-  font-size: 1.7rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-}
-.nav-logo span { color: var(--gold); }
-.nav-links { display: flex; gap: 2.5rem; align-items: center; }
-.nav-links a {
-  font-size: 0.88rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--white-dim);
-  transition: color 0.2s;
-  position: relative;
-}
-.nav-links a::after {
-  content: '';
-  position: absolute; bottom: -4px; left: 0; right: 0;
-  height: 1px;
-  background: var(--gold);
-  transform: scaleX(0);
-  transition: transform 0.3s;
-}
-.nav-links a:hover, .nav-links a.active { color: var(--gold); }
-.nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
-.nav-cta {
-  background: linear-gradient(135deg, var(--gold), var(--gold-dim));
-  color: var(--navy) !important;
-  padding: 0.45rem 1.2rem;
-  border-radius: 3px;
-  font-weight: 600;
-}
-.nav-cta::after { display: none; }
-.hamburger {
-  display: none;
-  flex-direction: column; gap: 5px;
-  background: none; border: none;
-  cursor: pointer; padding: 5px;
-}
-.hamburger span {
-  display: block; width: 24px; height: 2px;
-  background: var(--white);
-  transition: all 0.3s;
-}
-.mobile-menu {
-  display: none;
-  position: fixed; top: 70px; left: 0; right: 0;
-  background: rgba(5,13,26,0.98);
-  backdrop-filter: blur(20px);
-  padding: 2rem 5%;
-  flex-direction: column; gap: 1.5rem;
-  z-index: 999;
-  border-bottom: 1px solid var(--border);
-}
-.mobile-menu.open { display: flex; }
-.mobile-menu a {
-  font-size: 1rem; font-weight: 500;
-  letter-spacing: 0.05em; text-transform: uppercase;
-  color: var(--white-dim);
-  padding: 0.5rem 0;
-  border-bottom: 1px solid var(--border);
-  transition: color 0.2s;
-}
-.mobile-menu a:hover { color: var(--gold); }
+/* SECTION HEADER */
+.sh{text-align:center;margin-bottom:3.5rem}
+.sh-tag{display:inline-block;font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--g);margin-bottom:.6rem}
+.sh-line{width:50px;height:2px;background:linear-gradient(90deg,transparent,var(--g),transparent);margin:.5rem auto .8rem}
+.sh-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:700;line-height:1.15}
+.sh-title em{color:var(--g);font-style:italic}
+.sh-sub{color:var(--wd);font-size:.95rem;max-width:520px;margin:.7rem auto 0}
 
-/* ===== HERO ===== */
-#hero {
-  min-height: 100vh;
-  display: flex; align-items: center;
-  padding: 120px 5% 80px;
-  overflow: hidden;
-  background: var(--navy);
-}
-.hero-bg {
-  position: absolute; inset: 0; z-index: 0;
-  overflow: hidden;
-}
-.hero-grid {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(201,168,76,0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(201,168,76,0.06) 1px, transparent 1px);
-  background-size: 60px 60px;
-  animation: gridDrift 20s linear infinite;
-}
-@keyframes gridDrift {
-  0% { transform: translate(0,0); }
-  100% { transform: translate(60px,60px); }
-}
-.hero-glow {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  animation: pulse 6s ease-in-out infinite;
-}
-.hero-glow-1 {
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(201,168,76,0.12), transparent 70%);
-  top: -100px; right: 5%;
-}
-.hero-glow-2 {
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(37,99,235,0.15), transparent 70%);
-  bottom: 0; left: 10%;
-}
-@keyframes pulse {
-  0%,100% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.15); opacity: 1; }
-}
-.hero-ticker {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  height: 40px;
-  background: rgba(201,168,76,0.08);
-  border-top: 1px solid var(--border);
-  overflow: hidden; display: flex; align-items: center;
-}
-.ticker-track {
-  display: flex; gap: 4rem;
-  animation: tickerScroll 30s linear infinite;
-  white-space: nowrap;
-}
-@keyframes tickerScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.ticker-item {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--gold);
-  letter-spacing: 0.05em;
-}
-.ticker-item .up { color: var(--green); }
-.ticker-item .dn { color: var(--red); }
+/* HERO */
+#hero{min-height:100vh;padding:110px 5% 70px;display:flex;align-items:center;background:var(--n);overflow:hidden;position:relative}
+.hgb{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.05) 1px,transparent 1px);background-size:55px 55px;animation:gm 25s linear infinite}
+@keyframes gm{0%{transform:translate(0,0)}100%{transform:translate(55px,55px)}}
+.hg1{position:absolute;width:550px;height:550px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.1),transparent 70%);top:-80px;right:0;filter:blur(60px);animation:gp 7s ease-in-out infinite}
+.hg2{position:absolute;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,235,.12),transparent 70%);bottom:0;left:5%;filter:blur(60px);animation:gp 9s ease-in-out infinite reverse}
+@keyframes gp{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.12)}}
+.hcnt{position:relative;z-index:2;max-width:680px}
+.hbadge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.28);padding:.28rem .9rem;border-radius:2px;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--g);margin-bottom:1.4rem}
+.ldot{width:6px;height:6px;border-radius:50%;background:var(--grn);animation:bk 1.6s ease infinite}
+@keyframes bk{0%,100%{opacity:1}50%{opacity:.2}}
+.hh1{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,6vw,5rem);font-weight:700;line-height:1.06;margin-bottom:1.3rem}
+.hh1 em{color:var(--g);font-style:italic}
+.hp{font-size:1rem;color:var(--wd);max-width:520px;line-height:1.8;margin-bottom:2rem}
+.hstats{display:flex;gap:2.5rem;margin-bottom:2.2rem;flex-wrap:wrap}
+.stn{font-family:'Playfair Display',serif;font-size:2rem;color:var(--g);line-height:1}
+.stl{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--wd);margin-top:.25rem}
+.hbtns{display:flex;gap:.9rem;flex-wrap:wrap}
+.tkbar{position:absolute;bottom:0;left:0;right:0;height:38px;background:rgba(201,168,76,.07);border-top:1px solid var(--bdr);overflow:hidden;display:flex;align-items:center}
+.tkinner{display:flex;gap:3.5rem;animation:tk 28s linear infinite;white-space:nowrap}
+@keyframes tk{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ti{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--g);letter-spacing:.04em}
+.tup{color:var(--grn)}.tdn{color:var(--red)}
 
-.hero-content {
-  position: relative; z-index: 1;
-  max-width: 700px;
-}
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: rgba(201,168,76,0.1);
-  border: 1px solid rgba(201,168,76,0.3);
-  padding: 0.3rem 0.9rem;
-  border-radius: 2px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 1.5rem;
-  animation: fadeSlideUp 0.8s ease forwards;
-}
-.hero-badge::before {
-  content: '';
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--green);
-  animation: blink 1.5s ease infinite;
-}
-@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
-@keyframes fadeSlideUp {
-  from { opacity:0; transform:translateY(20px); }
-  to { opacity:1; transform:translateY(0); }
-}
-.hero-title {
-  font-family: var(--font-display);
-  font-size: clamp(2.8rem, 6vw, 5.5rem);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.01em;
-  margin-bottom: 1.5rem;
-  animation: fadeSlideUp 0.8s 0.15s ease both;
-}
-.hero-title .accent { color: var(--gold); font-style: italic; }
-.hero-sub {
-  font-size: 1.05rem;
-  color: var(--white-dim);
-  max-width: 540px;
-  line-height: 1.8;
-  margin-bottom: 2.5rem;
-  animation: fadeSlideUp 0.8s 0.3s ease both;
-}
-.hero-stats {
-  display: flex; gap: 2.5rem;
-  margin-bottom: 2.5rem;
-  animation: fadeSlideUp 0.8s 0.45s ease both;
-}
-.stat-item { display: flex; flex-direction: column; }
-.stat-num {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--gold);
-  line-height: 1;
-}
-.stat-label {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--white-dim);
-  margin-top: 0.3rem;
-}
-.hero-btns {
-  display: flex; gap: 1rem; flex-wrap: wrap;
-  animation: fadeSlideUp 0.8s 0.6s ease both;
-}
-.btn {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.85rem 2rem;
-  border-radius: 3px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  transition: all 0.25s;
-  border: none;
-  text-decoration: none;
-}
-.btn-gold {
-  background: linear-gradient(135deg, var(--gold-light), var(--gold));
-  color: var(--navy);
-}
-.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,168,76,0.4); }
-.btn-outline {
-  background: transparent;
-  color: var(--white);
-  border: 1px solid rgba(255,255,255,0.25);
-}
-.btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
-.btn-green {
-  background: linear-gradient(135deg, #25D366, #128C7E);
-  color: white;
-}
-.btn-green:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37,211,102,0.3); }
+/* CHARTS */
+#charts{padding:90px 5%;background:var(--n2)}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.4rem;margin-top:2.5rem}
+.ccard{background:var(--n3);border:1px solid var(--bdr);border-radius:8px;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.ccard:hover{transform:translateY(-4px);box-shadow:0 14px 35px rgba(0,0,0,.4)}
+.chdr{padding:.9rem 1.1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--bdr)}
+.cpair{font-family:'Space Mono',monospace;font-size:.9rem;font-weight:700;color:var(--g)}
+.clive{font-size:.65rem;padding:.18rem .55rem;border-radius:2px;background:rgba(0,200,83,.14);color:var(--grn);font-weight:700;letter-spacing:.05em}
 
-/* ===== SECTION HEADERS ===== */
-.section-header { text-align: center; margin-bottom: 4rem; }
-.section-tag {
-  display: inline-block;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 0.8rem;
-}
-.section-title {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  font-weight: 700;
-  line-height: 1.15;
-}
-.section-title em { color: var(--gold); font-style: italic; }
-.section-sub { color: var(--white-dim); font-size: 1rem; max-width: 540px; margin: 0.8rem auto 0; }
+/* SERVICES */
+#services{padding:90px 5%;background:var(--n)}
+.svgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.8rem;margin-top:2.5rem}
+.svcard{background:var(--n2);border:1px solid var(--bdr);border-radius:8px;padding:2.2rem 1.8rem;position:relative;overflow:hidden;transition:all .3s}
+.svcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--g),transparent);transform:scaleX(0);transition:transform .4s}
+.svcard:hover::before{transform:scaleX(1)}
+.svcard:hover{transform:translateY(-5px);box-shadow:0 18px 45px rgba(0,0,0,.45);border-color:rgba(201,168,76,.35)}
+.svicon{width:52px;height:52px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.22);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1.3rem}
+.svtag{font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--g);margin-bottom:.5rem}
+.svtitle{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;margin-bottom:.9rem}
+.svdesc{color:var(--wd);font-size:.9rem;line-height:1.78;margin-bottom:1.3rem}
+.svlist{list-style:none;margin-bottom:1.8rem}
+.svlist li{font-size:.85rem;color:var(--wd);padding:.3rem 0;display:flex;align-items:center;gap:.55rem}
+.svlist li::before{content:'◆';font-size:.38rem;color:var(--g);flex-shrink:0}
 
-/* ===== DIVIDER ===== */
-.gold-divider {
-  width: 60px; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  margin: 0 auto 1.5rem;
-}
+/* ABOUT */
+#about{padding:90px 5%;background:var(--n2)}
+.abgrid{display:grid;grid-template-columns:1fr 1.6fr;gap:5rem;align-items:center;margin-top:2.5rem}
+.abphoto{aspect-ratio:3/4;background:var(--n3);border:1px solid var(--bdr);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;position:relative;overflow:hidden}
+.abpicon{font-size:4.5rem;opacity:.25}
+.abptxt{font-size:.75rem;color:var(--wd);letter-spacing:.05em}
+.abbadge{position:absolute;bottom:-1.2rem;right:-1.2rem;background:linear-gradient(135deg,var(--g2),var(--g));color:#060e1c;padding:.9rem 1.3rem;border-radius:6px;text-align:center;font-weight:700}
+.abbn{display:block;font-family:'Playfair Display',serif;font-size:1.8rem;line-height:1}
+.abbl{font-size:.68rem;letter-spacing:.07em;text-transform:uppercase}
+.abh{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:700;line-height:1.2;margin-bottom:1.3rem}
+.abh em{color:var(--g);font-style:italic}
+.abtxt p{color:var(--wd);font-size:.92rem;line-height:1.82;margin-bottom:1.1rem}
+.achgrid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.8rem 0}
+.ach{background:var(--n3);border:1px solid var(--bdr);border-radius:6px;padding:1.1rem}
+.achn{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;color:var(--g);line-height:1}
+.achl{font-size:.72rem;color:var(--wd);margin-top:.28rem;text-transform:uppercase;letter-spacing:.06em}
 
-/* ===== LIVE CHARTS ===== */
-#charts {
-  padding: 100px 5%;
-  background: var(--navy-2);
-}
-.charts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 1.5rem;
-  margin-top: 3rem;
-}
-.chart-card {
-  background: var(--navy-3);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-.chart-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.4); }
-.chart-header {
-  padding: 1rem 1.2rem;
-  display: flex; align-items: center; justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-}
-.chart-pair {
-  font-family: var(--font-mono);
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--gold);
-}
-.chart-badge {
-  font-size: 0.7rem;
-  padding: 0.2rem 0.6rem;
-  border-radius: 2px;
-  background: rgba(0,200,83,0.15);
-  color: var(--green);
-  font-weight: 600;
-  letter-spacing: 0.05em;
-}
-.chart-widget { height: 220px; }
-.tradingview-widget-container { height: 100%; }
+/* ANALYSIS */
+#analysis{padding:90px 5%;background:var(--n)}
+.fbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
+.ftabs{display:flex;gap:.5rem;flex-wrap:wrap}
+.ftab{padding:.38rem .95rem;border-radius:3px;font-size:.78rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;background:transparent;border:1px solid var(--bdr);color:var(--wd);transition:all .2s}
+.ftab.on,.ftab:hover{background:rgba(201,168,76,.13);border-color:var(--g);color:var(--g)}
+.agrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.4rem}
+.acard{background:var(--n2);border:1px solid var(--bdr);border-radius:8px;overflow:hidden;transition:all .3s}
+.acard:hover{transform:translateY(-4px);border-color:rgba(201,168,76,.35);box-shadow:0 14px 35px rgba(0,0,0,.4)}
+.atop{height:130px;background:var(--n3);border-bottom:1px solid var(--bdr);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;position:relative;overflow:hidden}
+.atop-g{position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,.06),rgba(26,74,138,.07))}
+.atop-l{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 18px,rgba(201,168,76,.04) 18px,rgba(201,168,76,.04) 19px)}
+.adot{position:absolute;top:.8rem;right:.8rem;width:7px;height:7px;border-radius:50%;background:var(--grn);box-shadow:0 0 6px var(--grn);animation:bk 1.8s ease infinite}
+.apair{position:relative;z-index:1;font-family:'Space Mono',monospace;font-size:1.3rem;font-weight:700;color:var(--g);letter-spacing:.03em;text-shadow:0 0 20px rgba(201,168,76,.35)}
+.asub{position:relative;z-index:1;font-size:.65rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--wd)}
+.abody{padding:1.3rem}
+.ameta{display:flex;align-items:center;gap:.9rem;margin-bottom:.7rem}
+.btag{padding:.15rem .5rem;border-radius:2px;font-size:.68rem;font-weight:700;letter-spacing:.06em}
+.bbuy{background:rgba(0,200,83,.14);color:var(--grn)}
+.bsell{background:rgba(229,57,53,.14);color:var(--red)}
+.bneut{background:rgba(201,168,76,.14);color:var(--g)}
+.atitle{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:.55rem;line-height:1.3}
+.aexc{color:var(--wd);font-size:.85rem;line-height:1.72}
 
-/* ===== SERVICES ===== */
-#services { padding: 100px 5%; background: var(--navy); }
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
-}
-.service-card {
-  background: var(--navy-2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 2.5rem 2rem;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s;
-}
-.service-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  transform: scaleX(0);
-  transition: transform 0.4s;
-}
-.service-card:hover::before { transform: scaleX(1); }
-.service-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-  border-color: rgba(201,168,76,0.4);
-}
-.service-icon {
-  width: 56px; height: 56px;
-  background: rgba(201,168,76,0.1);
-  border: 1px solid rgba(201,168,76,0.25);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-.service-tag {
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 0.6rem;
-}
-.service-title {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-.service-desc { color: var(--white-dim); font-size: 0.95rem; line-height: 1.8; margin-bottom: 1.5rem; }
-.service-features { list-style: none; margin-bottom: 2rem; }
-.service-features li {
-  font-size: 0.88rem;
-  color: var(--white-dim);
-  padding: 0.35rem 0;
-  display: flex; align-items: center; gap: 0.6rem;
-}
-.service-features li::before {
-  content: '◆';
-  font-size: 0.4rem;
-  color: var(--gold);
-  flex-shrink: 0;
-}
+/* CONTACT */
+#contact{padding:90px 5%;background:var(--n2)}
+.ctgrid{display:grid;grid-template-columns:1fr 1.3fr;gap:4rem;margin-top:2.5rem}
+.citem{display:flex;align-items:flex-start;gap:.9rem;padding:1rem;background:var(--n3);border:1px solid var(--bdr);border-radius:6px;margin-bottom:.9rem;transition:border-color .2s}
+.citem:hover{border-color:rgba(201,168,76,.35)}
+.cicn{width:38px;height:38px;background:rgba(201,168,76,.1);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.cilbl{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--g);margin-bottom:.15rem}
+.cival{font-size:.88rem;color:var(--w)}
+.cival a{color:var(--w);transition:color .2s}
+.cival a:hover{color:var(--g)}
+.srow{display:flex;gap:.7rem;margin-top:1.3rem}
+.sbtn{width:42px;height:42px;border-radius:6px;border:1px solid var(--bdr);background:var(--n3);display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:700;transition:all .2s;text-decoration:none;color:var(--w)}
+.sbtn:hover{border-color:var(--g);color:var(--g);transform:translateY(-2px)}
+.cfwrap{background:var(--n3);border:1px solid var(--bdr);border-radius:8px;padding:2.2rem}
+.cftitle{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;margin-bottom:1.3rem}
+.fg{margin-bottom:1.1rem}
+.fg label{display:block;font-size:.72rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--g);margin-bottom:.42rem}
+.fg input,.fg textarea,.fg select{width:100%;background:var(--n2);border:1px solid var(--bdr);border-radius:4px;padding:.75rem .95rem;color:var(--w);font-family:'Inter',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--g)}
+.fg textarea{resize:vertical;min-height:110px}
+.fg select option{background:var(--n2)}
+.cfok{display:none;background:rgba(0,200,83,.1);border:1px solid rgba(0,200,83,.28);border-radius:5px;padding:.9rem;color:var(--grn);font-size:.88rem;margin-top:.9rem;text-align:center}
 
-/* ===== ABOUT ===== */
-#about { padding: 100px 5%; background: var(--navy-2); }
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 5rem;
-  align-items: center;
-  margin-top: 3rem;
-}
-.about-img-wrap {
-  position: relative;
-}
-.about-photo {
-  width: 100%;
-  aspect-ratio: 3/4;
-  background: var(--navy-3);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 1rem;
-  overflow: hidden;
-  position: relative;
-}
-.about-photo-placeholder {
-  font-size: 5rem;
-  opacity: 0.3;
-}
-.about-photo-text {
-  font-size: 0.8rem;
-  color: var(--white-dim);
-  letter-spacing: 0.05em;
-}
-.about-badge {
-  position: absolute; bottom: -1.5rem; right: -1.5rem;
-  background: linear-gradient(135deg, var(--gold), var(--gold-dim));
-  color: var(--navy);
-  padding: 1rem 1.5rem;
-  border-radius: 6px;
-  text-align: center;
-  font-weight: 700;
-}
-.about-badge .num {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 2rem;
-  line-height: 1;
-}
-.about-badge .lbl { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; }
-.about-text { }
-.about-headline {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 1.5rem;
-}
-.about-headline em { color: var(--gold); font-style: italic; }
-.about-text p { color: var(--white-dim); font-size: 0.98rem; margin-bottom: 1.2rem; line-height: 1.8; }
-.about-achievements {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 1rem; margin: 2rem 0;
-}
-.achievement {
-  background: var(--navy-3);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 1.2rem;
-}
-.achievement-num {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--gold);
-  line-height: 1;
-}
-.achievement-label { font-size: 0.78rem; color: var(--white-dim); margin-top: 0.3rem; text-transform: uppercase; letter-spacing: 0.06em; }
+/* FOOTER */
+footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.8rem}
+.fgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid var(--bdr);margin-bottom:1.5rem}
+.flogo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:.9rem;cursor:pointer}
+.flogo span{color:var(--g)}
+.fdesc{color:var(--wd);font-size:.85rem;line-height:1.8;margin-bottom:1.3rem}
+.fch{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--g);margin-bottom:1.1rem}
+.fcol a{display:block;font-size:.85rem;color:var(--wd);margin-bottom:.65rem;cursor:pointer;transition:color .2s}
+.fcol a:hover{color:var(--g)}
+.fbtm{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.fcopy{font-size:.78rem;color:var(--wd)}
+.frisk{font-size:.72rem;color:rgba(138,128,112,.5);max-width:460px;text-align:right}
 
-/* ===== ANALYSIS ===== */
-#analysis { padding: 100px 5%; background: var(--navy); }
-.analysis-toolbar {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
-}
-.filter-tabs {
-  display: flex; gap: 0.5rem; flex-wrap: wrap;
-}
-.filter-tab {
-  padding: 0.4rem 1rem;
-  border-radius: 3px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.2s;
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--white-dim);
-}
-.filter-tab.active, .filter-tab:hover {
-  background: rgba(201,168,76,0.15);
-  border-color: var(--gold);
-  color: var(--gold);
-}
-.analysis-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
-}
-.analysis-card {
-  background: var(--navy-2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: all 0.3s;
-}
-.analysis-card:hover { transform: translateY(-4px); border-color: rgba(201,168,76,0.4); }
-.analysis-img {
-  height: 180px;
-  background: var(--navy-3);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 2.5rem;
-  border-bottom: 1px solid var(--border);
-  position: relative;
-  overflow: hidden;
-}
-.analysis-img-bg {
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(201,168,76,0.05), transparent);
-}
-.analysis-pair-tag {
-  position: absolute; top: 1rem; left: 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  background: rgba(5,13,26,0.9);
-  border: 1px solid var(--border);
-  padding: 0.25rem 0.6rem;
-  border-radius: 3px;
-  color: var(--gold);
-}
-.analysis-body { padding: 1.5rem; }
-.analysis-meta {
-  display: flex; align-items: center; gap: 1rem;
-  margin-bottom: 0.8rem;
-  font-size: 0.75rem;
-  color: var(--white-dim);
-}
-.analysis-bias {
-  padding: 0.15rem 0.5rem;
-  border-radius: 2px;
-  font-weight: 700;
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-}
-.bias-buy { background: rgba(0,200,83,0.15); color: var(--green); }
-.bias-sell { background: rgba(229,57,53,0.15); color: var(--red); }
-.bias-neutral { background: rgba(201,168,76,0.15); color: var(--gold); }
-.analysis-title { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; margin-bottom: 0.6rem; }
-.analysis-excerpt { color: var(--white-dim); font-size: 0.88rem; line-height: 1.7; }
+/* LOGIN */
+#lpg{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 5% 40px;background:var(--n)}
+.lbox{background:var(--n2);border:1px solid var(--bdr);border-radius:10px;padding:2.8rem;width:100%;max-width:420px}
+.llogo{text-align:center;font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;margin-bottom:.4rem}
+.llogo span{color:var(--g)}
+.lsub{text-align:center;color:var(--wd);font-size:.85rem;margin-bottom:1.8rem}
+.lerr{display:none;background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.28);border-radius:4px;padding:.75rem;color:var(--red);font-size:.83rem;margin-bottom:.9rem}
 
-/* ===== CONTACT ===== */
-#contact { padding: 100px 5%; background: var(--navy-2); }
-.contact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 4rem;
-  margin-top: 3rem;
-}
-.contact-info { }
-.contact-info-title {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-.contact-info-sub { color: var(--white-dim); margin-bottom: 2rem; }
-.contact-item {
-  display: flex; align-items: flex-start; gap: 1rem;
-  padding: 1.2rem;
-  background: var(--navy-3);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  margin-bottom: 1rem;
-  transition: border-color 0.2s;
-}
-.contact-item:hover { border-color: rgba(201,168,76,0.4); }
-.contact-icon {
-  width: 40px; height: 40px;
-  background: rgba(201,168,76,0.1);
-  border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1rem;
-  flex-shrink: 0;
-}
-.contact-item-label {
-  font-size: 0.72rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--gold);
-  margin-bottom: 0.2rem;
-}
-.contact-item-val { font-size: 0.92rem; color: var(--white); }
-.contact-item-val a { color: var(--white); transition: color 0.2s; }
-.contact-item-val a:hover { color: var(--gold); }
-.social-row {
-  display: flex; gap: 0.8rem; margin-top: 1.5rem;
-}
-.social-btn {
-  width: 44px; height: 44px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  background: var(--navy-3);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.1rem;
-  transition: all 0.2s;
-  cursor: pointer;
-  text-decoration: none;
-  color: var(--white);
-}
-.social-btn:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
-.contact-form-wrap {
-  background: var(--navy-3);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 2.5rem;
-}
-.form-title {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-}
-.form-group { margin-bottom: 1.2rem; }
-.form-group label {
-  display: block;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 0.5rem;
-}
-.form-group input, .form-group textarea, .form-group select {
-  width: 100%;
-  background: var(--navy-2);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 0.8rem 1rem;
-  color: var(--white);
-  font-family: var(--font-body);
-  font-size: 0.92rem;
-  outline: none;
-  transition: border-color 0.2s;
-}
-.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-  border-color: var(--gold);
-}
-.form-group textarea { resize: vertical; min-height: 120px; }
-.form-group select option { background: var(--navy-2); }
-.form-success {
-  display: none;
-  background: rgba(0,200,83,0.1);
-  border: 1px solid rgba(0,200,83,0.3);
-  border-radius: 6px;
-  padding: 1rem;
-  color: var(--green);
-  font-size: 0.9rem;
-  margin-top: 1rem;
-  text-align: center;
-}
+/* ADMIN */
+#apg{background:var(--n);min-height:100vh;padding-top:68px}
+.awrap{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 68px)}
+.aside{background:var(--n2);border-right:1px solid var(--bdr);padding:1.8rem 0;position:sticky;top:68px;height:calc(100vh - 68px);overflow-y:auto}
+.aslogo{padding:0 1.4rem 1.3rem;border-bottom:1px solid var(--bdr);font-family:'Playfair Display',serif;font-size:1rem;font-weight:700}
+.aslogo span{color:var(--g)}
+.amenu{padding:1.2rem 0}
+.ami{display:flex;align-items:center;gap:.7rem;padding:.7rem 1.4rem;font-size:.85rem;font-weight:500;color:var(--wd);cursor:pointer;transition:all .2s;border-left:2px solid transparent}
+.ami:hover,.ami.on{color:var(--g);background:rgba(201,168,76,.06);border-left-color:var(--g)}
+.amain{padding:2.2rem;overflow-y:auto}
+.asec{display:none}.asec.on{display:block}
+.ahdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.8rem;padding-bottom:1.3rem;border-bottom:1px solid var(--bdr)}
+.atl{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700}
+.astats{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:.9rem;margin-bottom:1.8rem}
+.astat{background:var(--n3);border:1px solid var(--bdr);border-radius:6px;padding:1.1rem}
+.astn{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--g)}
+.astl{font-size:.72rem;color:var(--wd);margin-top:.2rem}
+.acard{background:var(--n2);border:1px solid var(--bdr);border-radius:8px;padding:1.4rem;margin-bottom:1.4rem}
+.acardt{font-weight:600;font-size:.9rem;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--bdr);color:var(--g)}
+.pitem{display:flex;align-items:center;justify-content:space-between;padding:.9rem;background:var(--n3);border:1px solid var(--bdr);border-radius:6px;margin-bottom:.7rem}
+.ppair{font-family:'Space Mono',monospace;font-size:.82rem;color:var(--g);font-weight:700}
+.pttl{font-size:.82rem;color:var(--w);margin-top:.18rem}
+.pdt{font-size:.7rem;color:var(--wd);margin-top:.12rem}
+.pbtns{display:flex;gap:.4rem;flex-shrink:0;margin-left:.9rem}
+.ibtn{width:30px;height:30px;border-radius:4px;border:1px solid var(--bdr);background:transparent;color:var(--wd);font-size:.8rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+.ibtn:hover{border-color:var(--g);color:var(--g)}
+.ibtn.del:hover{border-color:var(--red);color:var(--red)}
+.upok{display:none;background:rgba(0,200,83,.1);border:1px solid rgba(0,200,83,.28);border-radius:5px;padding:.8rem;color:var(--grn);font-size:.85rem;margin-top:.8rem;text-align:center}
 
-/* ===== LOGIN PAGE ===== */
-#login-page {
-  min-height: 100vh;
-  display: flex; align-items: center; justify-content: center;
-  padding: 100px 5% 60px;
-  background: var(--navy);
-}
-.login-box {
-  background: var(--navy-2);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 3rem;
-  width: 100%;
-  max-width: 440px;
-}
-.login-logo {
-  text-align: center;
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-.login-logo span { color: var(--gold); }
-.login-sub {
-  text-align: center;
-  color: var(--white-dim);
-  font-size: 0.88rem;
-  margin-bottom: 2rem;
-}
-.login-error {
-  background: rgba(229,57,53,0.1);
-  border: 1px solid rgba(229,57,53,0.3);
-  border-radius: 4px;
-  padding: 0.8rem;
-  color: var(--red);
-  font-size: 0.85rem;
-  margin-bottom: 1rem;
-  display: none;
-}
+/* MODAL */
+#modal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(6,14,28,.93);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1rem}
+#modal.open{display:flex}
+.mbox{background:var(--n2);border:1px solid var(--bdr);border-radius:10px;padding:2.2rem;width:100%;max-width:560px;max-height:88vh;overflow-y:auto;position:relative;animation:min .28s ease}
+@keyframes min{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.mx{position:absolute;top:.9rem;right:.9rem;background:none;border:none;color:var(--wd);font-size:1.1rem;cursor:pointer;transition:color .2s;padding:.2rem .5rem}
+.mx:hover{color:var(--g)}
 
-/* ===== ADMIN PANEL ===== */
-#admin-page {
-  min-height: 100vh;
-  padding: 90px 0 0;
-  background: var(--navy);
-  display: none;
-}
-#admin-page.active { display: block; }
-.admin-layout {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  min-height: calc(100vh - 90px);
-}
-.admin-sidebar {
-  background: var(--navy-2);
-  border-right: 1px solid var(--border);
-  padding: 2rem 0;
-  position: sticky;
-  top: 90px;
-  height: calc(100vh - 90px);
-  overflow-y: auto;
-}
-.admin-sidebar-logo {
-  padding: 0 1.5rem 1.5rem;
-  border-bottom: 1px solid var(--border);
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-.admin-sidebar-logo span { color: var(--gold); }
-.admin-nav { padding: 1.5rem 0; }
-.admin-nav-item {
-  display: flex; align-items: center; gap: 0.75rem;
-  padding: 0.75rem 1.5rem;
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: var(--white-dim);
-  cursor: pointer;
-  transition: all 0.2s;
-  border-left: 2px solid transparent;
-}
-.admin-nav-item:hover, .admin-nav-item.active {
-  color: var(--gold);
-  background: rgba(201,168,76,0.06);
-  border-left-color: var(--gold);
-}
-.admin-content { padding: 2.5rem; overflow-y: auto; }
-.admin-section { display: none; }
-.admin-section.active { display: block; }
-.admin-header {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border);
-}
-.admin-title {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  font-weight: 700;
-}
-.admin-card {
-  background: var(--navy-2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-.admin-card-title {
-  font-weight: 600;
-  font-size: 1rem;
-  margin-bottom: 1.2rem;
-  padding-bottom: 0.8rem;
-  border-bottom: 1px solid var(--border);
-  color: var(--gold);
-}
-.admin-stats-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-.admin-stat {
-  background: var(--navy-3);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 1.2rem;
-}
-.admin-stat-num {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--gold);
-}
-.admin-stat-label { font-size: 0.78rem; color: var(--white-dim); margin-top: 0.25rem; }
-.analysis-list { }
-.analysis-list-item {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 1rem;
-  background: var(--navy-3);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  margin-bottom: 0.75rem;
-}
-.analysis-list-info { }
-.analysis-list-pair {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--gold);
-  font-weight: 700;
-}
-.analysis-list-date { font-size: 0.78rem; color: var(--white-dim); margin-top: 0.2rem; }
-.analysis-list-actions { display: flex; gap: 0.5rem; }
-.icon-btn {
-  width: 32px; height: 32px;
-  border-radius: 4px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--white-dim);
-  font-size: 0.85rem;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.icon-btn:hover { border-color: var(--gold); color: var(--gold); }
-.icon-btn.del:hover { border-color: var(--red); color: var(--red); }
+/* TOAST */
+#toast{display:none;position:fixed;bottom:1.8rem;right:1.8rem;z-index:10000;background:var(--n2);border:1px solid var(--g);border-radius:6px;padding:.9rem 1.4rem;font-size:.88rem;box-shadow:0 8px 25px rgba(0,0,0,.4)}
+#toast.show{display:block;animation:min .25s ease}
 
-/* ===== FOOTER ===== */
-footer {
-  background: var(--navy-2);
-  border-top: 1px solid var(--border);
-  padding: 4rem 5% 2rem;
-}
-.footer-grid {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
-  gap: 3rem;
-  padding-bottom: 3rem;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 2rem;
-}
-.footer-brand { }
-.footer-logo {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-.footer-logo span { color: var(--gold); }
-.footer-desc { color: var(--white-dim); font-size: 0.88rem; line-height: 1.8; margin-bottom: 1.5rem; }
-.footer-col-title {
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 1.2rem;
-}
-.footer-col a {
-  display: block;
-  font-size: 0.88rem;
-  color: var(--white-dim);
-  margin-bottom: 0.7rem;
-  transition: color 0.2s;
-  cursor: pointer;
-}
-.footer-col a:hover { color: var(--gold); }
-.footer-bottom {
-  display: flex; justify-content: space-between; align-items: center;
-  flex-wrap: wrap; gap: 1rem;
-}
-.footer-copy { font-size: 0.8rem; color: var(--white-dim); }
-.footer-disc {
-  font-size: 0.75rem;
-  color: rgba(168,160,144,0.5);
-  max-width: 500px;
-  text-align: right;
-}
-
-/* ===== MODAL ===== */
-.modal-overlay {
-  display: none;
-  position: fixed; inset: 0; z-index: 2000;
-  background: rgba(5,13,26,0.9);
-  backdrop-filter: blur(8px);
-  align-items: center; justify-content: center;
-}
-.modal-overlay.open { display: flex; }
-.modal-box {
-  background: var(--navy-2);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 2.5rem;
-  width: 90%; max-width: 560px;
-  position: relative;
-  animation: modalIn 0.3s ease;
-}
-@keyframes modalIn { from {opacity:0;transform:scale(0.95);} to {opacity:1;transform:scale(1);} }
-.modal-close {
-  position: absolute; top: 1rem; right: 1rem;
-  background: none; border: none;
-  color: var(--white-dim);
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-.modal-close:hover { color: var(--gold); }
-.modal-title {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-.modal-sub { color: var(--white-dim); font-size: 0.88rem; margin-bottom: 1.5rem; }
-
-/* ===== TOAST ===== */
-.toast {
-  position: fixed; bottom: 2rem; right: 2rem;
-  background: var(--navy-2);
-  border: 1px solid var(--gold);
-  border-radius: 6px;
-  padding: 1rem 1.5rem;
-  font-size: 0.9rem;
-  z-index: 3000;
-  animation: toastIn 0.3s ease;
-  display: none;
-}
-.toast.show { display: block; }
-@keyframes toastIn { from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);} }
-
-/* ===== SCROLL ANIMATIONS ===== */
-.fade-in {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.fade-in.visible { opacity: 1; transform: translateY(0); }
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
-  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .contact-grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
-  .admin-layout { grid-template-columns: 1fr; }
-  .admin-sidebar { display: none; }
-}
-@media (max-width: 768px) {
-  .nav-links { display: none; }
-  .hamburger { display: flex; }
-  .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
-  .stat-num { font-size: 1.5rem; }
-  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .footer-disc { text-align: left; }
-}
-@media (max-width: 480px) {
-  .hero-btns { flex-direction: column; }
-  .btn { width: 100%; justify-content: center; }
-  .login-box { padding: 2rem 1.5rem; }
-}
+/* RESPONSIVE */
+@media(max-width:900px){.abgrid,.ctgrid{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr;gap:2rem}.awrap{grid-template-columns:1fr}.aside{display:none}}
+@media(max-width:700px){.nav-links{display:none}.ham{display:flex}.hstats{gap:1.4rem}.fgrid{grid-template-columns:1fr}.frisk{text-align:left}.hbtns{flex-direction:column}.hbtns .btn{width:100%;justify-content:center}}
 </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav id="main-nav">
-  <div class="nav-logo">Sarakhan<span>FX</span></div>
+<nav id="nav">
+  <div class="logo" onclick="goHome()">Sarakhan<span>FX</span></div>
   <div class="nav-links">
-    <a href="#" onclick="showPage('home')">Home</a>
-    <a href="#" onclick="scrollToSection('about')">About</a>
-    <a href="#" onclick="scrollToSection('services')">Services</a>
-    <a href="#" onclick="scrollToSection('charts')">Live Charts</a>
-    <a href="#" onclick="scrollToSection('analysis')">Analysis</a>
-    <a href="#" onclick="scrollToSection('contact')">Contact</a>
-    <a href="#" class="nav-cta" onclick="showPage('login')">Admin Login</a>
+    <a onclick="goHome()">Home</a>
+    <a onclick="goTo('about')">About</a>
+    <a onclick="goTo('services')">Services</a>
+    <a onclick="goTo('charts')">Live Charts</a>
+    <a onclick="goTo('analysis')">Analysis</a>
+    <a onclick="goTo('contact')">Contact</a>
+    <a class="nbtn" onclick="openPg('login')">Admin Login</a>
   </div>
-  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="ham" onclick="toggleMob()"><span></span><span></span><span></span></button>
 </nav>
-<div class="mobile-menu" id="mobile-menu">
-  <a href="#" onclick="showPage('home');closeMenu()">Home</a>
-  <a href="#" onclick="scrollToSection('about');closeMenu()">About</a>
-  <a href="#" onclick="scrollToSection('services');closeMenu()">Services</a>
-  <a href="#" onclick="scrollToSection('charts');closeMenu()">Live Charts</a>
-  <a href="#" onclick="scrollToSection('analysis');closeMenu()">Analysis</a>
-  <a href="#" onclick="scrollToSection('contact');closeMenu()">Contact</a>
-  <a href="#" onclick="showPage('login');closeMenu()">Admin Login</a>
+<div class="mobnav" id="mobnav">
+  <a onclick="goHome();closeMob()">Home</a>
+  <a onclick="goTo('about');closeMob()">About</a>
+  <a onclick="goTo('services');closeMob()">Services</a>
+  <a onclick="goTo('charts');closeMob()">Live Charts</a>
+  <a onclick="goTo('analysis');closeMob()">Analysis</a>
+  <a onclick="goTo('contact');closeMob()">Contact</a>
+  <a onclick="openPg('login');closeMob()">Admin Login</a>
 </div>
 
-<!-- ===================== HOME PAGE ===================== -->
-<div id="page-home" class="page active">
+<!-- ======= HOME PAGE ======= -->
+<div id="pg-home" class="pg on">
 
-<!-- HERO -->
 <section id="hero">
-  <div class="hero-bg">
-    <div class="hero-grid"></div>
-    <div class="hero-glow hero-glow-1"></div>
-    <div class="hero-glow hero-glow-2"></div>
-  </div>
-  <div class="hero-content">
-    <div class="hero-badge">● Live Trading Now Active</div>
-    <h1 class="hero-title">Trade with<br><span class="accent">Sarakhan FX</span></h1>
-    <p class="hero-sub">Professional Forex & Commodities trading signals, fund management, and live trading education from Abu Dhabi's most trusted independent trader.</p>
-    <div class="hero-stats">
-      <div class="stat-item">
-        <span class="stat-num">12+</span>
-        <span class="stat-label">Years Experience</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">2000+</span>
-        <span class="stat-label">Students Trained</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">$500K</span>
-        <span class="stat-label">Fund Managed</span>
-      </div>
+  <div class="hgb"></div><div class="hg1"></div><div class="hg2"></div>
+  <div class="hcnt">
+    <div class="hbadge"><span class="ldot"></span>Live Trading Active – Abu Dhabi</div>
+    <h1 class="hh1">Trade with<br><em>Sarakhan FX</em></h1>
+    <p class="hp">Professional Forex &amp; Commodities signals, fund management, and live trading education from Abu Dhabi's most trusted independent trader.</p>
+    <div class="hstats">
+      <div><div class="stn">12+</div><div class="stl">Years Experience</div></div>
+      <div><div class="stn">2000+</div><div class="stl">Students Trained</div></div>
+      <div><div class="stn">$500K</div><div class="stl">Fund Managed</div></div>
     </div>
-    <div class="hero-btns">
-      <a href="#" class="btn btn-gold" onclick="scrollToSection('contact')">📩 Get in Touch</a>
-      <a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank" class="btn btn-green">💬 Join WhatsApp Group</a>
-      <a href="#" class="btn btn-outline" onclick="scrollToSection('services')">Our Services</a>
+    <div class="hbtns">
+      <a class="btn bgold" onclick="goTo('contact')">📩 Get in Touch</a>
+      <a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank" class="btn bgreen">💬 Join WhatsApp</a>
+      <a class="btn boutline" onclick="goTo('services')">Our Services</a>
     </div>
   </div>
-  <div class="hero-ticker">
-    <div class="ticker-track" id="ticker">
-      <span class="ticker-item">EUR/USD <span class="up">▲ 1.0892</span></span>
-      <span class="ticker-item">GBP/USD <span class="up">▲ 1.2754</span></span>
-      <span class="ticker-item">GBP/JPY <span class="dn">▼ 196.42</span></span>
-      <span class="ticker-item">XAU/USD <span class="up">▲ 2,384.50</span></span>
-      <span class="ticker-item">WTI OIL <span class="dn">▼ 78.34</span></span>
-      <span class="ticker-item">USD/JPY <span class="up">▲ 154.12</span></span>
-      <span class="ticker-item">AUD/USD <span class="dn">▼ 0.6512</span></span>
-      <span class="ticker-item">USD/CHF <span class="up">▲ 0.9034</span></span>
-      <!-- repeat for seamless loop -->
-      <span class="ticker-item">EUR/USD <span class="up">▲ 1.0892</span></span>
-      <span class="ticker-item">GBP/USD <span class="up">▲ 1.2754</span></span>
-      <span class="ticker-item">GBP/JPY <span class="dn">▼ 196.42</span></span>
-      <span class="ticker-item">XAU/USD <span class="up">▲ 2,384.50</span></span>
-      <span class="ticker-item">WTI OIL <span class="dn">▼ 78.34</span></span>
-      <span class="ticker-item">USD/JPY <span class="up">▲ 154.12</span></span>
-      <span class="ticker-item">AUD/USD <span class="dn">▼ 0.6512</span></span>
-      <span class="ticker-item">USD/CHF <span class="up">▲ 0.9034</span></span>
+  <div class="tkbar">
+    <div class="tkinner">
+      <span class="ti">EUR/USD <span class="tup">▲ 1.0892</span></span>
+      <span class="ti">GBP/USD <span class="tup">▲ 1.2754</span></span>
+      <span class="ti">GBP/JPY <span class="tdn">▼ 196.42</span></span>
+      <span class="ti">XAU/USD <span class="tup">▲ 2,384.50</span></span>
+      <span class="ti">WTI OIL <span class="tdn">▼ 78.34</span></span>
+      <span class="ti">USD/JPY <span class="tup">▲ 154.12</span></span>
+      <span class="ti">AUD/USD <span class="tdn">▼ 0.6512</span></span>
+      <span class="ti">USD/CHF <span class="tup">▲ 0.9034</span></span>
+      <span class="ti">EUR/USD <span class="tup">▲ 1.0892</span></span>
+      <span class="ti">GBP/USD <span class="tup">▲ 1.2754</span></span>
+      <span class="ti">GBP/JPY <span class="tdn">▼ 196.42</span></span>
+      <span class="ti">XAU/USD <span class="tup">▲ 2,384.50</span></span>
+      <span class="ti">WTI OIL <span class="tdn">▼ 78.34</span></span>
+      <span class="ti">USD/JPY <span class="tup">▲ 154.12</span></span>
+      <span class="ti">AUD/USD <span class="tdn">▼ 0.6512</span></span>
+      <span class="ti">USD/CHF <span class="tup">▲ 0.9034</span></span>
     </div>
   </div>
 </section>
 
-<!-- LIVE CHARTS -->
 <section id="charts">
-  <div class="section-header fade-in">
-    <span class="section-tag">Real-Time Markets</span>
-    <div class="gold-divider"></div>
-    <h2 class="section-title">Live <em>Price Charts</em></h2>
-    <p class="section-sub">Professional TradingView charts for all major pairs and commodities we trade.</p>
+  <div class="sh">
+    <div class="sh-tag">Real-Time Markets</div>
+    <div class="sh-line"></div>
+    <h2 class="sh-title">Live <em>Price Charts</em></h2>
+    <p class="sh-sub">Professional TradingView charts for all major pairs and commodities we trade.</p>
   </div>
-  <div class="charts-grid">
-    <!-- EUR/USD -->
-    <div class="chart-card fade-in">
-      <div class="chart-header">
-        <span class="chart-pair">EUR/USD</span>
-        <span class="chart-badge">LIVE</span>
-      </div>
-      <div class="chart-widget">
-        <div class="tradingview-widget-container">
-          <div id="tv-eurusd"></div>
-        </div>
-      </div>
-    </div>
-    <!-- GBP/USD -->
-    <div class="chart-card fade-in">
-      <div class="chart-header">
-        <span class="chart-pair">GBP/USD</span>
-        <span class="chart-badge">LIVE</span>
-      </div>
-      <div class="chart-widget">
-        <div class="tradingview-widget-container">
-          <div id="tv-gbpusd"></div>
-        </div>
-      </div>
-    </div>
-    <!-- GBP/JPY -->
-    <div class="chart-card fade-in">
-      <div class="chart-header">
-        <span class="chart-pair">GBP/JPY</span>
-        <span class="chart-badge">LIVE</span>
-      </div>
-      <div class="chart-widget">
-        <div class="tradingview-widget-container">
-          <div id="tv-gbpjpy"></div>
-        </div>
-      </div>
-    </div>
-    <!-- XAU/USD Gold -->
-    <div class="chart-card fade-in">
-      <div class="chart-header">
-        <span class="chart-pair">XAU/USD – GOLD</span>
-        <span class="chart-badge">LIVE</span>
-      </div>
-      <div class="chart-widget">
-        <div class="tradingview-widget-container">
-          <div id="tv-xauusd"></div>
-        </div>
-      </div>
-    </div>
-    <!-- WTI Oil -->
-    <div class="chart-card fade-in">
-      <div class="chart-header">
-        <span class="chart-pair">WTI CRUDE OIL</span>
-        <span class="chart-badge">LIVE</span>
-      </div>
-      <div class="chart-widget">
-        <div class="tradingview-widget-container">
-          <div id="tv-wti"></div>
-        </div>
-      </div>
-    </div>
-    <!-- Market Overview -->
-    <div class="chart-card fade-in">
-      <div class="chart-header">
-        <span class="chart-pair">MARKET OVERVIEW</span>
-        <span class="chart-badge">LIVE</span>
-      </div>
-      <div class="chart-widget">
-        <div class="tradingview-widget-container">
-          <div id="tv-overview"></div>
-        </div>
-      </div>
-    </div>
+  <div class="cgrid">
+    <div class="ccard"><div class="chdr"><span class="cpair">EUR/USD</span><span class="clive">LIVE</span></div><div id="tv1" style="height:220px"></div></div>
+    <div class="ccard"><div class="chdr"><span class="cpair">GBP/USD</span><span class="clive">LIVE</span></div><div id="tv2" style="height:220px"></div></div>
+    <div class="ccard"><div class="chdr"><span class="cpair">GBP/JPY</span><span class="clive">LIVE</span></div><div id="tv3" style="height:220px"></div></div>
+    <div class="ccard"><div class="chdr"><span class="cpair">XAU/USD – GOLD</span><span class="clive">LIVE</span></div><div id="tv4" style="height:220px"></div></div>
+    <div class="ccard"><div class="chdr"><span class="cpair">WTI CRUDE OIL</span><span class="clive">LIVE</span></div><div id="tv5" style="height:220px"></div></div>
+    <div class="ccard"><div class="chdr"><span class="cpair">USD/JPY</span><span class="clive">LIVE</span></div><div id="tv6" style="height:220px"></div></div>
   </div>
 </section>
 
-<!-- SERVICES -->
 <section id="services">
-  <div class="section-header fade-in">
-    <span class="section-tag">What We Offer</span>
-    <div class="gold-divider"></div>
-    <h2 class="section-title">Professional <em>Trading Services</em></h2>
-    <p class="section-sub">Comprehensive Forex solutions designed for both beginners and experienced traders.</p>
+  <div class="sh">
+    <div class="sh-tag">What We Offer</div>
+    <div class="sh-line"></div>
+    <h2 class="sh-title">Professional <em>Trading Services</em></h2>
+    <p class="sh-sub">Comprehensive Forex solutions designed for beginners and experienced traders alike.</p>
   </div>
-  <div class="services-grid">
-    <div class="service-card fade-in">
-      <div class="service-icon">📡</div>
-      <div class="service-tag">Premium Service</div>
-      <h3 class="service-title">Signal Service</h3>
-      <p class="service-desc">Receive high-accuracy trading signals for Forex pairs and Gold directly to your device with clear entry, stop-loss, and take-profit levels.</p>
-      <ul class="service-features">
-        <li>Daily signals for EUR/USD, GBP/USD, Gold & more</li>
-        <li>Precise entry, SL & TP levels provided</li>
-        <li>Delivered via WhatsApp & Telegram</li>
-        <li>Win rate tracked and published monthly</li>
+  <div class="svgrid">
+    <div class="svcard">
+      <div class="svicon">📡</div>
+      <div class="svtag">Premium Service</div>
+      <h3 class="svtitle">Signal Service</h3>
+      <p class="svdesc">High-accuracy trading signals for Forex pairs and Gold with clear entry, stop-loss, and take-profit levels delivered daily.</p>
+      <ul class="svlist">
+        <li>Daily signals for EUR/USD, GBP/USD, Gold &amp; more</li>
+        <li>Precise entry, SL &amp; TP levels provided</li>
+        <li>Delivered via WhatsApp &amp; Telegram</li>
+        <li>Monthly win rate tracked and published</li>
         <li>Risk management guidance included</li>
       </ul>
-      <a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank" class="btn btn-gold">Join Signal Group</a>
+      <a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank" class="btn bgold">Join Signal Group</a>
     </div>
-    <div class="service-card fade-in">
-      <div class="service-icon">💼</div>
-      <div class="service-tag">Exclusive</div>
-      <h3 class="service-title">Fund Management</h3>
-      <p class="service-desc">Let Sarakhan FX manage your trading capital professionally. Consistent, risk-controlled returns managed by a seasoned 12-year professional.</p>
-      <ul class="service-features">
+    <div class="svcard">
+      <div class="svicon">💼</div>
+      <div class="svtag">Exclusive</div>
+      <h3 class="svtitle">Fund Management</h3>
+      <p class="svdesc">Let Sarakhan FX manage your trading capital professionally with consistent, risk-controlled returns by a 12-year veteran.</p>
+      <ul class="svlist">
         <li>Minimum deposit from $1,000</li>
         <li>Monthly performance reporting</li>
         <li>Strict risk management protocols</li>
         <li>Transparent profit-sharing model</li>
         <li>Currently managing $500K+ in funds</li>
       </ul>
-      <a href="#" class="btn btn-gold" onclick="scrollToSection('contact')">Apply Now</a>
+      <a class="btn bgold" onclick="goTo('contact')">Apply Now</a>
     </div>
-    <div class="service-card fade-in">
-      <div class="service-icon">🎓</div>
-      <div class="service-tag">Education</div>
-      <h3 class="service-title">Live Trading Classes</h3>
-      <p class="service-desc">Learn professional Forex trading from scratch or advance your existing skills with live sessions, recorded courses, and one-on-one mentorship.</p>
-      <ul class="service-features">
+    <div class="svcard">
+      <div class="svicon">🎓</div>
+      <div class="svtag">Education</div>
+      <h3 class="svtitle">Live Trading Classes</h3>
+      <p class="svdesc">Learn professional Forex trading from scratch or advance your skills with live sessions, recorded courses, and mentorship.</p>
+      <ul class="svlist">
         <li>Live sessions on Zoom / Google Meet</li>
         <li>Beginner to advanced curriculum</li>
-        <li>Technical & fundamental analysis</li>
+        <li>Technical &amp; fundamental analysis</li>
         <li>2000+ students trained worldwide</li>
         <li>Certificate of completion provided</li>
       </ul>
-      <a href="#" class="btn btn-gold" onclick="scrollToSection('contact')">Enroll Today</a>
+      <a class="btn bgold" onclick="goTo('contact')">Enroll Today</a>
     </div>
   </div>
 </section>
 
-<!-- ABOUT -->
 <section id="about">
-  <div class="section-header fade-in">
-    <span class="section-tag">Who We Are</span>
-    <div class="gold-divider"></div>
-    <h2 class="section-title">About <em>Sarakhan FX</em></h2>
+  <div class="sh">
+    <div class="sh-tag">Who We Are</div>
+    <div class="sh-line"></div>
+    <h2 class="sh-title">About <em>Sarakhan FX</em></h2>
   </div>
-  <div class="about-grid">
-    <div class="about-img-wrap fade-in">
-      <div class="about-photo">
-        <div class="about-photo-placeholder">👤</div>
-        <span class="about-photo-text">Profile Photo</span>
-        <div class="about-badge">
-          <span class="num">12+</span>
-          <span class="lbl">Years<br>Experience</span>
-        </div>
+  <div class="abgrid">
+    <div>
+      <div class="abphoto">
+        <div class="abpicon">👤</div>
+        <span class="abptxt">Profile Photo</span>
+        <div class="abbadge"><span class="abbn">12+</span><span class="abbl">Years<br>Experience</span></div>
       </div>
     </div>
-    <div class="about-text fade-in">
-      <h3 class="about-headline">A Trusted Name in<br><em>Professional Trading</em></h3>
+    <div class="abtxt">
+      <h3 class="abh">A Trusted Name in<br><em>Professional Trading</em></h3>
       <p>Sarakhan FX is a premier Forex and commodities trading service based in Abu Dhabi, UAE, led by a professional trader with over 12 years of live market experience across Forex, Gold, and Oil markets.</p>
-      <p>Since beginning his trading journey, our founder has developed a disciplined, data-driven approach to markets that combines classical technical analysis with modern price action strategies. This methodology has delivered consistent returns and earned the trust of clients from across the MENA region and beyond.</p>
-      <p>Beyond personal trading, Sarakhan FX has become a trusted educational brand — training over 2,000 students in professional trading techniques. From complete beginners to seasoned traders seeking refinement, our courses and live classes have helped transform careers and financial futures.</p>
-      <p>Today, Sarakhan FX actively manages over $500,000 in client capital through a transparent, risk-first fund management program, while continuing to publish daily market analysis and premium signals.</p>
-      <div class="about-achievements">
-        <div class="achievement">
-          <div class="achievement-num">12+</div>
-          <div class="achievement-label">Years in Markets</div>
-        </div>
-        <div class="achievement">
-          <div class="achievement-num">2000+</div>
-          <div class="achievement-label">Students Trained</div>
-        </div>
-        <div class="achievement">
-          <div class="achievement-num">$500K+</div>
-          <div class="achievement-label">Funds Under Management</div>
-        </div>
-        <div class="achievement">
-          <div class="achievement-num">5+</div>
-          <div class="achievement-label">Markets Covered</div>
-        </div>
+      <p>Our founder has developed a disciplined, data-driven approach combining classical technical analysis with modern price action strategies — delivering consistent returns trusted by clients across the MENA region and beyond.</p>
+      <p>Beyond personal trading, Sarakhan FX has trained over 2,000 students in professional trading techniques. Today, we actively manage over $500,000 in client capital through a transparent, risk-first fund management program.</p>
+      <div class="achgrid">
+        <div class="ach"><div class="achn">12+</div><div class="achl">Years in Markets</div></div>
+        <div class="ach"><div class="achn">2000+</div><div class="achl">Students Trained</div></div>
+        <div class="ach"><div class="achn">$500K+</div><div class="achl">Funds Managed</div></div>
+        <div class="ach"><div class="achn">5+</div><div class="achl">Markets Covered</div></div>
       </div>
-      <a href="https://www.facebook.com/amankhanfx1" target="_blank" class="btn btn-outline">Connect on Facebook</a>
+      <a href="https://www.facebook.com/amankhanfx1" target="_blank" class="btn boutline">Connect on Facebook</a>
     </div>
   </div>
 </section>
 
-<!-- DAILY ANALYSIS -->
 <section id="analysis">
-  <div class="section-header fade-in">
-    <span class="section-tag">Updated Daily</span>
-    <div class="gold-divider"></div>
-    <h2 class="section-title">Daily <em>Technical Analysis</em></h2>
-    <p class="section-sub">Professional market analysis published every trading day before market open.</p>
+  <div class="sh">
+    <div class="sh-tag">Updated Daily</div>
+    <div class="sh-line"></div>
+    <h2 class="sh-title">Daily <em>Technical Analysis</em></h2>
+    <p class="sh-sub">Professional market analysis published every trading day before market open.</p>
   </div>
-  <div class="analysis-toolbar fade-in">
-    <div class="filter-tabs">
-      <button class="filter-tab active" onclick="filterAnalysis('all', this)">All Markets</button>
-      <button class="filter-tab" onclick="filterAnalysis('forex', this)">Forex</button>
-      <button class="filter-tab" onclick="filterAnalysis('gold', this)">Gold</button>
-      <button class="filter-tab" onclick="filterAnalysis('oil', this)">Oil</button>
+  <div class="fbar">
+    <div class="ftabs">
+      <button class="ftab on" onclick="filterA('all',this)">All Markets</button>
+      <button class="ftab" onclick="filterA('forex',this)">Forex</button>
+      <button class="ftab" onclick="filterA('gold',this)">Gold</button>
+      <button class="ftab" onclick="filterA('oil',this)">Oil</button>
     </div>
-    <a href="#" class="btn btn-outline" onclick="showPage('login')" style="padding:0.5rem 1.2rem;font-size:0.82rem;">⚙️ Admin Upload</a>
+    <a class="btn boutline" style="padding:.4rem 1rem;font-size:.78rem;cursor:pointer;" onclick="openPg('login')">⚙️ Admin Upload</a>
   </div>
-  <div class="analysis-grid" id="analysis-grid">
-    <!-- Cards injected by JS -->
-  </div>
+  <div class="agrid" id="agrid"></div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
-  <div class="section-header fade-in">
-    <span class="section-tag">Get in Touch</span>
-    <div class="gold-divider"></div>
-    <h2 class="section-title">Contact <em>Us</em></h2>
-    <p class="section-sub">Have a question or ready to start? Reach out through any of the channels below.</p>
+  <div class="sh">
+    <div class="sh-tag">Get in Touch</div>
+    <div class="sh-line"></div>
+    <h2 class="sh-title">Contact <em>Us</em></h2>
+    <p class="sh-sub">Based in Abu Dhabi — reach us through any channel below.</p>
   </div>
-  <div class="contact-grid">
-    <div class="contact-info fade-in">
-      <h3 class="contact-info-title">Contact Information</h3>
-      <p class="contact-info-sub">We're based in Abu Dhabi and available across multiple channels.</p>
-      <div class="contact-item">
-        <div class="contact-icon">📍</div>
-        <div>
-          <div class="contact-item-label">Location</div>
-          <div class="contact-item-val">Abu Dhabi, United Arab Emirates</div>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-icon">📞</div>
-        <div>
-          <div class="contact-item-label">Phone (UAE)</div>
-          <div class="contact-item-val"><a href="tel:+971501234567">+971 50 123 4567</a></div>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-icon">✉️</div>
-        <div>
-          <div class="contact-item-label">Email</div>
-          <div class="contact-item-val"><a href="mailto:sarakhanfx1@gmail.com">sarakhanfx1@gmail.com</a></div>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-icon">💬</div>
-        <div>
-          <div class="contact-item-label">WhatsApp Channel</div>
-          <div class="contact-item-val"><a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank">Join Our Group →</a></div>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-icon">📘</div>
-        <div>
-          <div class="contact-item-label">Facebook</div>
-          <div class="contact-item-val"><a href="https://www.facebook.com/amankhanfx1" target="_blank">@amankhanfx1</a></div>
-        </div>
-      </div>
-      <div class="social-row">
-        <a href="https://www.facebook.com/amankhanfx1" target="_blank" class="social-btn" title="Facebook">f</a>
-        <a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank" class="social-btn" title="WhatsApp">W</a>
-        <a href="mailto:sarakhanfx1@gmail.com" class="social-btn" title="Email">@</a>
+  <div class="ctgrid">
+    <div>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:.4rem;">Contact Information</h3>
+      <p style="color:var(--wd);font-size:.88rem;margin-bottom:1.5rem;">Available across multiple channels.</p>
+      <div class="citem"><div class="cicn">📍</div><div><div class="cilbl">Location</div><div class="cival">Abu Dhabi, United Arab Emirates</div></div></div>
+      <div class="citem"><div class="cicn">📞</div><div><div class="cilbl">Phone (UAE)</div><div class="cival"><a href="tel:+971501234567">+971 50 123 4567</a></div></div></div>
+      <div class="citem"><div class="cicn">✉️</div><div><div class="cilbl">Email</div><div class="cival"><a href="mailto:sarakhanfx1@gmail.com">sarakhanfx1@gmail.com</a></div></div></div>
+      <div class="citem"><div class="cicn">💬</div><div><div class="cilbl">WhatsApp Channel</div><div class="cival"><a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank">Join Our Group →</a></div></div></div>
+      <div class="citem"><div class="cicn">📘</div><div><div class="cilbl">Facebook</div><div class="cival"><a href="https://www.facebook.com/amankhanfx1" target="_blank">@amankhanfx1</a></div></div></div>
+      <div class="srow">
+        <a href="https://www.facebook.com/amankhanfx1" target="_blank" class="sbtn">f</a>
+        <a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank" class="sbtn">W</a>
+        <a href="mailto:sarakhanfx1@gmail.com" class="sbtn">@</a>
       </div>
     </div>
-    <div class="contact-form-wrap fade-in">
-      <h3 class="form-title">Send an Enquiry</h3>
-      <div class="form-group">
-        <label>Your Name</label>
-        <input type="text" id="cf-name" placeholder="e.g. Ahmed Al Mansoori">
+    <div class="cfwrap">
+      <h3 class="cftitle">Send an Enquiry</h3>
+      <div class="fg"><label>Your Name</label><input type="text" id="cf-name" placeholder="e.g. Ahmed Al Mansoori"></div>
+      <div class="fg"><label>Email Address</label><input type="email" id="cf-email" placeholder="your@email.com"></div>
+      <div class="fg"><label>Service Interested In</label>
+        <select id="cf-svc"><option value="">– Select a Service –</option><option>Signal Service</option><option>Fund Management</option><option>Live Trading Classes</option><option>General Inquiry</option></select>
       </div>
-      <div class="form-group">
-        <label>Email Address</label>
-        <input type="email" id="cf-email" placeholder="your@email.com">
-      </div>
-      <div class="form-group">
-        <label>Service Interested In</label>
-        <select id="cf-service">
-          <option value="">– Select a Service –</option>
-          <option>Signal Service</option>
-          <option>Fund Management</option>
-          <option>Live Trading Classes</option>
-          <option>General Inquiry</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Message</label>
-        <textarea id="cf-msg" placeholder="Tell us about your trading background and what you're looking for..."></textarea>
-      </div>
-      <button class="btn btn-gold" style="width:100%;justify-content:center;" onclick="submitContact()">Send Message →</button>
-      <div class="form-success" id="cf-success">✅ Message sent! We'll get back to you within 24 hours.</div>
+      <div class="fg"><label>Message</label><textarea id="cf-msg" placeholder="Tell us about your trading background..."></textarea></div>
+      <button class="btn bgold" style="width:100%;justify-content:center;" onclick="submitCF()">Send Message →</button>
+      <div class="cfok" id="cfok">✅ Message sent! We'll respond within 24 hours.</div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="footer-logo">Sarakhan<span>FX</span></div>
-      <p class="footer-desc">Professional Forex trading services, signals, and education from Abu Dhabi. Trusted by 2000+ traders worldwide since 2012.</p>
-      <div class="social-row">
-        <a href="https://www.facebook.com/amankhanfx1" target="_blank" class="social-btn">f</a>
-        <a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank" class="social-btn">W</a>
-        <a href="mailto:sarakhanfx1@gmail.com" class="social-btn">@</a>
+  <div class="fgrid">
+    <div>
+      <div class="flogo" onclick="goHome()">Sarakhan<span>FX</span></div>
+      <p class="fdesc">Professional Forex trading services, signals, and education from Abu Dhabi. Trusted by 2000+ traders worldwide since 2012.</p>
+      <div class="srow">
+        <a href="https://www.facebook.com/amankhanfx1" target="_blank" class="sbtn">f</a>
+        <a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank" class="sbtn">W</a>
+        <a href="mailto:sarakhanfx1@gmail.com" class="sbtn">@</a>
       </div>
     </div>
-    <div class="footer-col">
-      <div class="footer-col-title">Services</div>
-      <a onclick="scrollToSection('services')">Signal Service</a>
-      <a onclick="scrollToSection('services')">Fund Management</a>
-      <a onclick="scrollToSection('services')">Trading Classes</a>
-      <a onclick="scrollToSection('analysis')">Daily Analysis</a>
+    <div class="fcol">
+      <div class="fch">Services</div>
+      <a onclick="goTo('services')">Signal Service</a>
+      <a onclick="goTo('services')">Fund Management</a>
+      <a onclick="goTo('services')">Trading Classes</a>
+      <a onclick="goTo('analysis')">Daily Analysis</a>
     </div>
-    <div class="footer-col">
-      <div class="footer-col-title">Company</div>
-      <a onclick="scrollToSection('about')">About Us</a>
-      <a onclick="scrollToSection('contact')">Contact</a>
-      <a onclick="showPage('login')">Admin Login</a>
+    <div class="fcol">
+      <div class="fch">Company</div>
+      <a onclick="goTo('about')">About Us</a>
+      <a onclick="goTo('contact')">Contact</a>
+      <a onclick="openPg('login')">Admin Login</a>
     </div>
-    <div class="footer-col">
-      <div class="footer-col-title">Contact</div>
+    <div class="fcol">
+      <div class="fch">Contact</div>
       <a href="mailto:sarakhanfx1@gmail.com">sarakhanfx1@gmail.com</a>
       <a href="tel:+971501234567">+971 50 123 4567</a>
       <a>Abu Dhabi, UAE</a>
-      <a href="https://www.facebook.com/amankhanfx1" target="_blank">Facebook Page</a>
     </div>
   </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2024 Sarakhan FX. All rights reserved.</div>
-    <div class="footer-disc">Risk Warning: Trading Forex and commodities involves substantial risk of loss and is not suitable for all investors. Past performance is not indicative of future results.</div>
+  <div class="fbtm">
+    <div class="fcopy">© 2024 Sarakhan FX. All rights reserved.</div>
+    <div class="frisk">Risk Warning: Trading Forex involves substantial risk of loss. Past performance is not indicative of future results.</div>
   </div>
 </footer>
+</div><!-- /home -->
 
-</div><!-- end page-home -->
-
-<!-- ===================== LOGIN PAGE ===================== -->
-<div id="page-login" class="page">
-  <div id="login-page">
-    <div class="login-box">
-      <div class="login-logo">Sarakhan<span>FX</span></div>
-      <p class="login-sub">Admin Panel – Authorised Access Only</p>
-      <div class="login-error" id="login-error">❌ Incorrect credentials. Please try again.</div>
-      <div class="form-group">
-        <label>Username</label>
-        <input type="text" id="login-user" placeholder="admin" onkeyup="if(event.key==='Enter')doLogin()">
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" id="login-pass" placeholder="••••••••" onkeyup="if(event.key==='Enter')doLogin()">
-      </div>
-      <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:0.5rem;" onclick="doLogin()">Login to Admin Panel</button>
-      <p style="text-align:center;font-size:0.78rem;color:var(--white-dim);margin-top:1.2rem;">
-        Demo credentials: <strong style="color:var(--gold)">admin</strong> / <strong style="color:var(--gold)">sarakhan2024</strong>
-      </p>
-      <p style="text-align:center;margin-top:1rem;">
-        <a href="#" onclick="showPage('home')" style="color:var(--gold);font-size:0.85rem;">← Back to Website</a>
-      </p>
+<!-- ======= LOGIN PAGE ======= -->
+<div id="pg-login" class="pg">
+  <div id="lpg">
+    <div class="lbox">
+      <div class="llogo">Sarakhan<span>FX</span></div>
+      <p class="lsub">Admin Panel – Authorised Access Only</p>
+      <div class="lerr" id="lerr">❌ Incorrect username or password.</div>
+      <div class="fg"><label>Username</label><input type="text" id="luser" placeholder="admin" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <div class="fg"><label>Password</label><input type="password" id="lpass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <button class="btn bgold" style="width:100%;justify-content:center;margin-top:.4rem;" onclick="doLogin()">Login to Admin Panel</button>
+      <p style="text-align:center;font-size:.75rem;color:var(--wd);margin-top:1.1rem;">Demo: <b style="color:var(--g)">admin</b> / <b style="color:var(--g)">sarakhan2024</b></p>
+      <p style="text-align:center;margin-top:.9rem;"><a onclick="openPg('home')" style="color:var(--g);font-size:.82rem;cursor:pointer;">← Back to Website</a></p>
     </div>
   </div>
 </div>
 
-<!-- ===================== ADMIN PAGE ===================== -->
-<div id="page-admin" class="page">
-  <div id="admin-page" class="active">
-    <div class="admin-layout">
-      <!-- Sidebar -->
-      <aside class="admin-sidebar">
-        <div class="admin-sidebar-logo">Sarakhan<span>FX</span> Admin</div>
-        <nav class="admin-nav">
-          <div class="admin-nav-item active" onclick="adminTab('dashboard', this)">📊 Dashboard</div>
-          <div class="admin-nav-item" onclick="adminTab('upload', this)">📤 Upload Analysis</div>
-          <div class="admin-nav-item" onclick="adminTab('manage', this)">📋 Manage Posts</div>
-          <div class="admin-nav-item" onclick="adminTab('services', this)">⚙️ Services</div>
-          <div class="admin-nav-item" onclick="adminTab('settings', this)">🔧 Settings</div>
-        </nav>
-        <div style="padding:1.5rem;position:absolute;bottom:0;left:0;right:0;border-top:1px solid var(--border);">
-          <button class="btn btn-outline" style="width:100%;justify-content:center;font-size:0.82rem;" onclick="showPage('home')">← Back to Site</button>
-          <button class="btn" style="width:100%;margin-top:0.5rem;background:rgba(229,57,53,0.1);border:1px solid rgba(229,57,53,0.3);color:var(--red);justify-content:center;font-size:0.82rem;border-radius:3px;" onclick="doLogout()">Logout</button>
+<!-- ======= ADMIN PAGE ======= -->
+<div id="pg-admin" class="pg">
+  <div id="apg">
+    <div class="awrap">
+      <aside class="aside">
+        <div class="aslogo">Sarakhan<span>FX</span> Admin</div>
+        <div class="amenu">
+          <div class="ami on" onclick="aTab('dash',this)">📊 Dashboard</div>
+          <div class="ami" onclick="aTab('upload',this)">📤 Upload Analysis</div>
+          <div class="ami" onclick="aTab('manage',this)">📋 Manage Posts</div>
+          <div class="ami" onclick="aTab('svc',this)">⚙️ Services</div>
+          <div class="ami" onclick="aTab('cfg',this)">🔧 Settings</div>
+        </div>
+        <div style="padding:1.3rem;border-top:1px solid var(--bdr);margin-top:1rem;">
+          <button class="btn boutline" style="width:100%;justify-content:center;font-size:.8rem;margin-bottom:.5rem;" onclick="openPg('home')">← Back to Site</button>
+          <button style="width:100%;padding:.6rem;background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.28);color:var(--red);border-radius:3px;font-size:.8rem;cursor:pointer;" onclick="doLogout()">Logout</button>
         </div>
       </aside>
-      <!-- Content -->
-      <main class="admin-content">
-        <!-- Dashboard -->
-        <div class="admin-section active" id="admin-dashboard">
-          <div class="admin-header">
-            <h2 class="admin-title">Dashboard</h2>
-            <span style="font-size:0.82rem;color:var(--white-dim);">Welcome back, Admin</span>
+      <main class="amain">
+
+        <div class="asec on" id="a-dash">
+          <div class="ahdr"><h2 class="atl">Dashboard</h2><span style="font-size:.8rem;color:var(--wd);">Welcome back, Admin</span></div>
+          <div class="astats">
+            <div class="astat"><div class="astn" id="stat-n">6</div><div class="astl">Analysis Posts</div></div>
+            <div class="astat"><div class="astn">3</div><div class="astl">Active Services</div></div>
+            <div class="astat"><div class="astn">2000+</div><div class="astl">Students</div></div>
+            <div class="astat"><div class="astn">$500K</div><div class="astl">Funds Managed</div></div>
           </div>
-          <div class="admin-stats-row">
-            <div class="admin-stat">
-              <div class="admin-stat-num" id="stat-posts">6</div>
-              <div class="admin-stat-label">Analysis Posts</div>
-            </div>
-            <div class="admin-stat">
-              <div class="admin-stat-num">3</div>
-              <div class="admin-stat-label">Active Services</div>
-            </div>
-            <div class="admin-stat">
-              <div class="admin-stat-num">2000+</div>
-              <div class="admin-stat-label">Students</div>
-            </div>
-            <div class="admin-stat">
-              <div class="admin-stat-num">$500K</div>
-              <div class="admin-stat-label">Funds Managed</div>
+          <div class="acard">
+            <div class="acardt">Quick Actions</div>
+            <div style="display:flex;gap:.9rem;flex-wrap:wrap;">
+              <button class="btn bgold" onclick="aTab('upload',document.querySelectorAll('.ami')[1])">📤 New Analysis</button>
+              <a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank" class="btn bgreen">💬 WhatsApp</a>
+              <a href="https://www.facebook.com/amankhanfx1" target="_blank" class="btn boutline">📘 Facebook</a>
             </div>
           </div>
-          <div class="admin-card">
-            <div class="admin-card-title">Quick Actions</div>
-            <div style="display:flex;gap:1rem;flex-wrap:wrap;">
-              <button class="btn btn-gold" onclick="adminTab('upload', document.querySelector('.admin-nav-item:nth-child(2)'))">📤 New Analysis Post</button>
-              <a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank" class="btn btn-green">💬 WhatsApp Channel</a>
-              <a href="https://www.facebook.com/amankhanfx1" target="_blank" class="btn btn-outline">📘 Facebook Page</a>
-            </div>
-          </div>
-          <div class="admin-card">
-            <div class="admin-card-title">Recent Activity</div>
-            <div id="recent-activity">
-              <div style="font-size:0.88rem;color:var(--white-dim);padding:0.5rem 0;border-bottom:1px solid var(--border);">✅ EUR/USD analysis posted — Today, 08:15 AM</div>
-              <div style="font-size:0.88rem;color:var(--white-dim);padding:0.5rem 0;border-bottom:1px solid var(--border);">✅ XAU/USD analysis posted — Today, 08:00 AM</div>
-              <div style="font-size:0.88rem;color:var(--white-dim);padding:0.5rem 0;">✅ GBP/USD analysis posted — Yesterday, 08:30 AM</div>
+          <div class="acard">
+            <div class="acardt">Recent Activity</div>
+            <div id="actlog">
+              <div style="font-size:.85rem;color:var(--wd);padding:.45rem 0;border-bottom:1px solid var(--bdr);">✅ EUR/USD analysis posted — Today, 08:15 AM</div>
+              <div style="font-size:.85rem;color:var(--wd);padding:.45rem 0;border-bottom:1px solid var(--bdr);">✅ Gold analysis posted — Today, 08:00 AM</div>
+              <div style="font-size:.85rem;color:var(--wd);padding:.45rem 0;">✅ GBP/USD analysis posted — Yesterday, 08:30 AM</div>
             </div>
           </div>
         </div>
 
-        <!-- Upload Analysis -->
-        <div class="admin-section" id="admin-upload">
-          <div class="admin-header">
-            <h2 class="admin-title">Upload Daily Analysis</h2>
-          </div>
-          <div class="admin-card">
-            <div class="admin-card-title">New Analysis Post</div>
-            <div class="form-group">
-              <label>Currency Pair / Instrument</label>
+        <div class="asec" id="a-upload">
+          <div class="ahdr"><h2 class="atl">Upload Analysis</h2></div>
+          <div class="acard">
+            <div class="acardt">New Analysis Post</div>
+            <div class="fg"><label>Currency Pair</label>
               <select id="up-pair">
-                <option>EUR/USD</option>
-                <option>GBP/USD</option>
-                <option>GBP/JPY</option>
-                <option>XAU/USD – GOLD</option>
-                <option>WTI CRUDE OIL</option>
-                <option>USD/JPY</option>
+                <option value="EUR/USD">EUR/USD – Euro / US Dollar</option>
+                <option value="GBP/USD">GBP/USD – British Pound / Dollar</option>
+                <option value="GBP/JPY">GBP/JPY – British Pound / Yen</option>
+                <option value="XAU/USD">XAU/USD – Gold / US Dollar</option>
+                <option value="WTI OIL">WTI OIL – Crude Oil</option>
+                <option value="USD/JPY">USD/JPY – Dollar / Japanese Yen</option>
               </select>
             </div>
-            <div class="form-group">
-              <label>Market Bias</label>
-              <select id="up-bias">
-                <option value="buy">Bullish (BUY)</option>
-                <option value="sell">Bearish (SELL)</option>
-                <option value="neutral">Neutral / Wait</option>
-              </select>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+              <div class="fg"><label>Market Bias</label>
+                <select id="up-bias"><option value="buy">▲ Bullish (BUY)</option><option value="sell">▼ Bearish (SELL)</option><option value="neutral">◆ Neutral / Wait</option></select>
+              </div>
+              <div class="fg"><label>Category</label>
+                <select id="up-cat"><option value="forex">Forex</option><option value="gold">Gold</option><option value="oil">Oil</option></select>
+              </div>
             </div>
-            <div class="form-group">
-              <label>Category</label>
-              <select id="up-cat">
-                <option value="forex">Forex</option>
-                <option value="gold">Gold</option>
-                <option value="oil">Oil</option>
-              </select>
+            <div class="fg"><label>Analysis Title</label><input type="text" id="up-title" placeholder="e.g. EUR/USD – Bullish Breakout Setup Above 1.0880"></div>
+            <div class="fg"><label>Full Analysis Content</label><textarea id="up-body" rows="6" placeholder="Write full technical analysis here. Include key support/resistance levels, patterns, entry ideas, and trade direction..."></textarea></div>
+            <div style="display:flex;gap:.9rem;flex-wrap:wrap;">
+              <button class="btn bgold" onclick="doPublish()">📤 Publish to Website</button>
+              <button class="btn boutline" onclick="clearForm()">Clear Form</button>
             </div>
-            <div class="form-group">
-              <label>Analysis Title</label>
-              <input type="text" id="up-title" placeholder="e.g. EUR/USD – Bullish Breakout Setup">
-            </div>
-            <div class="form-group">
-              <label>Analysis Summary</label>
-              <textarea id="up-content" placeholder="Write the technical analysis summary here. Include key levels, patterns, and trade direction..."></textarea>
-            </div>
-            <div class="form-group">
-              <label>Chart Image URL (optional)</label>
-              <input type="url" id="up-img" placeholder="https://your-chart-image.com/chart.png">
-            </div>
-            <div style="display:flex;gap:1rem;flex-wrap:wrap;">
-              <button class="btn btn-gold" onclick="publishAnalysis()">📤 Publish Analysis</button>
-              <button class="btn btn-outline" onclick="clearUploadForm()">Clear Form</button>
-            </div>
-            <div class="form-success" id="up-success">✅ Analysis published successfully and is now live on the website!</div>
+            <div class="upok" id="upok">✅ Analysis published! It is now live on the website.</div>
           </div>
         </div>
 
-        <!-- Manage Posts -->
-        <div class="admin-section" id="admin-manage">
-          <div class="admin-header">
-            <h2 class="admin-title">Manage Analysis Posts</h2>
-            <span id="post-count" style="font-size:0.85rem;color:var(--gold);"></span>
+        <div class="asec" id="a-manage">
+          <div class="ahdr"><h2 class="atl">Manage Posts</h2><span id="pcntlbl" style="font-size:.85rem;color:var(--g);"></span></div>
+          <div id="plist"></div>
+        </div>
+
+        <div class="asec" id="a-svc">
+          <div class="ahdr"><h2 class="atl">Manage Services</h2></div>
+          <div class="acard"><div class="acardt">Signal Service</div>
+            <div class="fg"><label>Status</label><select><option>Active</option><option>Inactive</option></select></div>
+            <div class="fg"><label>WhatsApp Link</label><input type="url" value="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F"></div>
+            <button class="btn bgold" onclick="toast('Signal service updated!')">Save Changes</button>
           </div>
-          <div id="admin-post-list" class="analysis-list">
-            <!-- injected by JS -->
+          <div class="acard"><div class="acardt">Fund Management</div>
+            <div class="fg"><label>Minimum Investment</label><input value="$1,000"></div>
+            <div class="fg"><label>Accepting Investors</label><select><option>Yes</option><option>No</option></select></div>
+            <button class="btn bgold" onclick="toast('Fund management updated!')">Save Changes</button>
+          </div>
+          <div class="acard"><div class="acardt">Trading Classes</div>
+            <div class="fg"><label>Next Batch Start</label><input type="date"></div>
+            <div class="fg"><label>Course Price (USD)</label><input value="299"></div>
+            <button class="btn bgold" onclick="toast('Classes info updated!')">Save Changes</button>
           </div>
         </div>
 
-        <!-- Services -->
-        <div class="admin-section" id="admin-services">
-          <div class="admin-header"><h2 class="admin-title">Manage Services</h2></div>
-          <div class="admin-card">
-            <div class="admin-card-title">Signal Service</div>
-            <div class="form-group"><label>Service Status</label>
-              <select><option>Active</option><option>Inactive</option></select>
-            </div>
-            <div class="form-group"><label>WhatsApp Group Link</label>
-              <input type="url" value="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F">
-            </div>
-            <button class="btn btn-gold" onclick="showToast('Signal service updated!')">Save Changes</button>
+        <div class="asec" id="a-cfg">
+          <div class="ahdr"><h2 class="atl">Settings</h2></div>
+          <div class="acard"><div class="acardt">Site Information</div>
+            <div class="fg"><label>Site Title</label><input value="Sarakhan FX"></div>
+            <div class="fg"><label>Contact Email</label><input value="sarakhanfx1@gmail.com"></div>
+            <div class="fg"><label>Phone</label><input value="+971 50 123 4567"></div>
+            <div class="fg"><label>Location</label><input value="Abu Dhabi, UAE"></div>
+            <button class="btn bgold" onclick="toast('Settings saved!')">Save Settings</button>
           </div>
-          <div class="admin-card">
-            <div class="admin-card-title">Fund Management</div>
-            <div class="form-group"><label>Minimum Investment</label>
-              <input type="text" value="$1,000">
-            </div>
-            <div class="form-group"><label>Currently Accepting New Investors</label>
-              <select><option>Yes</option><option>No</option></select>
-            </div>
-            <button class="btn btn-gold" onclick="showToast('Fund management updated!')">Save Changes</button>
-          </div>
-          <div class="admin-card">
-            <div class="admin-card-title">Trading Classes</div>
-            <div class="form-group"><label>Next Batch Start Date</label>
-              <input type="date">
-            </div>
-            <div class="form-group"><label>Course Price (USD)</label>
-              <input type="text" value="299">
-            </div>
-            <button class="btn btn-gold" onclick="showToast('Classes info updated!')">Save Changes</button>
-          </div>
-        </div>
-
-        <!-- Settings -->
-        <div class="admin-section" id="admin-settings">
-          <div class="admin-header"><h2 class="admin-title">Settings</h2></div>
-          <div class="admin-card">
-            <div class="admin-card-title">Site Information</div>
-            <div class="form-group"><label>Site Title</label>
-              <input type="text" value="Sarakhan FX">
-            </div>
-            <div class="form-group"><label>Tagline</label>
-              <input type="text" value="Trade with Confidence">
-            </div>
-            <div class="form-group"><label>Contact Email</label>
-              <input type="email" value="sarakhanfx1@gmail.com">
-            </div>
-            <div class="form-group"><label>Phone (UAE)</label>
-              <input type="text" value="+971 50 123 4567">
-            </div>
-            <button class="btn btn-gold" onclick="showToast('Settings saved!')">Save Settings</button>
-          </div>
-          <div class="admin-card">
-            <div class="admin-card-title">Change Password</div>
-            <div class="form-group"><label>Current Password</label><input type="password" placeholder="••••••••"></div>
-            <div class="form-group"><label>New Password</label><input type="password" placeholder="••••••••"></div>
-            <div class="form-group"><label>Confirm Password</label><input type="password" placeholder="••••••••"></div>
-            <button class="btn btn-gold" onclick="showToast('Password changed successfully!')">Update Password</button>
+          <div class="acard"><div class="acardt">Change Password</div>
+            <div class="fg"><label>Current Password</label><input type="password" placeholder="••••••••"></div>
+            <div class="fg"><label>New Password</label><input type="password" placeholder="••••••••"></div>
+            <div class="fg"><label>Confirm Password</label><input type="password" placeholder="••••••••"></div>
+            <button class="btn bgold" onclick="toast('Password updated!')">Update Password</button>
           </div>
         </div>
 
@@ -1648,295 +629,268 @@ footer {
   </div>
 </div>
 
-<!-- ANALYSIS MODAL -->
-<div class="modal-overlay" id="analysis-modal">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div id="modal-content"></div>
+<!-- GLOBAL MODAL -->
+<div id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="mbox">
+    <button class="mx" onclick="closeModal()">✕</button>
+    <div id="mbody"></div>
   </div>
 </div>
 
 <!-- TOAST -->
-<div class="toast" id="toast"></div>
+<div id="toast"></div>
 
-<!-- ===================== TRADINGVIEW WIDGETS ===================== -->
-<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<script src="https://s3.tradingview.com/tv.js"></script>
 <script>
-// ===== DATA STORE =====
-let analysisData = [
-  { id:1, pair:'EUR/USD', cat:'forex', bias:'buy',  title:'EUR/USD – Bullish Breakout Above 1.0880', excerpt:'Price has broken above a key resistance zone at 1.0870 with strong bullish momentum. We anticipate a continuation toward 1.0950. Bias: Buy on pullbacks to 1.0855.', date:'Today, 08:15 AM', icon:'📈' },
-  { id:2, pair:'XAU/USD – GOLD', cat:'gold', bias:'buy', title:'Gold Holding Support – Targeting $2,400', excerpt:'Gold remains supported above $2,360 despite USD strength. A bullish flag pattern on the H4 chart suggests continuation. Key support at $2,340.', date:'Today, 08:00 AM', icon:'🥇' },
-  { id:3, pair:'GBP/USD', cat:'forex', bias:'neutral', title:'GBP/USD Consolidating Before CPI Data', excerpt:'Cable is stuck in a 40-pip range ahead of UK CPI. We recommend waiting for the news release before committing. Support: 1.2700, Resistance: 1.2800.', date:'Today, 07:45 AM', icon:'📊' },
-  { id:4, pair:'WTI CRUDE OIL', cat:'oil', bias:'sell', title:'Oil Facing Resistance at $80 – Bearish Setup', excerpt:'WTI is facing heavy selling pressure at the $80 psychological level. A double-top formation on the daily chart signals potential downside to $76.50.', date:'Yesterday, 08:30 AM', icon:'🛢️' },
-  { id:5, pair:'GBP/JPY', cat:'forex', bias:'sell', title:'GBP/JPY Retracing from 197.00 Highs', excerpt:'After a strong rally, GBP/JPY is showing exhaustion near 197.00. Bearish divergence on RSI suggests a pullback to 194.50 is likely.', date:'Yesterday, 08:10 AM', icon:'📉' },
-  { id:6, pair:'USD/JPY', cat:'forex', bias:'buy', title:'USD/JPY – BoJ Watch, Range Play Above 153', excerpt:'Yen remains weak on dovish BoJ commentary. USD/JPY maintains bullish structure above 153.00. Targets: 155.50 on sustained USD strength.', date:'Yesterday, 07:55 AM', icon:'💴' },
+// ── DATA ──
+var posts=[
+  {id:1,pair:'EUR/USD',cat:'forex',bias:'buy',title:'EUR/USD – Bullish Breakout Above 1.0880',body:'Price has broken above a key resistance zone at 1.0870 with strong bullish momentum on H4.\n\nKey Levels:\n• Support: 1.0840 / 1.0810\n• Resistance: 1.0950 / 1.1000\n\nStrategy: Buy on pullbacks to 1.0855. Target 1.0950. Stop loss below 1.0820.\n\nPattern: Bullish flag breakout confirmed. RSI above 55 and trending up.',date:'Today, 08:15 AM'},
+  {id:2,pair:'XAU/USD',cat:'gold',bias:'buy',title:'Gold Holding Support – Targeting $2,400',body:'Gold remains well-supported above $2,360 despite recent USD strength. Bullish flag forming on H4.\n\nKey Levels:\n• Support: $2,340 / $2,310\n• Resistance: $2,400 / $2,430\n\nStrategy: Buy near $2,355 area. Target $2,400. Stop below $2,330.\n\nFundamentals: Safe-haven demand still strong. Fed rate cut expectations supporting gold.',date:'Today, 08:00 AM'},
+  {id:3,pair:'GBP/USD',cat:'forex',bias:'neutral',title:'GBP/USD Consolidating Before CPI Data',body:'Cable is stuck in a narrow 40-pip range ahead of UK CPI release. Recommend caution.\n\nKey Levels:\n• Support: 1.2700\n• Resistance: 1.2800\n\nStrategy: Wait for CPI news. Break above 1.2800 → Buy. Break below 1.2700 → Sell.\n\nNo trades before the news release. Risk management is priority.',date:'Today, 07:45 AM'},
+  {id:4,pair:'WTI OIL',cat:'oil',bias:'sell',title:'Oil Facing Resistance at $80 – Bearish Setup',body:'WTI Crude facing heavy selling pressure at $80 psychological level. Double-top on Daily chart.\n\nKey Levels:\n• Resistance: $80.00 / $81.50\n• Support: $76.50 / $74.00\n\nStrategy: Sell rallies toward $79.50–$80.00. Target $76.50. Stop above $81.80.\n\nVolume declining on rallies — institutional distribution likely.',date:'Yesterday, 08:30 AM'},
+  {id:5,pair:'GBP/JPY',cat:'forex',bias:'sell',title:'GBP/JPY Retracing from 197.00 Highs',body:'After a strong rally, GBP/JPY is showing clear exhaustion near 197.00. Bearish RSI divergence on H4.\n\nKey Levels:\n• Resistance: 197.00 / 198.50\n• Support: 194.50 / 192.00\n\nStrategy: Sell on bounces near 196.50–197.00. Target 194.50. Stop above 197.60.\n\nRisk/reward ratio: 1:2.5',date:'Yesterday, 08:10 AM'},
+  {id:6,pair:'USD/JPY',cat:'forex',bias:'buy',title:'USD/JPY – BoJ Watch, Range Play Above 153',body:'Yen remains weak amid dovish BoJ rhetoric. USD/JPY holding bullish structure above 153.00.\n\nKey Levels:\n• Support: 153.00 / 151.80\n• Resistance: 155.50 / 157.00\n\nStrategy: Buy dips toward 153.20. Target 155.50. Stop below 152.50.\n\nFundamentals: BoJ unchanged, Fed hawkish — bullish USD/JPY divergence.',date:'Yesterday, 07:55 AM'}
 ];
-let nextId = 7;
-let currentFilter = 'all';
+var nid=7, cf='all';
 
-// ===== PAGE MANAGEMENT =====
-function showPage(name) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
+var submap={'EUR/USD':'Euro / US Dollar','GBP/USD':'British Pound / Dollar','GBP/JPY':'British Pound / Yen','XAU/USD':'Gold / US Dollar','WTI OIL':'West Texas Intermediate','USD/JPY':'Dollar / Japanese Yen'};
+function sub(p){return submap[p]||p}
+
+// ── PAGES ──
+function openPg(n){
+  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on')});
+  document.getElementById('pg-'+n).classList.add('on');
   window.scrollTo(0,0);
-  if (name === 'home') renderAnalysis();
-  if (name === 'admin') renderAdminList();
+  if(n==='admin') renderPList();
+  if(n==='home') renderCards();
+}
+function goHome(){openPg('home')}
+function goTo(id){
+  openPg('home');
+  setTimeout(function(){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'})},100);
 }
 
-function scrollToSection(id) {
-  showPage('home');
-  setTimeout(() => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  }, 100);
-}
+// ── NAV ──
+function toggleMob(){document.getElementById('mobnav').classList.toggle('on')}
+function closeMob(){document.getElementById('mobnav').classList.remove('on')}
 
-// ===== NAV =====
-function toggleMenu() {
-  document.getElementById('mobile-menu').classList.toggle('open');
-}
-function closeMenu() {
-  document.getElementById('mobile-menu').classList.remove('open');
-}
-
-// ===== LOGIN =====
-function doLogin() {
-  const u = document.getElementById('login-user').value.trim();
-  const p = document.getElementById('login-pass').value.trim();
-  if (u === 'admin' && p === 'sarakhan2024') {
-    document.getElementById('login-error').style.display = 'none';
-    showPage('admin');
+// ── LOGIN ──
+function doLogin(){
+  var u=document.getElementById('luser').value.trim();
+  var p=document.getElementById('lpass').value.trim();
+  if(u==='admin'&&p==='sarakhan2024'){
+    document.getElementById('lerr').style.display='none';
+    openPg('admin');
   } else {
-    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('lerr').style.display='block';
   }
 }
-
-function doLogout() {
-  document.getElementById('login-user').value = '';
-  document.getElementById('login-pass').value = '';
-  showPage('home');
+function doLogout(){
+  document.getElementById('luser').value='';
+  document.getElementById('lpass').value='';
+  openPg('home');
 }
 
-// ===== ADMIN TABS =====
-function adminTab(name, el) {
-  document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.admin-nav-item').forEach(i => i.classList.remove('active'));
-  document.getElementById('admin-' + name).classList.add('active');
-  if (el) el.classList.add('active');
-  if (name === 'manage') renderAdminList();
+// ── ADMIN TABS ──
+function aTab(n,el){
+  document.querySelectorAll('.asec').forEach(function(s){s.classList.remove('on')});
+  document.querySelectorAll('.ami').forEach(function(i){i.classList.remove('on')});
+  document.getElementById('a-'+n).classList.add('on');
+  if(el) el.classList.add('on');
+  if(n==='manage') renderPList();
 }
 
-// ===== ANALYSIS =====
-function renderAnalysis(filter) {
-  filter = filter || currentFilter;
-  const grid = document.getElementById('analysis-grid');
-  if (!grid) return;
-  const filtered = filter === 'all' ? analysisData : analysisData.filter(a => a.cat === filter);
-  grid.innerHTML = filtered.map(a => `
-    <div class="analysis-card fade-in visible" data-cat="${a.cat}">
-      <div class="analysis-img">
-        <div class="analysis-img-bg"></div>
-        <span style="font-size:2.5rem;position:relative;z-index:1;">${a.icon}</span>
-        <span class="analysis-pair-tag">${a.pair}</span>
-      </div>
-      <div class="analysis-body">
-        <div class="analysis-meta">
-          <span class="analysis-bias bias-${a.bias}">${a.bias.toUpperCase()}</span>
-          <span>🕐 ${a.date}</span>
-        </div>
-        <div class="analysis-title">${a.title}</div>
-        <div class="analysis-excerpt">${a.excerpt}</div>
-        <button class="btn btn-outline" style="margin-top:1rem;padding:0.45rem 1rem;font-size:0.82rem;" onclick="openAnalysis(${a.id})">Read Full Analysis →</button>
-      </div>
-    </div>
-  `).join('');
+// ── ANALYSIS CARDS ──
+function renderCards(){
+  var grid=document.getElementById('agrid');
+  if(!grid) return;
+  var list=cf==='all'?posts:posts.filter(function(p){return p.cat===cf});
+  if(!list.length){grid.innerHTML='<p style="color:var(--wd);padding:1rem;grid-column:1/-1;">No posts found for this filter.</p>';return;}
+  grid.innerHTML=list.map(function(p){
+    var bc='b'+p.bias;
+    var bl=p.bias==='buy'?'▲ BUY':p.bias==='sell'?'▼ SELL':'◆ NEUTRAL';
+    var exc=p.body.replace(/\n/g,' ');
+    if(exc.length>140) exc=exc.substring(0,140)+'...';
+    return '<div class="acard">'
+      +'<div class="atop">'
+        +'<div class="atop-g"></div>'
+        +'<div class="atop-l"></div>'
+        +'<div class="adot"></div>'
+        +'<div class="apair">'+p.pair+'</div>'
+        +'<div class="asub">'+sub(p.pair)+'</div>'
+      +'</div>'
+      +'<div class="abody">'
+        +'<div class="ameta">'
+          +'<span class="btag '+bc+'">'+bl+'</span>'
+          +'<span style="font-size:.72rem;color:var(--wd);">🕐 '+p.date+'</span>'
+        +'</div>'
+        +'<div class="atitle">'+p.title+'</div>'
+        +'<div class="aexc">'+exc+'</div>'
+        +'<button class="btn boutline" style="margin-top:1rem;padding:.4rem 1rem;font-size:.8rem;" onclick="openA('+p.id+')">Read Full Analysis →</button>'
+      +'</div>'
+    +'</div>';
+  }).join('');
 }
 
-function filterAnalysis(cat, btn) {
-  currentFilter = cat;
-  document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderAnalysis(cat);
+function filterA(cat,btn){
+  cf=cat;
+  document.querySelectorAll('.ftab').forEach(function(b){b.classList.remove('on')});
+  btn.classList.add('on');
+  renderCards();
 }
 
-function openAnalysis(id) {
-  const a = analysisData.find(x => x.id === id);
-  if (!a) return;
-  document.getElementById('modal-content').innerHTML = `
-    <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;">
-      <span style="font-size:2rem;">${a.icon}</span>
-      <div>
-        <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--gold);">${a.pair}</div>
-        <div style="font-size:0.75rem;color:var(--white-dim);">🕐 ${a.date}</div>
-      </div>
-      <span class="analysis-bias bias-${a.bias}" style="margin-left:auto;">${a.bias.toUpperCase()}</span>
-    </div>
-    <div class="modal-title">${a.title}</div>
-    <div class="modal-sub" style="margin-bottom:1.2rem;">Full Technical Analysis</div>
-    <p style="color:var(--white-dim);font-size:0.95rem;line-height:1.85;">${a.excerpt}</p>
-    <div style="background:var(--navy-3);border:1px solid var(--border);border-radius:6px;padding:1rem;margin-top:1.5rem;">
-      <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold);margin-bottom:0.5rem;">Trade Setup</div>
-      <div style="font-size:0.88rem;color:var(--white-dim);">For detailed entry, stop-loss, and take-profit levels, join our premium signal group.</div>
-    </div>
-    <a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank" class="btn btn-green" style="margin-top:1.5rem;width:100%;justify-content:center;">💬 Join Premium Signals</a>
-  `;
-  document.getElementById('analysis-modal').classList.add('open');
+// ── OPEN ANALYSIS MODAL ──
+function openA(id){
+  var p=null;
+  for(var i=0;i<posts.length;i++){if(posts[i].id===id){p=posts[i];break;}}
+  if(!p){toast('Post not found.');return;}
+  var bc=p.bias==='buy'?'var(--grn)':p.bias==='sell'?'var(--red)':'var(--g)';
+  var bl=p.bias==='buy'?'▲ BULLISH – BUY':p.bias==='sell'?'▼ BEARISH – SELL':'◆ NEUTRAL – WAIT';
+  var bd=p.bias==='buy'?'Looking for buying opportunities on pullbacks':p.bias==='sell'?'Looking for selling opportunities on rallies':'Wait for a clearer setup before entering';
+  var bhtml=p.body.replace(/\n/g,'<br>');
+  document.getElementById('mbody').innerHTML=
+    '<div style="border-bottom:1px solid var(--bdr);padding-bottom:1.1rem;margin-bottom:1.3rem;">'
+      +'<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;">'
+        +'<div><div style="font-family:Space Mono,monospace;font-size:1.05rem;font-weight:700;color:var(--g);">'+p.pair+'</div>'
+        +'<div style="font-size:.72rem;color:var(--wd);margin-top:.2rem;">'+sub(p.pair)+'</div></div>'
+        +'<div style="display:flex;flex-direction:column;align-items:flex-end;gap:.35rem;">'
+          +'<span style="padding:.25rem .85rem;border-radius:3px;font-size:.75rem;font-weight:700;letter-spacing:.05em;border:1px solid '+bc+'40;color:'+bc+';">'+bl+'</span>'
+          +'<span style="font-size:.7rem;color:var(--wd);">🕐 '+p.date+'</span>'
+        +'</div>'
+      +'</div>'
+    +'</div>'
+    +'<h3 style="font-family:Playfair Display,serif;font-size:1.35rem;font-weight:700;line-height:1.3;margin-bottom:1.1rem;">'+p.title+'</h3>'
+    +'<div style="background:var(--n3);border-left:3px solid '+bc+';border-radius:0 5px 5px 0;padding:.9rem 1.1rem;margin-bottom:1.3rem;">'
+      +'<div style="font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:'+bc+';margin-bottom:.35rem;">Market Bias</div>'
+      +'<div style="font-size:.88rem;color:var(--w);">'+bd+'</div>'
+    +'</div>'
+    +'<div style="font-size:.92rem;color:var(--wd);line-height:1.9;margin-bottom:1.4rem;">'+bhtml+'</div>'
+    +'<div style="background:var(--n3);border:1px solid var(--bdr);border-radius:6px;padding:1.1rem;margin-bottom:1.3rem;">'
+      +'<div style="font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--g);margin-bottom:.45rem;">⚡ Exact Entry / SL / TP Levels</div>'
+      +'<div style="font-size:.86rem;color:var(--wd);">Precise entry, stop-loss, and take-profit levels are shared exclusively in our premium WhatsApp signal group. Join below to receive all trade details instantly.</div>'
+    +'</div>'
+    +'<a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank" class="btn bgreen" style="width:100%;justify-content:center;padding:.85rem;">💬 Join Premium Signal Group – Get Entry / SL / TP</a>';
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow='';
 }
 
-function closeModal() {
-  document.getElementById('analysis-modal').classList.remove('open');
+// ── PUBLISH ──
+function doPublish(){
+  var pair=document.getElementById('up-pair').value;
+  var bias=document.getElementById('up-bias').value;
+  var cat=document.getElementById('up-cat').value;
+  var title=document.getElementById('up-title').value.trim();
+  var body=document.getElementById('up-body').value.trim();
+  if(!title){toast('⚠️ Please enter an analysis title.');return;}
+  if(!body){toast('⚠️ Please enter the analysis content.');return;}
+  var now=new Date();
+  var t=now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+  posts.unshift({id:nid++,pair:pair,cat:cat,bias:bias,title:title,body:body,date:'Today, '+t});
+  var sn=document.getElementById('stat-n');
+  if(sn) sn.textContent=posts.length;
+  var log=document.getElementById('actlog');
+  if(log){var d=document.createElement('div');d.style.cssText='font-size:.85rem;color:var(--wd);padding:.45rem 0;border-bottom:1px solid var(--bdr);';d.textContent='✅ '+pair+' analysis posted — Just now';log.insertBefore(d,log.firstChild);}
+  var ok=document.getElementById('upok');
+  ok.style.display='block';
+  toast('✅ Published! Now live on website.');
+  clearForm();
+  setTimeout(function(){
+    ok.style.display='none';
+    cf='all';
+    openPg('home');
+    setTimeout(function(){
+      document.querySelectorAll('.ftab').forEach(function(b){b.classList.remove('on')});
+      var ft=document.querySelector('.ftab');
+      if(ft) ft.classList.add('on');
+      renderCards();
+      var el=document.getElementById('analysis');
+      if(el) el.scrollIntoView({behavior:'smooth'});
+    },150);
+  },1800);
+}
+function clearForm(){
+  document.getElementById('up-title').value='';
+  document.getElementById('up-body').value='';
 }
 
-// ===== ADMIN FUNCTIONS =====
-function publishAnalysis() {
-  const pair = document.getElementById('up-pair').value;
-  const bias = document.getElementById('up-bias').value;
-  const cat = document.getElementById('up-cat').value;
-  const title = document.getElementById('up-title').value.trim();
-  const content = document.getElementById('up-content').value.trim();
-  if (!title || !content) { showToast('⚠️ Please fill in title and analysis content.'); return; }
-  const icons = { 'EUR/USD':'📈','GBP/USD':'📊','GBP/JPY':'📉','XAU/USD – GOLD':'🥇','WTI CRUDE OIL':'🛢️','USD/JPY':'💴' };
-  analysisData.unshift({ id: nextId++, pair, cat, bias, title, excerpt: content, date: 'Just now', icon: icons[pair] || '📊' });
-  document.getElementById('up-success').style.display = 'block';
-  document.getElementById('stat-posts').textContent = analysisData.length;
-  const ra = document.getElementById('recent-activity');
-  ra.innerHTML = `<div style="font-size:0.88rem;color:var(--white-dim);padding:0.5rem 0;border-bottom:1px solid var(--border);">✅ ${pair} analysis posted — Just now</div>` + ra.innerHTML;
-  setTimeout(() => document.getElementById('up-success').style.display = 'none', 3000);
+// ── MANAGE POSTS ──
+function renderPList(){
+  var list=document.getElementById('plist');
+  if(!list) return;
+  var lbl=document.getElementById('pcntlbl');
+  if(lbl) lbl.textContent=posts.length+' posts';
+  if(!posts.length){list.innerHTML='<p style="color:var(--wd);font-size:.9rem;padding:1rem 0;">No posts yet.</p>';return;}
+  list.innerHTML=posts.map(function(p){
+    var bc='btag b'+p.bias;
+    var bl=p.bias==='buy'?'BUY':p.bias==='sell'?'SELL':'NEUTRAL';
+    return '<div class="pitem">'
+      +'<div style="flex:1;min-width:0;">'
+        +'<div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;">'
+          +'<span class="ppair">'+p.pair+'</span>'
+          +'<span class="'+bc+'" style="font-size:.65rem;padding:.12rem .45rem;">'+bl+'</span>'
+        +'</div>'
+        +'<div class="pttl" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:300px;">'+p.title+'</div>'
+        +'<div class="pdt">🕐 '+p.date+'</div>'
+      +'</div>'
+      +'<div class="pbtns">'
+        +'<button class="ibtn" onclick="openA('+p.id+')" title="Preview">👁</button>'
+        +'<button class="ibtn del" onclick="delPost('+p.id+')" title="Delete">🗑</button>'
+      +'</div>'
+    +'</div>';
+  }).join('');
+}
+function delPost(id){
+  if(!confirm('Delete this analysis post?')) return;
+  posts=posts.filter(function(p){return p.id!==id});
+  var sn=document.getElementById('stat-n');
+  if(sn) sn.textContent=posts.length;
+  renderPList();
+  renderCards();
+  toast('🗑 Post deleted.');
 }
 
-function clearUploadForm() {
-  ['up-title','up-content','up-img'].forEach(id => document.getElementById(id).value = '');
+// ── CONTACT ──
+function submitCF(){
+  var n=document.getElementById('cf-name').value.trim();
+  var e=document.getElementById('cf-email').value.trim();
+  var m=document.getElementById('cf-msg').value.trim();
+  if(!n||!e||!m){toast('⚠️ Please fill all required fields.');return;}
+  document.getElementById('cfok').style.display='block';
+  document.getElementById('cf-name').value='';
+  document.getElementById('cf-email').value='';
+  document.getElementById('cf-msg').value='';
 }
 
-function renderAdminList() {
-  const list = document.getElementById('admin-post-list');
-  if (!list) return;
-  document.getElementById('post-count').textContent = analysisData.length + ' posts';
-  list.innerHTML = analysisData.map(a => `
-    <div class="analysis-list-item">
-      <div class="analysis-list-info">
-        <div class="analysis-list-pair">${a.pair} <span class="analysis-bias bias-${a.bias}" style="margin-left:0.5rem;">${a.bias}</span></div>
-        <div class="analysis-list-date">${a.title}</div>
-        <div class="analysis-list-date" style="font-size:0.72rem;margin-top:0.1rem;">🕐 ${a.date}</div>
-      </div>
-      <div class="analysis-list-actions">
-        <button class="icon-btn" onclick="openAnalysis(${a.id})" title="View">👁</button>
-        <button class="icon-btn del" onclick="deletePost(${a.id})" title="Delete">🗑</button>
-      </div>
-    </div>
-  `).join('');
-}
-
-function deletePost(id) {
-  if (!confirm('Delete this analysis post?')) return;
-  analysisData = analysisData.filter(a => a.id !== id);
-  document.getElementById('stat-posts').textContent = analysisData.length;
-  renderAdminList();
-  showToast('Post deleted.');
-}
-
-// ===== CONTACT FORM =====
-function submitContact() {
-  const name = document.getElementById('cf-name').value.trim();
-  const email = document.getElementById('cf-email').value.trim();
-  const msg = document.getElementById('cf-msg').value.trim();
-  if (!name || !email || !msg) { showToast('⚠️ Please fill all required fields.'); return; }
-  document.getElementById('cf-success').style.display = 'block';
-  ['cf-name','cf-email','cf-msg'].forEach(id => document.getElementById(id).value = '');
-}
-
-// ===== TOAST =====
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
+// ── TOAST ──
+function toast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
+  setTimeout(function(){t.classList.remove('show')},3000);
 }
 
-// ===== SCROLL ANIMATIONS =====
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.12 });
-function observeFadeIns() {
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-}
-
-// ===== TRADINGVIEW CHARTS =====
-function loadCharts() {
-  const commonConfig = {
-    autosize: true,
-    interval: "60",
-    timezone: "Asia/Dubai",
-    theme: "dark",
-    style: "1",
-    locale: "en",
-    toolbar_bg: "#0A1628",
-    enable_publishing: false,
-    hide_top_toolbar: false,
-    hide_legend: false,
-    save_image: false,
-    container_id: ""
-  };
-  const pairs = [
-    { id:'tv-eurusd', sym:'FX:EURUSD' },
-    { id:'tv-gbpusd', sym:'FX:GBPUSD' },
-    { id:'tv-gbpjpy', sym:'FX:GBPJPY' },
-    { id:'tv-xauusd', sym:'OANDA:XAUUSD' },
-    { id:'tv-wti',    sym:'NYMEX:CL1!' },
-  ];
-  pairs.forEach(p => {
-    new TradingView.widget({ ...commonConfig, symbol: p.sym, container_id: p.id, height: 220 });
-  });
-  // Market Overview
-  new TradingView.MediumWidget({
-    "symbols": [["EUR/USD","FX:EURUSD|1D"],["GBP/USD","FX:GBPUSD|1D"],["GOLD","OANDA:XAUUSD|1D"],["OIL","NYMEX:CL1!|1D"]],
-    "chartOnly": false,
-    "width": "100%",
-    "height": "220",
-    "locale": "en",
-    "colorTheme": "dark",
-    "autosize": false,
-    "showVolume": false,
-    "hideDateRanges": false,
-    "scalePosition": "right",
-    "scaleMode": "Normal",
-    "fontFamily": "DM Sans, sans-serif",
-    "noTimeScale": false,
-    "valuesTracking": "1",
-    "chartType": "area",
-    "container_id": "tv-overview"
+// ── TRADINGVIEW ──
+function loadCharts(){
+  if(typeof TradingView==='undefined') return;
+  var cfg={interval:'60',timezone:'Asia/Dubai',theme:'dark',style:'1',locale:'en',toolbar_bg:'#0c1a2e',enable_publishing:false,save_image:false,height:220,autosize:true};
+  [{id:'tv1',sym:'FX:EURUSD'},{id:'tv2',sym:'FX:GBPUSD'},{id:'tv3',sym:'FX:GBPJPY'},{id:'tv4',sym:'OANDA:XAUUSD'},{id:'tv5',sym:'NYMEX:CL1!'},{id:'tv6',sym:'FX:USDJPY'}].forEach(function(p){
+    try{new TradingView.widget(Object.assign({},cfg,{symbol:p.sym,container_id:p.id}));}catch(e){}
   });
 }
 
-// ===== INIT =====
-window.addEventListener('load', () => {
-  renderAnalysis();
-  observeFadeIns();
+// ── INIT ──
+window.addEventListener('load',function(){
+  renderCards();
   loadCharts();
 });
-
-// Close modal on overlay click
-document.getElementById('analysis-modal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
+document.addEventListener('click',function(e){
+  var m=document.getElementById('mobnav');
+  if(m.classList.contains('on')&&!m.contains(e.target)&&!document.querySelector('.ham').contains(e.target)) closeMob();
 });
-
-// Close mobile menu on outside click
-document.addEventListener('click', (e) => {
-  const menu = document.getElementById('mobile-menu');
-  const ham = document.querySelector('.hamburger');
-  if (menu.classList.contains('open') && !menu.contains(e.target) && !ham.contains(e.target)) {
-    closeMenu();
-  }
-});
-
-// Nav scroll effect
-window.addEventListener('scroll', () => {
-  const nav = document.getElementById('main-nav');
-  nav.style.background = window.scrollY > 50 ? 'rgba(5,13,26,0.98)' : 'rgba(5,13,26,0.95)';
-});
-
-// Re-observe after page change
-const origShowPage = showPage;
 </script>
 </body>
 </html>
