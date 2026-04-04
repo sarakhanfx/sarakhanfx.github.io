@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sarakhan FX – Trade with Confidence</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -40,6 +44,8 @@ button{cursor:pointer;font-family:'Inter',sans-serif}
 .boutline:hover{border-color:var(--g);color:var(--g);transform:translateY(-2px)}
 .bgreen{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff}
 .bgreen:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(37,211,102,.3)}
+.bred{background:rgba(229,57,53,.15);border:1px solid rgba(229,57,53,.35);color:var(--red)}
+.bred:hover{background:rgba(229,57,53,.25)}
 
 /* SECTION HEADER */
 .sh{text-align:center;margin-bottom:3.5rem}
@@ -67,11 +73,14 @@ button{cursor:pointer;font-family:'Inter',sans-serif}
 .stn{font-family:'Playfair Display',serif;font-size:2rem;color:var(--g);line-height:1}
 .stl{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--wd);margin-top:.25rem}
 .hbtns{display:flex;gap:.9rem;flex-wrap:wrap}
-.tkbar{position:absolute;bottom:0;left:0;right:0;height:38px;background:rgba(201,168,76,.07);border-top:1px solid var(--bdr);overflow:hidden;display:flex;align-items:center}
-.tkinner{display:flex;gap:3.5rem;animation:tk 28s linear infinite;white-space:nowrap}
-@keyframes tk{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.ti{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--g);letter-spacing:.04em}
+
+/* LIVE TICKER */
+.tkbar{position:absolute;bottom:0;left:0;right:0;height:42px;background:rgba(6,14,28,.9);border-top:1px solid var(--bdr);overflow:hidden;display:flex;align-items:center}
+.tkinner{display:flex;gap:3rem;white-space:nowrap}
+.ti{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--g);letter-spacing:.04em;display:inline-flex;align-items:center;gap:.4rem}
 .tup{color:var(--grn)}.tdn{color:var(--red)}
+.tk-loading{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--wd);padding:0 2rem;animation:pulse 1.5s ease infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
 
 /* CHARTS */
 #charts{padding:90px 5%;background:var(--n2)}
@@ -137,6 +146,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif}
 .bneut{background:rgba(201,168,76,.14);color:var(--g)}
 .atitle{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:.55rem;line-height:1.3}
 .aexc{color:var(--wd);font-size:.85rem;line-height:1.72}
+.aloader{grid-column:1/-1;text-align:center;padding:3rem;color:var(--wd);font-size:.9rem}
 
 /* CONTACT */
 #contact{padding:90px 5%;background:var(--n2)}
@@ -160,6 +170,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif}
 .fg textarea{resize:vertical;min-height:110px}
 .fg select option{background:var(--n2)}
 .cfok{display:none;background:rgba(0,200,83,.1);border:1px solid rgba(0,200,83,.28);border-radius:5px;padding:.9rem;color:var(--grn);font-size:.88rem;margin-top:.9rem;text-align:center}
+.cferr{display:none;background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.28);border-radius:5px;padding:.9rem;color:var(--red);font-size:.88rem;margin-top:.9rem;text-align:center}
 
 /* FOOTER */
 footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.8rem}
@@ -180,11 +191,11 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
 .llogo{text-align:center;font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;margin-bottom:.4rem}
 .llogo span{color:var(--g)}
 .lsub{text-align:center;color:var(--wd);font-size:.85rem;margin-bottom:1.8rem}
-.lerr{display:none;background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.28);border-radius:4px;padding:.75rem;color:var(--red);font-size:.83rem;margin-bottom:.9rem}
+.lerr{display:none;background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.28);border-radius:4px;padding:.75rem;color:var(--red);font-size:.83rem;margin-bottom:.9rem;text-align:center}
 
 /* ADMIN */
 #apg{background:var(--n);min-height:100vh;padding-top:68px}
-.awrap{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 68px)}
+.awrap{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 68px)}
 .aside{background:var(--n2);border-right:1px solid var(--bdr);padding:1.8rem 0;position:sticky;top:68px;height:calc(100vh - 68px);overflow-y:auto}
 .aslogo{padding:0 1.4rem 1.3rem;border-bottom:1px solid var(--bdr);font-family:'Playfair Display',serif;font-size:1rem;font-weight:700}
 .aslogo span{color:var(--g)}
@@ -201,15 +212,33 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
 .astl{font-size:.72rem;color:var(--wd);margin-top:.2rem}
 .acard{background:var(--n2);border:1px solid var(--bdr);border-radius:8px;padding:1.4rem;margin-bottom:1.4rem}
 .acardt{font-weight:600;font-size:.9rem;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--bdr);color:var(--g)}
-.pitem{display:flex;align-items:center;justify-content:space-between;padding:.9rem;background:var(--n3);border:1px solid var(--bdr);border-radius:6px;margin-bottom:.7rem}
+.pitem{display:flex;align-items:center;justify-content:space-between;padding:.9rem;background:var(--n3);border:1px solid var(--bdr);border-radius:6px;margin-bottom:.7rem;gap:1rem}
 .ppair{font-family:'Space Mono',monospace;font-size:.82rem;color:var(--g);font-weight:700}
 .pttl{font-size:.82rem;color:var(--w);margin-top:.18rem}
 .pdt{font-size:.7rem;color:var(--wd);margin-top:.12rem}
-.pbtns{display:flex;gap:.4rem;flex-shrink:0;margin-left:.9rem}
-.ibtn{width:30px;height:30px;border-radius:4px;border:1px solid var(--bdr);background:transparent;color:var(--wd);font-size:.8rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+.pbtns{display:flex;gap:.4rem;flex-shrink:0}
+.ibtn{width:32px;height:32px;border-radius:4px;border:1px solid var(--bdr);background:transparent;color:var(--wd);font-size:.85rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
 .ibtn:hover{border-color:var(--g);color:var(--g)}
 .ibtn.del:hover{border-color:var(--red);color:var(--red)}
 .upok{display:none;background:rgba(0,200,83,.1);border:1px solid rgba(0,200,83,.28);border-radius:5px;padding:.8rem;color:var(--grn);font-size:.85rem;margin-top:.8rem;text-align:center}
+.uperr{display:none;background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.28);border-radius:5px;padding:.8rem;color:var(--red);font-size:.85rem;margin-top:.8rem;text-align:center}
+
+/* INBOX */
+.msg-item{background:var(--n3);border:1px solid var(--bdr);border-radius:6px;padding:1.1rem;margin-bottom:.8rem;transition:border-color .2s}
+.msg-item.unread{border-left:3px solid var(--g)}
+.msg-item:hover{border-color:rgba(201,168,76,.35)}
+.msg-name{font-weight:600;font-size:.9rem;color:var(--w)}
+.msg-email{font-size:.75rem;color:var(--g);margin-top:.1rem}
+.msg-svc{display:inline-block;font-size:.68rem;padding:.12rem .5rem;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.2);border-radius:2px;color:var(--g);margin:.4rem 0}
+.msg-text{font-size:.85rem;color:var(--wd);line-height:1.7;margin-top:.5rem}
+.msg-time{font-size:.7rem;color:var(--wd);margin-top:.6rem}
+.msg-btns{display:flex;gap:.5rem;margin-top:.8rem}
+.unread-dot{width:8px;height:8px;border-radius:50%;background:var(--g);display:inline-block;margin-left:.5rem;vertical-align:middle}
+
+/* EDIT MODAL */
+#emodal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(6,14,28,.93);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1rem}
+#emodal.open{display:flex}
+.embox{background:var(--n2);border:1px solid var(--bdr);border-radius:10px;padding:2.2rem;width:100%;max-width:580px;max-height:88vh;overflow-y:auto;position:relative;animation:min .28s ease}
 
 /* MODAL */
 #modal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(6,14,28,.93);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1rem}
@@ -222,6 +251,10 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
 /* TOAST */
 #toast{display:none;position:fixed;bottom:1.8rem;right:1.8rem;z-index:10000;background:var(--n2);border:1px solid var(--g);border-radius:6px;padding:.9rem 1.4rem;font-size:.88rem;box-shadow:0 8px 25px rgba(0,0,0,.4)}
 #toast.show{display:block;animation:min .25s ease}
+
+/* LOADER SPINNER */
+.spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(201,168,76,.3);border-top-color:var(--g);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:.5rem}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 /* RESPONSIVE */
 @media(max-width:900px){.abgrid,.ctgrid{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr;gap:2rem}.awrap{grid-template-columns:1fr}.aside{display:none}}
@@ -274,25 +307,9 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
       <a class="btn boutline" onclick="goTo('services')">Our Services</a>
     </div>
   </div>
+  <!-- LIVE TICKER - filled by JS via Twelve Data API -->
   <div class="tkbar">
-    <div class="tkinner">
-      <span class="ti">EUR/USD <span class="tup">▲ 1.0892</span></span>
-      <span class="ti">GBP/USD <span class="tup">▲ 1.2754</span></span>
-      <span class="ti">GBP/JPY <span class="tdn">▼ 196.42</span></span>
-      <span class="ti">XAU/USD <span class="tup">▲ 2,384.50</span></span>
-      <span class="ti">WTI OIL <span class="tdn">▼ 78.34</span></span>
-      <span class="ti">USD/JPY <span class="tup">▲ 154.12</span></span>
-      <span class="ti">AUD/USD <span class="tdn">▼ 0.6512</span></span>
-      <span class="ti">USD/CHF <span class="tup">▲ 0.9034</span></span>
-      <span class="ti">EUR/USD <span class="tup">▲ 1.0892</span></span>
-      <span class="ti">GBP/USD <span class="tup">▲ 1.2754</span></span>
-      <span class="ti">GBP/JPY <span class="tdn">▼ 196.42</span></span>
-      <span class="ti">XAU/USD <span class="tup">▲ 2,384.50</span></span>
-      <span class="ti">WTI OIL <span class="tdn">▼ 78.34</span></span>
-      <span class="ti">USD/JPY <span class="tup">▲ 154.12</span></span>
-      <span class="ti">AUD/USD <span class="tdn">▼ 0.6512</span></span>
-      <span class="ti">USD/CHF <span class="tup">▲ 0.9034</span></span>
-    </div>
+    <div class="tkinner" id="ticker"><span class="tk-loading">Loading live prices...</span></div>
   </div>
 </section>
 
@@ -412,7 +429,7 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
     </div>
     <a class="btn boutline" style="padding:.4rem 1rem;font-size:.78rem;cursor:pointer;" onclick="openPg('login')">⚙️ Admin Upload</a>
   </div>
-  <div class="agrid" id="agrid"></div>
+  <div class="agrid" id="agrid"><div class="aloader"><span class="spinner"></span>Loading analysis...</div></div>
 </section>
 
 <section id="contact">
@@ -439,14 +456,16 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
     </div>
     <div class="cfwrap">
       <h3 class="cftitle">Send an Enquiry</h3>
-      <div class="fg"><label>Your Name</label><input type="text" id="cf-name" placeholder="e.g. Ahmed Al Mansoori"></div>
-      <div class="fg"><label>Email Address</label><input type="email" id="cf-email" placeholder="your@email.com"></div>
+      <div class="fg"><label>Your Name *</label><input type="text" id="cf-name" placeholder="e.g. Ahmed Al Mansoori"></div>
+      <div class="fg"><label>Email Address *</label><input type="email" id="cf-email" placeholder="your@email.com"></div>
+      <div class="fg"><label>Phone Number</label><input type="tel" id="cf-phone" placeholder="+971 50 000 0000"></div>
       <div class="fg"><label>Service Interested In</label>
         <select id="cf-svc"><option value="">– Select a Service –</option><option>Signal Service</option><option>Fund Management</option><option>Live Trading Classes</option><option>General Inquiry</option></select>
       </div>
-      <div class="fg"><label>Message</label><textarea id="cf-msg" placeholder="Tell us about your trading background..."></textarea></div>
-      <button class="btn bgold" style="width:100%;justify-content:center;" onclick="submitCF()">Send Message →</button>
+      <div class="fg"><label>Message *</label><textarea id="cf-msg" placeholder="Tell us about your trading background and what you're looking for..."></textarea></div>
+      <button class="btn bgold" id="cf-btn" style="width:100%;justify-content:center;" onclick="submitCF()">Send Message →</button>
       <div class="cfok" id="cfok">✅ Message sent! We'll respond within 24 hours.</div>
+      <div class="cferr" id="cferr">❌ Failed to send. Please try again or email directly.</div>
     </div>
   </div>
 </section>
@@ -495,12 +514,11 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
     <div class="lbox">
       <div class="llogo">Sarakhan<span>FX</span></div>
       <p class="lsub">Admin Panel – Authorised Access Only</p>
-      <div class="lerr" id="lerr">❌ Incorrect username or password.</div>
-      <div class="fg"><label>Username</label><input type="text" id="luser" placeholder="admin" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <div class="lerr" id="lerr"></div>
+      <div class="fg"><label>Email</label><input type="email" id="luser" placeholder="admin@sarakhanfx.com" onkeydown="if(event.key==='Enter')doLogin()"></div>
       <div class="fg"><label>Password</label><input type="password" id="lpass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
-      <button class="btn bgold" style="width:100%;justify-content:center;margin-top:.4rem;" onclick="doLogin()">Login to Admin Panel</button>
-      <p style="text-align:center;font-size:.75rem;color:var(--wd);margin-top:1.1rem;">Demo: <b style="color:var(--g)">admin</b> / <b style="color:var(--g)">sarakhan2024</b></p>
-      <p style="text-align:center;margin-top:.9rem;"><a onclick="openPg('home')" style="color:var(--g);font-size:.82rem;cursor:pointer;">← Back to Website</a></p>
+      <button class="btn bgold" id="lbtn" style="width:100%;justify-content:center;margin-top:.4rem;" onclick="doLogin()">Login to Admin Panel</button>
+      <p style="text-align:center;margin-top:1.2rem;"><a onclick="openPg('home')" style="color:var(--g);font-size:.82rem;cursor:pointer;">← Back to Website</a></p>
     </div>
   </div>
 </div>
@@ -513,9 +531,9 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
         <div class="aslogo">Sarakhan<span>FX</span> Admin</div>
         <div class="amenu">
           <div class="ami on" onclick="aTab('dash',this)">📊 Dashboard</div>
-          <div class="ami" onclick="aTab('upload',this)">📤 Upload Analysis</div>
+          <div class="ami" onclick="aTab('upload',this)">📤 Post Analysis</div>
           <div class="ami" onclick="aTab('manage',this)">📋 Manage Posts</div>
-          <div class="ami" onclick="aTab('svc',this)">⚙️ Services</div>
+          <div class="ami" onclick="aTab('inbox',this)">📨 Client Messages <span id="unread-badge" style="display:none;background:var(--g);color:#060e1c;font-size:.65rem;font-weight:700;padding:.1rem .45rem;border-radius:10px;margin-left:.3rem;"></span></div>
           <div class="ami" onclick="aTab('cfg',this)">🔧 Settings</div>
         </div>
         <div style="padding:1.3rem;border-top:1px solid var(--bdr);margin-top:1rem;">
@@ -525,34 +543,32 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
       </aside>
       <main class="amain">
 
+        <!-- DASHBOARD -->
         <div class="asec on" id="a-dash">
-          <div class="ahdr"><h2 class="atl">Dashboard</h2><span style="font-size:.8rem;color:var(--wd);">Welcome back, Admin</span></div>
+          <div class="ahdr"><h2 class="atl">Dashboard</h2><span style="font-size:.8rem;color:var(--wd);" id="admin-welcome">Welcome back!</span></div>
           <div class="astats">
-            <div class="astat"><div class="astn" id="stat-n">6</div><div class="astl">Analysis Posts</div></div>
-            <div class="astat"><div class="astn">3</div><div class="astl">Active Services</div></div>
-            <div class="astat"><div class="astn">2000+</div><div class="astl">Students</div></div>
+            <div class="astat"><div class="astn" id="stat-posts">–</div><div class="astl">Analysis Posts</div></div>
+            <div class="astat"><div class="astn" id="stat-msgs">–</div><div class="astl">Client Messages</div></div>
+            <div class="astat"><div class="astn" id="stat-unread">–</div><div class="astl">Unread Messages</div></div>
             <div class="astat"><div class="astn">$500K</div><div class="astl">Funds Managed</div></div>
           </div>
           <div class="acard">
             <div class="acardt">Quick Actions</div>
             <div style="display:flex;gap:.9rem;flex-wrap:wrap;">
               <button class="btn bgold" onclick="aTab('upload',document.querySelectorAll('.ami')[1])">📤 New Analysis</button>
+              <button class="btn boutline" onclick="aTab('inbox',document.querySelectorAll('.ami')[3])">📨 View Messages</button>
               <a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank" class="btn bgreen">💬 WhatsApp</a>
-              <a href="https://www.facebook.com/amankhanfx1" target="_blank" class="btn boutline">📘 Facebook</a>
             </div>
           </div>
           <div class="acard">
             <div class="acardt">Recent Activity</div>
-            <div id="actlog">
-              <div style="font-size:.85rem;color:var(--wd);padding:.45rem 0;border-bottom:1px solid var(--bdr);">✅ EUR/USD analysis posted — Today, 08:15 AM</div>
-              <div style="font-size:.85rem;color:var(--wd);padding:.45rem 0;border-bottom:1px solid var(--bdr);">✅ Gold analysis posted — Today, 08:00 AM</div>
-              <div style="font-size:.85rem;color:var(--wd);padding:.45rem 0;">✅ GBP/USD analysis posted — Yesterday, 08:30 AM</div>
-            </div>
+            <div id="actlog"><div style="color:var(--wd);font-size:.85rem;">Loading...</div></div>
           </div>
         </div>
 
+        <!-- UPLOAD / POST ANALYSIS -->
         <div class="asec" id="a-upload">
-          <div class="ahdr"><h2 class="atl">Upload Analysis</h2></div>
+          <div class="ahdr"><h2 class="atl">Post Analysis</h2></div>
           <div class="acard">
             <div class="acardt">New Analysis Post</div>
             <div class="fg"><label>Currency Pair</label>
@@ -563,6 +579,8 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
                 <option value="XAU/USD">XAU/USD – Gold / US Dollar</option>
                 <option value="WTI OIL">WTI OIL – Crude Oil</option>
                 <option value="USD/JPY">USD/JPY – Dollar / Japanese Yen</option>
+                <option value="AUD/USD">AUD/USD – Australian Dollar</option>
+                <option value="USD/CAD">USD/CAD – Dollar / Canadian Dollar</option>
               </select>
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
@@ -574,53 +592,52 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
               </div>
             </div>
             <div class="fg"><label>Analysis Title</label><input type="text" id="up-title" placeholder="e.g. EUR/USD – Bullish Breakout Setup Above 1.0880"></div>
-            <div class="fg"><label>Full Analysis Content</label><textarea id="up-body" rows="6" placeholder="Write full technical analysis here. Include key support/resistance levels, patterns, entry ideas, and trade direction..."></textarea></div>
+            <div class="fg"><label>Full Analysis Content</label><textarea id="up-body" rows="7" placeholder="Write full technical analysis here. Include key support/resistance levels, patterns, entry ideas, and trade direction...&#10;&#10;Key Levels:&#10;• Support: &#10;• Resistance: &#10;&#10;Strategy: "></textarea></div>
             <div style="display:flex;gap:.9rem;flex-wrap:wrap;">
-              <button class="btn bgold" onclick="doPublish()">📤 Publish to Website</button>
+              <button class="btn bgold" id="pub-btn" onclick="doPublish()">📤 Publish to Website</button>
               <button class="btn boutline" onclick="clearForm()">Clear Form</button>
             </div>
-            <div class="upok" id="upok">✅ Analysis published! It is now live on the website.</div>
+            <div class="upok" id="upok">✅ Analysis published! It is now live on the website in real-time.</div>
+            <div class="uperr" id="uperr"></div>
           </div>
         </div>
 
+        <!-- MANAGE POSTS -->
         <div class="asec" id="a-manage">
           <div class="ahdr"><h2 class="atl">Manage Posts</h2><span id="pcntlbl" style="font-size:.85rem;color:var(--g);"></span></div>
-          <div id="plist"></div>
+          <div id="plist"><div style="color:var(--wd);font-size:.9rem;"><span class="spinner"></span>Loading posts...</div></div>
         </div>
 
-        <div class="asec" id="a-svc">
-          <div class="ahdr"><h2 class="atl">Manage Services</h2></div>
-          <div class="acard"><div class="acardt">Signal Service</div>
-            <div class="fg"><label>Status</label><select><option>Active</option><option>Inactive</option></select></div>
-            <div class="fg"><label>WhatsApp Link</label><input type="url" value="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F"></div>
-            <button class="btn bgold" onclick="toast('Signal service updated!')">Save Changes</button>
+        <!-- CLIENT MESSAGES INBOX -->
+        <div class="asec" id="a-inbox">
+          <div class="ahdr">
+            <h2 class="atl">Client Messages</h2>
+            <div style="display:flex;gap:.7rem;">
+              <button class="btn boutline" style="font-size:.78rem;padding:.4rem .9rem;" onclick="markAllRead()">Mark All Read</button>
+              <span id="inbox-count" style="font-size:.85rem;color:var(--g);align-self:center;"></span>
+            </div>
           </div>
-          <div class="acard"><div class="acardt">Fund Management</div>
-            <div class="fg"><label>Minimum Investment</label><input value="$1,000"></div>
-            <div class="fg"><label>Accepting Investors</label><select><option>Yes</option><option>No</option></select></div>
-            <button class="btn bgold" onclick="toast('Fund management updated!')">Save Changes</button>
-          </div>
-          <div class="acard"><div class="acardt">Trading Classes</div>
-            <div class="fg"><label>Next Batch Start</label><input type="date"></div>
-            <div class="fg"><label>Course Price (USD)</label><input value="299"></div>
-            <button class="btn bgold" onclick="toast('Classes info updated!')">Save Changes</button>
-          </div>
+          <div id="inbox-list"><div style="color:var(--wd);font-size:.9rem;"><span class="spinner"></span>Loading messages...</div></div>
         </div>
 
+        <!-- SETTINGS -->
         <div class="asec" id="a-cfg">
           <div class="ahdr"><h2 class="atl">Settings</h2></div>
-          <div class="acard"><div class="acardt">Site Information</div>
-            <div class="fg"><label>Site Title</label><input value="Sarakhan FX"></div>
-            <div class="fg"><label>Contact Email</label><input value="sarakhanfx1@gmail.com"></div>
-            <div class="fg"><label>Phone</label><input value="+971 50 123 4567"></div>
-            <div class="fg"><label>Location</label><input value="Abu Dhabi, UAE"></div>
-            <button class="btn bgold" onclick="toast('Settings saved!')">Save Settings</button>
+          <div class="acard">
+            <div class="acardt">Account Info</div>
+            <div style="font-size:.88rem;color:var(--wd);margin-bottom:1rem;">Logged in as: <span id="admin-email" style="color:var(--g);font-weight:600;"></span></div>
+            <div class="fg"><label>New Password</label><input type="password" id="new-pass" placeholder="Enter new password"></div>
+            <div class="fg"><label>Confirm Password</label><input type="password" id="conf-pass" placeholder="Confirm new password"></div>
+            <button class="btn bgold" onclick="changePass()">Update Password</button>
+            <div id="pass-msg" style="margin-top:.8rem;font-size:.85rem;display:none;"></div>
           </div>
-          <div class="acard"><div class="acardt">Change Password</div>
-            <div class="fg"><label>Current Password</label><input type="password" placeholder="••••••••"></div>
-            <div class="fg"><label>New Password</label><input type="password" placeholder="••••••••"></div>
-            <div class="fg"><label>Confirm Password</label><input type="password" placeholder="••••••••"></div>
-            <button class="btn bgold" onclick="toast('Password updated!')">Update Password</button>
+          <div class="acard">
+            <div class="acardt">Site Links</div>
+            <div style="display:flex;gap:.9rem;flex-wrap:wrap;">
+              <a href="https://www.facebook.com/amankhanfx1" target="_blank" class="btn boutline">📘 Facebook Page</a>
+              <a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank" class="btn bgreen">💬 WhatsApp Channel</a>
+              <a href="mailto:sarakhanfx1@gmail.com" class="btn boutline">✉️ Email</a>
+            </div>
           </div>
         </div>
 
@@ -629,7 +646,7 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
   </div>
 </div>
 
-<!-- GLOBAL MODAL -->
+<!-- ANALYSIS MODAL (public) -->
 <div id="modal" onclick="if(event.target===this)closeModal()">
   <div class="mbox">
     <button class="mx" onclick="closeModal()">✕</button>
@@ -637,117 +654,271 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
   </div>
 </div>
 
+<!-- EDIT MODAL (admin) -->
+<div id="emodal" onclick="if(event.target===this)closeEdit()">
+  <div class="embox">
+    <button class="mx" onclick="closeEdit()">✕</button>
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:1.3rem;">Edit Analysis Post</h3>
+    <input type="hidden" id="edit-id">
+    <div class="fg"><label>Currency Pair</label>
+      <select id="edit-pair">
+        <option value="EUR/USD">EUR/USD</option><option value="GBP/USD">GBP/USD</option>
+        <option value="GBP/JPY">GBP/JPY</option><option value="XAU/USD">XAU/USD</option>
+        <option value="WTI OIL">WTI OIL</option><option value="USD/JPY">USD/JPY</option>
+        <option value="AUD/USD">AUD/USD</option><option value="USD/CAD">USD/CAD</option>
+      </select>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+      <div class="fg"><label>Bias</label>
+        <select id="edit-bias"><option value="buy">▲ Bullish (BUY)</option><option value="sell">▼ Bearish (SELL)</option><option value="neutral">◆ Neutral</option></select>
+      </div>
+      <div class="fg"><label>Category</label>
+        <select id="edit-cat"><option value="forex">Forex</option><option value="gold">Gold</option><option value="oil">Oil</option></select>
+      </div>
+    </div>
+    <div class="fg"><label>Title</label><input type="text" id="edit-title"></div>
+    <div class="fg"><label>Analysis Content</label><textarea id="edit-body" rows="7"></textarea></div>
+    <div style="display:flex;gap:.9rem;">
+      <button class="btn bgold" onclick="saveEdit()">💾 Save Changes</button>
+      <button class="btn boutline" onclick="closeEdit()">Cancel</button>
+    </div>
+    <div id="edit-msg" style="margin-top:.8rem;font-size:.85rem;display:none;"></div>
+  </div>
+</div>
+
 <!-- TOAST -->
 <div id="toast"></div>
 
+<!-- SCRIPTS -->
 <script src="https://s3.tradingview.com/tv.js"></script>
 <script>
-// ── DATA ──
-var posts=[
-  {id:1,pair:'EUR/USD',cat:'forex',bias:'buy',title:'EUR/USD – Bullish Breakout Above 1.0880',body:'Price has broken above a key resistance zone at 1.0870 with strong bullish momentum on H4.\n\nKey Levels:\n• Support: 1.0840 / 1.0810\n• Resistance: 1.0950 / 1.1000\n\nStrategy: Buy on pullbacks to 1.0855. Target 1.0950. Stop loss below 1.0820.\n\nPattern: Bullish flag breakout confirmed. RSI above 55 and trending up.',date:'Today, 08:15 AM'},
-  {id:2,pair:'XAU/USD',cat:'gold',bias:'buy',title:'Gold Holding Support – Targeting $2,400',body:'Gold remains well-supported above $2,360 despite recent USD strength. Bullish flag forming on H4.\n\nKey Levels:\n• Support: $2,340 / $2,310\n• Resistance: $2,400 / $2,430\n\nStrategy: Buy near $2,355 area. Target $2,400. Stop below $2,330.\n\nFundamentals: Safe-haven demand still strong. Fed rate cut expectations supporting gold.',date:'Today, 08:00 AM'},
-  {id:3,pair:'GBP/USD',cat:'forex',bias:'neutral',title:'GBP/USD Consolidating Before CPI Data',body:'Cable is stuck in a narrow 40-pip range ahead of UK CPI release. Recommend caution.\n\nKey Levels:\n• Support: 1.2700\n• Resistance: 1.2800\n\nStrategy: Wait for CPI news. Break above 1.2800 → Buy. Break below 1.2700 → Sell.\n\nNo trades before the news release. Risk management is priority.',date:'Today, 07:45 AM'},
-  {id:4,pair:'WTI OIL',cat:'oil',bias:'sell',title:'Oil Facing Resistance at $80 – Bearish Setup',body:'WTI Crude facing heavy selling pressure at $80 psychological level. Double-top on Daily chart.\n\nKey Levels:\n• Resistance: $80.00 / $81.50\n• Support: $76.50 / $74.00\n\nStrategy: Sell rallies toward $79.50–$80.00. Target $76.50. Stop above $81.80.\n\nVolume declining on rallies — institutional distribution likely.',date:'Yesterday, 08:30 AM'},
-  {id:5,pair:'GBP/JPY',cat:'forex',bias:'sell',title:'GBP/JPY Retracing from 197.00 Highs',body:'After a strong rally, GBP/JPY is showing clear exhaustion near 197.00. Bearish RSI divergence on H4.\n\nKey Levels:\n• Resistance: 197.00 / 198.50\n• Support: 194.50 / 192.00\n\nStrategy: Sell on bounces near 196.50–197.00. Target 194.50. Stop above 197.60.\n\nRisk/reward ratio: 1:2.5',date:'Yesterday, 08:10 AM'},
-  {id:6,pair:'USD/JPY',cat:'forex',bias:'buy',title:'USD/JPY – BoJ Watch, Range Play Above 153',body:'Yen remains weak amid dovish BoJ rhetoric. USD/JPY holding bullish structure above 153.00.\n\nKey Levels:\n• Support: 153.00 / 151.80\n• Resistance: 155.50 / 157.00\n\nStrategy: Buy dips toward 153.20. Target 155.50. Stop below 152.50.\n\nFundamentals: BoJ unchanged, Fed hawkish — bullish USD/JPY divergence.',date:'Yesterday, 07:55 AM'}
-];
-var nid=7, cf='all';
+// ══════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════
+var SUPA_URL = 'https://bfbnarzvocrvqwxqwumy.supabase.co';
+var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmYm5hcnp2b2NydnF3eHF3dW15Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyNzg1NDIsImV4cCI6MjA5MDg1NDU0Mn0.IPUwg0-IhVhudinVYC3iAy_OP1oL545uLJSkIGbdfeU';
+var EJS_KEY  = 'WrIsrN1NaCEvYoQfF';
+var EJS_SVC  = 'service_oohzixm';
+var EJS_TPL  = 'template_w8dnb7o';
 
-var submap={'EUR/USD':'Euro / US Dollar','GBP/USD':'British Pound / Dollar','GBP/JPY':'British Pound / Yen','XAU/USD':'Gold / US Dollar','WTI OIL':'West Texas Intermediate','USD/JPY':'Dollar / Japanese Yen'};
+// Init Supabase
+var sb = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+// Init EmailJS
+emailjs.init(EJS_KEY);
+
+// ══════════════════════════════════════════
+// PAIR SUBLABELS
+// ══════════════════════════════════════════
+var submap = {
+  'EUR/USD':'Euro / US Dollar','GBP/USD':'British Pound / Dollar',
+  'GBP/JPY':'British Pound / Yen','XAU/USD':'Gold / US Dollar',
+  'WTI OIL':'West Texas Intermediate','USD/JPY':'Dollar / Japanese Yen',
+  'AUD/USD':'Australian Dollar','USD/CAD':'Dollar / Canadian Dollar'
+};
 function sub(p){return submap[p]||p}
 
-// ── PAGES ──
+// ══════════════════════════════════════════
+// PAGE ROUTING
+// ══════════════════════════════════════════
 function openPg(n){
   document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on')});
   document.getElementById('pg-'+n).classList.add('on');
   window.scrollTo(0,0);
-  if(n==='admin') renderPList();
-  if(n==='home') renderCards();
 }
-function goHome(){openPg('home')}
+function goHome(){
+  openPg('home');
+  loadAnalysis();
+}
 function goTo(id){
   openPg('home');
-  setTimeout(function(){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'})},100);
+  setTimeout(function(){
+    var el=document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:'smooth'});
+  },100);
 }
 
-// ── NAV ──
+// ══════════════════════════════════════════
+// NAV
+// ══════════════════════════════════════════
 function toggleMob(){document.getElementById('mobnav').classList.toggle('on')}
 function closeMob(){document.getElementById('mobnav').classList.remove('on')}
 
-// ── LOGIN ──
-function doLogin(){
-  var u=document.getElementById('luser').value.trim();
-  var p=document.getElementById('lpass').value.trim();
-  if(u==='admin'&&p==='sarakhan2024'){
-    document.getElementById('lerr').style.display='none';
-    openPg('admin');
-  } else {
-    document.getElementById('lerr').style.display='block';
+// ══════════════════════════════════════════
+// AUTH — LOGIN / LOGOUT
+// ══════════════════════════════════════════
+async function doLogin(){
+  var u = document.getElementById('luser').value.trim();
+  var p = document.getElementById('lpass').value.trim();
+  var lerr = document.getElementById('lerr');
+  var lbtn = document.getElementById('lbtn');
+  if(!u||!p){lerr.textContent='Please enter email and password.';lerr.style.display='block';return;}
+  lbtn.innerHTML='<span class="spinner"></span>Logging in...';
+  lbtn.disabled=true;
+  lerr.style.display='none';
+  var res = await sb.auth.signInWithPassword({email:u,password:p});
+  if(res.error){
+    lerr.textContent='❌ '+res.error.message;
+    lerr.style.display='block';
+    lbtn.innerHTML='Login to Admin Panel';
+    lbtn.disabled=false;
+    return;
   }
+  lbtn.innerHTML='Login to Admin Panel';
+  lbtn.disabled=false;
+  openPg('admin');
+  loadAdminData();
 }
-function doLogout(){
-  document.getElementById('luser').value='';
-  document.getElementById('lpass').value='';
+
+async function doLogout(){
+  await sb.auth.signOut();
   openPg('home');
 }
 
-// ── ADMIN TABS ──
+// Check if already logged in
+async function checkAuth(){
+  var s = await sb.auth.getSession();
+  if(s.data.session){
+    // Already logged in — if on admin page stay there
+    var el = document.getElementById('admin-email');
+    if(el) el.textContent = s.data.session.user.email;
+  }
+}
+
+// ══════════════════════════════════════════
+// ADMIN TABS
+// ══════════════════════════════════════════
 function aTab(n,el){
   document.querySelectorAll('.asec').forEach(function(s){s.classList.remove('on')});
   document.querySelectorAll('.ami').forEach(function(i){i.classList.remove('on')});
   document.getElementById('a-'+n).classList.add('on');
   if(el) el.classList.add('on');
-  if(n==='manage') renderPList();
+  if(n==='manage') loadPostList();
+  if(n==='inbox') loadInbox();
+  if(n==='dash') loadDashStats();
 }
 
-// ── ANALYSIS CARDS ──
-function renderCards(){
-  var grid=document.getElementById('agrid');
+// ══════════════════════════════════════════
+// LOAD ADMIN DATA
+// ══════════════════════════════════════════
+async function loadAdminData(){
+  var s = await sb.auth.getSession();
+  if(s.data.session){
+    var el = document.getElementById('admin-email');
+    if(el) el.textContent = s.data.session.user.email;
+    var aw = document.getElementById('admin-welcome');
+    if(aw) aw.textContent = 'Welcome, Admin 👋';
+  }
+  loadDashStats();
+  loadPostList();
+  loadInbox();
+}
+
+async function loadDashStats(){
+  // posts count
+  var r1 = await sb.from('analysis').select('id',{count:'exact',head:true});
+  var sp = document.getElementById('stat-posts');
+  if(sp) sp.textContent = r1.count || 0;
+
+  // messages
+  var r2 = await sb.from('contacts').select('id,is_read',{count:'exact'});
+  var sm = document.getElementById('stat-msgs');
+  if(sm) sm.textContent = r2.count || 0;
+  var unread = (r2.data||[]).filter(function(x){return !x.is_read}).length;
+  var su = document.getElementById('stat-unread');
+  if(su) su.textContent = unread;
+
+  // badge
+  var badge = document.getElementById('unread-badge');
+  if(badge){
+    if(unread>0){badge.textContent=unread;badge.style.display='inline';}
+    else badge.style.display='none';
+  }
+
+  // recent activity
+  var r3 = await sb.from('analysis').select('pair,created_at').order('created_at',{ascending:false}).limit(5);
+  var log = document.getElementById('actlog');
+  if(log && r3.data && r3.data.length){
+    log.innerHTML = r3.data.map(function(p){
+      var d = new Date(p.created_at);
+      var ds = d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+', '+d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+      return '<div style="font-size:.85rem;color:var(--wd);padding:.45rem 0;border-bottom:1px solid var(--bdr);">✅ '+p.pair+' analysis posted — '+ds+'</div>';
+    }).join('');
+  } else if(log){
+    log.innerHTML='<div style="font-size:.85rem;color:var(--wd);">No activity yet.</div>';
+  }
+}
+
+// ══════════════════════════════════════════
+// LOAD ANALYSIS (PUBLIC)
+// ══════════════════════════════════════════
+var curFilter = 'all';
+
+async function loadAnalysis(){
+  var grid = document.getElementById('agrid');
   if(!grid) return;
-  var list=cf==='all'?posts:posts.filter(function(p){return p.cat===cf});
-  if(!list.length){grid.innerHTML='<p style="color:var(--wd);padding:1rem;grid-column:1/-1;">No posts found for this filter.</p>';return;}
-  grid.innerHTML=list.map(function(p){
-    var bc='b'+p.bias;
-    var bl=p.bias==='buy'?'▲ BUY':p.bias==='sell'?'▼ SELL':'◆ NEUTRAL';
-    var exc=p.body.replace(/\n/g,' ');
-    if(exc.length>140) exc=exc.substring(0,140)+'...';
+  grid.innerHTML = '<div class="aloader"><span class="spinner"></span>Loading analysis...</div>';
+  var q = sb.from('analysis').select('*').order('created_at',{ascending:false});
+  if(curFilter !== 'all') q = q.eq('category', curFilter);
+  var res = await q;
+  if(res.error){
+    grid.innerHTML='<div class="aloader" style="color:var(--red);">Failed to load. Please refresh.</div>';
+    return;
+  }
+  if(!res.data || !res.data.length){
+    grid.innerHTML='<div class="aloader">No analysis posts yet. Check back soon!</div>';
+    return;
+  }
+  grid.innerHTML = res.data.map(function(p){
+    var bc = p.bias==='buy'?'bbuy':p.bias==='sell'?'bsell':'bneut';
+    var bl = p.bias==='buy'?'▲ BUY':p.bias==='sell'?'▼ SELL':'◆ NEUTRAL';
+    var d = new Date(p.created_at);
+    var ds = d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+', '+d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+    var exc = p.body.replace(/\n/g,' ');
+    if(exc.length>150) exc=exc.substring(0,150)+'...';
     return '<div class="acard">'
       +'<div class="atop">'
-        +'<div class="atop-g"></div>'
-        +'<div class="atop-l"></div>'
-        +'<div class="adot"></div>'
+        +'<div class="atop-g"></div><div class="atop-l"></div><div class="adot"></div>'
         +'<div class="apair">'+p.pair+'</div>'
         +'<div class="asub">'+sub(p.pair)+'</div>'
       +'</div>'
       +'<div class="abody">'
-        +'<div class="ameta">'
-          +'<span class="btag '+bc+'">'+bl+'</span>'
-          +'<span style="font-size:.72rem;color:var(--wd);">🕐 '+p.date+'</span>'
-        +'</div>'
+        +'<div class="ameta"><span class="btag '+bc+'">'+bl+'</span>'
+        +'<span style="font-size:.72rem;color:var(--wd);">🕐 '+ds+'</span></div>'
         +'<div class="atitle">'+p.title+'</div>'
         +'<div class="aexc">'+exc+'</div>'
-        +'<button class="btn boutline" style="margin-top:1rem;padding:.4rem 1rem;font-size:.8rem;" onclick="openA('+p.id+')">Read Full Analysis →</button>'
+        +'<button class="btn boutline" style="margin-top:1rem;padding:.4rem 1rem;font-size:.8rem;" onclick="openA(\''+p.id+'\')">Read Full Analysis →</button>'
       +'</div>'
     +'</div>';
   }).join('');
 }
 
 function filterA(cat,btn){
-  cf=cat;
+  curFilter=cat;
   document.querySelectorAll('.ftab').forEach(function(b){b.classList.remove('on')});
   btn.classList.add('on');
-  renderCards();
+  loadAnalysis();
 }
 
-// ── OPEN ANALYSIS MODAL ──
-function openA(id){
-  var p=null;
-  for(var i=0;i<posts.length;i++){if(posts[i].id===id){p=posts[i];break;}}
-  if(!p){toast('Post not found.');return;}
-  var bc=p.bias==='buy'?'var(--grn)':p.bias==='sell'?'var(--red)':'var(--g)';
-  var bl=p.bias==='buy'?'▲ BULLISH – BUY':p.bias==='sell'?'▼ BEARISH – SELL':'◆ NEUTRAL – WAIT';
-  var bd=p.bias==='buy'?'Looking for buying opportunities on pullbacks':p.bias==='sell'?'Looking for selling opportunities on rallies':'Wait for a clearer setup before entering';
-  var bhtml=p.body.replace(/\n/g,'<br>');
+// ══════════════════════════════════════════
+// OPEN ANALYSIS MODAL
+// ══════════════════════════════════════════
+async function openA(id){
+  document.getElementById('mbody').innerHTML='<div style="text-align:center;padding:2rem;"><span class="spinner"></span> Loading...</div>';
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+  var res = await sb.from('analysis').select('*').eq('id',id).single();
+  if(res.error||!res.data){
+    document.getElementById('mbody').innerHTML='<p style="color:var(--red);">Failed to load post.</p>';
+    return;
+  }
+  var p = res.data;
+  var bc = p.bias==='buy'?'var(--grn)':p.bias==='sell'?'var(--red)':'var(--g)';
+  var bl = p.bias==='buy'?'▲ BULLISH – BUY':p.bias==='sell'?'▼ BEARISH – SELL':'◆ NEUTRAL – WAIT';
+  var bd = p.bias==='buy'?'Looking for buying opportunities on pullbacks':p.bias==='sell'?'Looking for selling opportunities on rallies':'Wait for a clearer setup before entering';
+  var d = new Date(p.created_at);
+  var ds = d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})+' · '+d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+  var bhtml = p.body.replace(/\n/g,'<br>');
   document.getElementById('mbody').innerHTML=
     '<div style="border-bottom:1px solid var(--bdr);padding-bottom:1.1rem;margin-bottom:1.3rem;">'
       +'<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;">'
@@ -755,7 +926,7 @@ function openA(id){
         +'<div style="font-size:.72rem;color:var(--wd);margin-top:.2rem;">'+sub(p.pair)+'</div></div>'
         +'<div style="display:flex;flex-direction:column;align-items:flex-end;gap:.35rem;">'
           +'<span style="padding:.25rem .85rem;border-radius:3px;font-size:.75rem;font-weight:700;letter-spacing:.05em;border:1px solid '+bc+'40;color:'+bc+';">'+bl+'</span>'
-          +'<span style="font-size:.7rem;color:var(--wd);">🕐 '+p.date+'</span>'
+          +'<span style="font-size:.7rem;color:var(--wd);">🕐 '+ds+'</span>'
         +'</div>'
       +'</div>'
     +'</div>'
@@ -770,126 +941,399 @@ function openA(id){
       +'<div style="font-size:.86rem;color:var(--wd);">Precise entry, stop-loss, and take-profit levels are shared exclusively in our premium WhatsApp signal group. Join below to receive all trade details instantly.</div>'
     +'</div>'
     +'<a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank" class="btn bgreen" style="width:100%;justify-content:center;padding:.85rem;">💬 Join Premium Signal Group – Get Entry / SL / TP</a>';
-  document.getElementById('modal').classList.add('open');
-  document.body.style.overflow='hidden';
 }
+
 function closeModal(){
   document.getElementById('modal').classList.remove('open');
   document.body.style.overflow='';
 }
 
-// ── PUBLISH ──
-function doPublish(){
-  var pair=document.getElementById('up-pair').value;
-  var bias=document.getElementById('up-bias').value;
-  var cat=document.getElementById('up-cat').value;
-  var title=document.getElementById('up-title').value.trim();
-  var body=document.getElementById('up-body').value.trim();
-  if(!title){toast('⚠️ Please enter an analysis title.');return;}
-  if(!body){toast('⚠️ Please enter the analysis content.');return;}
-  var now=new Date();
-  var t=now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
-  posts.unshift({id:nid++,pair:pair,cat:cat,bias:bias,title:title,body:body,date:'Today, '+t});
-  var sn=document.getElementById('stat-n');
-  if(sn) sn.textContent=posts.length;
-  var log=document.getElementById('actlog');
-  if(log){var d=document.createElement('div');d.style.cssText='font-size:.85rem;color:var(--wd);padding:.45rem 0;border-bottom:1px solid var(--bdr);';d.textContent='✅ '+pair+' analysis posted — Just now';log.insertBefore(d,log.firstChild);}
-  var ok=document.getElementById('upok');
+// ══════════════════════════════════════════
+// PUBLISH ANALYSIS (ADMIN)
+// ══════════════════════════════════════════
+async function doPublish(){
+  var pair  = document.getElementById('up-pair').value;
+  var bias  = document.getElementById('up-bias').value;
+  var cat   = document.getElementById('up-cat').value;
+  var title = document.getElementById('up-title').value.trim();
+  var body  = document.getElementById('up-body').value.trim();
+  var btn   = document.getElementById('pub-btn');
+  var ok    = document.getElementById('upok');
+  var err   = document.getElementById('uperr');
+  ok.style.display='none'; err.style.display='none';
+  if(!title){toast('⚠️ Please enter a title.');return;}
+  if(!body){toast('⚠️ Please enter analysis content.');return;}
+  btn.innerHTML='<span class="spinner"></span>Publishing...';
+  btn.disabled=true;
+  var res = await sb.from('analysis').insert([{pair:pair,category:cat,bias:bias,title:title,body:body}]);
+  btn.innerHTML='📤 Publish to Website'; btn.disabled=false;
+  if(res.error){
+    err.textContent='❌ Failed: '+res.error.message;
+    err.style.display='block';
+    return;
+  }
   ok.style.display='block';
-  toast('✅ Published! Now live on website.');
+  toast('✅ Analysis published live!');
   clearForm();
+  loadDashStats();
   setTimeout(function(){
     ok.style.display='none';
-    cf='all';
     openPg('home');
     setTimeout(function(){
-      document.querySelectorAll('.ftab').forEach(function(b){b.classList.remove('on')});
-      var ft=document.querySelector('.ftab');
-      if(ft) ft.classList.add('on');
-      renderCards();
       var el=document.getElementById('analysis');
       if(el) el.scrollIntoView({behavior:'smooth'});
+      filterA('all',document.querySelector('.ftab'));
+      loadAnalysis();
     },150);
-  },1800);
+  },2000);
 }
+
 function clearForm(){
   document.getElementById('up-title').value='';
   document.getElementById('up-body').value='';
 }
 
-// ── MANAGE POSTS ──
-function renderPList(){
-  var list=document.getElementById('plist');
+// ══════════════════════════════════════════
+// MANAGE POSTS LIST (ADMIN)
+// ══════════════════════════════════════════
+async function loadPostList(){
+  var list = document.getElementById('plist');
   if(!list) return;
-  var lbl=document.getElementById('pcntlbl');
-  if(lbl) lbl.textContent=posts.length+' posts';
-  if(!posts.length){list.innerHTML='<p style="color:var(--wd);font-size:.9rem;padding:1rem 0;">No posts yet.</p>';return;}
-  list.innerHTML=posts.map(function(p){
+  list.innerHTML='<div style="color:var(--wd);font-size:.9rem;"><span class="spinner"></span> Loading posts...</div>';
+  var res = await sb.from('analysis').select('*').order('created_at',{ascending:false});
+  var lbl = document.getElementById('pcntlbl');
+  if(lbl) lbl.textContent=(res.data?res.data.length:0)+' posts total';
+  if(res.error||!res.data||!res.data.length){
+    list.innerHTML='<div style="color:var(--wd);font-size:.9rem;padding:1rem 0;">No posts yet.</div>';
+    return;
+  }
+  list.innerHTML = res.data.map(function(p){
     var bc='btag b'+p.bias;
     var bl=p.bias==='buy'?'BUY':p.bias==='sell'?'SELL':'NEUTRAL';
+    var d=new Date(p.created_at);
+    var ds=d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+', '+d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
     return '<div class="pitem">'
       +'<div style="flex:1;min-width:0;">'
         +'<div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;">'
           +'<span class="ppair">'+p.pair+'</span>'
           +'<span class="'+bc+'" style="font-size:.65rem;padding:.12rem .45rem;">'+bl+'</span>'
         +'</div>'
-        +'<div class="pttl" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:300px;">'+p.title+'</div>'
-        +'<div class="pdt">🕐 '+p.date+'</div>'
+        +'<div class="pttl" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:320px;">'+p.title+'</div>'
+        +'<div class="pdt">🕐 '+ds+'</div>'
       +'</div>'
       +'<div class="pbtns">'
-        +'<button class="ibtn" onclick="openA('+p.id+')" title="Preview">👁</button>'
-        +'<button class="ibtn del" onclick="delPost('+p.id+')" title="Delete">🗑</button>'
+        +'<button class="ibtn" onclick="openEditModal(\''+p.id+'\')" title="Edit">✏️</button>'
+        +'<button class="ibtn" onclick="openA(\''+p.id+'\')" title="Preview">👁</button>'
+        +'<button class="ibtn del" onclick="delPost(\''+p.id+'\')" title="Delete">🗑</button>'
       +'</div>'
     +'</div>';
   }).join('');
 }
-function delPost(id){
-  if(!confirm('Delete this analysis post?')) return;
-  posts=posts.filter(function(p){return p.id!==id});
-  var sn=document.getElementById('stat-n');
-  if(sn) sn.textContent=posts.length;
-  renderPList();
-  renderCards();
+
+async function delPost(id){
+  if(!confirm('Delete this analysis post? This cannot be undone.')) return;
+  var res = await sb.from('analysis').delete().eq('id',id);
+  if(res.error){toast('❌ Failed to delete.');return;}
   toast('🗑 Post deleted.');
+  loadPostList();
+  loadDashStats();
 }
 
-// ── CONTACT ──
-function submitCF(){
-  var n=document.getElementById('cf-name').value.trim();
-  var e=document.getElementById('cf-email').value.trim();
-  var m=document.getElementById('cf-msg').value.trim();
-  if(!n||!e||!m){toast('⚠️ Please fill all required fields.');return;}
-  document.getElementById('cfok').style.display='block';
+// ══════════════════════════════════════════
+// EDIT POST (ADMIN)
+// ══════════════════════════════════════════
+async function openEditModal(id){
+  var res = await sb.from('analysis').select('*').eq('id',id).single();
+  if(res.error||!res.data){toast('❌ Failed to load post.');return;}
+  var p = res.data;
+  document.getElementById('edit-id').value=p.id;
+  document.getElementById('edit-pair').value=p.pair;
+  document.getElementById('edit-bias').value=p.bias;
+  document.getElementById('edit-cat').value=p.category;
+  document.getElementById('edit-title').value=p.title;
+  document.getElementById('edit-body').value=p.body;
+  document.getElementById('edit-msg').style.display='none';
+  document.getElementById('emodal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeEdit(){
+  document.getElementById('emodal').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+async function saveEdit(){
+  var id    = document.getElementById('edit-id').value;
+  var pair  = document.getElementById('edit-pair').value;
+  var bias  = document.getElementById('edit-bias').value;
+  var cat   = document.getElementById('edit-cat').value;
+  var title = document.getElementById('edit-title').value.trim();
+  var body  = document.getElementById('edit-body').value.trim();
+  var msg   = document.getElementById('edit-msg');
+  if(!title||!body){toast('⚠️ Title and content required.');return;}
+  var res = await sb.from('analysis').update({pair:pair,category:cat,bias:bias,title:title,body:body}).eq('id',id);
+  if(res.error){
+    msg.textContent='❌ Failed: '+res.error.message;
+    msg.style.color='var(--red)';
+    msg.style.display='block';
+    return;
+  }
+  msg.textContent='✅ Post updated successfully!';
+  msg.style.color='var(--grn)';
+  msg.style.display='block';
+  toast('✅ Post updated!');
+  loadPostList();
+  loadAnalysis();
+  setTimeout(closeEdit,1500);
+}
+
+// ══════════════════════════════════════════
+// CLIENT MESSAGES INBOX (ADMIN)
+// ══════════════════════════════════════════
+async function loadInbox(){
+  var list = document.getElementById('inbox-list');
+  if(!list) return;
+  list.innerHTML='<div style="color:var(--wd);font-size:.9rem;"><span class="spinner"></span> Loading messages...</div>';
+  var res = await sb.from('contacts').select('*').order('created_at',{ascending:false});
+  var cnt = document.getElementById('inbox-count');
+  if(cnt) cnt.textContent=(res.data?res.data.length:0)+' messages total';
+  if(res.error||!res.data||!res.data.length){
+    list.innerHTML='<div style="color:var(--wd);font-size:.9rem;padding:1rem 0;">No messages yet.</div>';
+    return;
+  }
+  list.innerHTML = res.data.map(function(m){
+    var d=new Date(m.created_at);
+    var ds=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'})+' · '+d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+    return '<div class="msg-item'+(m.is_read?'':' unread')+'" id="msg-'+m.id+'">'
+      +'<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;">'
+        +'<div>'
+          +'<div class="msg-name">'+m.name+(m.is_read?'':'<span class="unread-dot"></span>')+'</div>'
+          +'<div class="msg-email">'+m.email+'</div>'
+          +(m.service?'<span class="msg-svc">'+m.service+'</span>':'')
+          +(m.phone?'<div style="font-size:.75rem;color:var(--wd);margin-top:.2rem;">📞 '+m.phone+'</div>':'')
+        +'</div>'
+        +'<div class="msg-time">'+ds+'</div>'
+      +'</div>'
+      +'<div class="msg-text">'+m.message+'</div>'
+      +'<div class="msg-btns">'
+        +(m.is_read?
+          '<button class="btn boutline" style="padding:.3rem .8rem;font-size:.75rem;" onclick="markRead(\''+m.id+'\',false)">Mark Unread</button>'
+          :'<button class="btn bgold" style="padding:.3rem .8rem;font-size:.75rem;" onclick="markRead(\''+m.id+'\',true)">Mark Read ✓</button>')
+        +'<a href="mailto:'+m.email+'?subject=Re: Your enquiry – Sarakhan FX" class="btn bgreen" style="padding:.3rem .8rem;font-size:.75rem;">✉️ Reply</a>'
+        +'<button class="btn bred" style="padding:.3rem .8rem;font-size:.75rem;" onclick="delMsg(\''+m.id+'\')">🗑 Delete</button>'
+      +'</div>'
+    +'</div>';
+  }).join('');
+}
+
+async function markRead(id,val){
+  await sb.from('contacts').update({is_read:val}).eq('id',id);
+  loadInbox();
+  loadDashStats();
+}
+
+async function markAllRead(){
+  await sb.from('contacts').update({is_read:true}).eq('is_read',false);
+  loadInbox();
+  loadDashStats();
+  toast('✅ All messages marked as read.');
+}
+
+async function delMsg(id){
+  if(!confirm('Delete this message permanently?')) return;
+  await sb.from('contacts').delete().eq('id',id);
+  toast('🗑 Message deleted.');
+  loadInbox();
+  loadDashStats();
+}
+
+// ══════════════════════════════════════════
+// CONTACT FORM (PUBLIC)
+// ══════════════════════════════════════════
+async function submitCF(){
+  var name  = document.getElementById('cf-name').value.trim();
+  var email = document.getElementById('cf-email').value.trim();
+  var phone = document.getElementById('cf-phone').value.trim();
+  var svc   = document.getElementById('cf-svc').value;
+  var msg   = document.getElementById('cf-msg').value.trim();
+  var btn   = document.getElementById('cf-btn');
+  var ok    = document.getElementById('cfok');
+  var er    = document.getElementById('cferr');
+  ok.style.display='none'; er.style.display='none';
+  if(!name||!email||!msg){toast('⚠️ Name, email and message are required.');return;}
+  btn.innerHTML='<span class="spinner"></span>Sending...';
+  btn.disabled=true;
+
+  // Save to Supabase
+  var r1 = await sb.from('contacts').insert([{name:name,email:email,phone:phone||null,service:svc||null,message:msg}]);
+
+  // Send email via EmailJS
+  var r2 = await emailjs.send(EJS_SVC, EJS_TPL, {
+    from_name: name,
+    from_email: email,
+    phone: phone||'Not provided',
+    service: svc||'Not specified',
+    message: msg,
+    to_email: 'ashich943@gmail.com'
+  }).catch(function(e){return {status:0,text:e}});
+
+  btn.innerHTML='Send Message →'; btn.disabled=false;
+
+  if(r1.error){
+    er.style.display='block';
+    return;
+  }
+  ok.style.display='block';
   document.getElementById('cf-name').value='';
   document.getElementById('cf-email').value='';
+  document.getElementById('cf-phone').value='';
   document.getElementById('cf-msg').value='';
+  document.getElementById('cf-svc').selectedIndex=0;
 }
 
-// ── TOAST ──
-function toast(msg){
-  var t=document.getElementById('toast');
-  t.textContent=msg;
-  t.classList.add('show');
-  setTimeout(function(){t.classList.remove('show')},3000);
+// ══════════════════════════════════════════
+// CHANGE PASSWORD
+// ══════════════════════════════════════════
+async function changePass(){
+  var np = document.getElementById('new-pass').value;
+  var cp = document.getElementById('conf-pass').value;
+  var m  = document.getElementById('pass-msg');
+  if(!np||np.length<6){m.textContent='❌ Password must be at least 6 characters.';m.style.color='var(--red)';m.style.display='block';return;}
+  if(np!==cp){m.textContent='❌ Passwords do not match.';m.style.color='var(--red)';m.style.display='block';return;}
+  var res = await sb.auth.updateUser({password:np});
+  if(res.error){m.textContent='❌ '+res.error.message;m.style.color='var(--red)';m.style.display='block';return;}
+  m.textContent='✅ Password updated successfully!';
+  m.style.color='var(--grn)';
+  m.style.display='block';
+  document.getElementById('new-pass').value='';
+  document.getElementById('conf-pass').value='';
 }
 
-// ── TRADINGVIEW ──
+// ══════════════════════════════════════════
+// REAL-TIME SUPABASE SUBSCRIPTION
+// ══════════════════════════════════════════
+function setupRealtime(){
+  sb.channel('analysis-changes')
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'analysis'},function(){loadAnalysis()})
+    .on('postgres_changes',{event:'UPDATE',schema:'public',table:'analysis'},function(){loadAnalysis()})
+    .on('postgres_changes',{event:'DELETE',schema:'public',table:'analysis'},function(){loadAnalysis()})
+    .subscribe();
+}
+
+// ══════════════════════════════════════════
+// LIVE TICKER — TwelveData free API
+// ══════════════════════════════════════════
+var TWELVE_KEY = 'demo'; // Works for demo prices; replace with free key from twelvedata.com
+var tickerSymbols = ['EUR/USD','GBP/USD','GBP/JPY','XAU/USD','WTI/USD','USD/JPY'];
+
+async function loadLivePrices(){
+  try{
+    var syms = 'EUR/USD,GBP/USD,GBP/JPY,XAU/USD,WTI/USD,USD/JPY';
+    var url = 'https://api.twelvedata.com/price?symbol='+encodeURIComponent(syms)+'&apikey='+TWELVE_KEY;
+    var r = await fetch(url);
+    var data = await r.json();
+    buildTicker(data);
+  } catch(e){
+    // Fallback to static prices if API fails
+    buildTickerStatic();
+  }
+}
+
+function buildTicker(data){
+  var pairs = [
+    {sym:'EUR/USD',key:'EUR/USD'},{sym:'GBP/USD',key:'GBP/USD'},
+    {sym:'GBP/JPY',key:'GBP/JPY'},{sym:'XAU/USD',key:'XAU/USD'},
+    {sym:'WTI OIL',key:'WTI/USD'},{sym:'USD/JPY',key:'USD/JPY'}
+  ];
+  var items = '';
+  pairs.forEach(function(p){
+    var d = data[p.key];
+    if(d && d.price){
+      var price = parseFloat(d.price).toFixed(p.sym==='XAU/USD'?2:p.sym==='GBP/JPY'||p.sym==='USD/JPY'?2:4);
+      var cls = Math.random()>0.5?'tup':'tdn'; // random up/dn since free API doesn't give change
+      var arr = cls==='tup'?'▲':'▼';
+      items += '<span class="ti">'+p.sym+' <span class="'+cls+'">'+arr+' '+price+'</span></span>';
+    }
+  });
+  if(!items) {buildTickerStatic();return;}
+  // Duplicate for seamless scroll
+  var full = items+items;
+  var tk = document.getElementById('ticker');
+  if(tk) tk.innerHTML=full;
+  // Animate
+  animateTicker();
+}
+
+function buildTickerStatic(){
+  var items = [
+    {s:'EUR/USD',p:'1.0892',u:true},{s:'GBP/USD',p:'1.2754',u:true},
+    {s:'GBP/JPY',p:'196.42',u:false},{s:'XAU/USD',p:'2,384.50',u:true},
+    {s:'WTI OIL',p:'78.34',u:false},{s:'USD/JPY',p:'154.12',u:true},
+    {s:'AUD/USD',p:'0.6512',u:false},{s:'USD/CHF',p:'0.9034',u:true}
+  ];
+  var html = items.map(function(i){
+    return '<span class="ti">'+i.s+' <span class="'+(i.u?'tup':'tdn')+'">'+(i.u?'▲':'▼')+' '+i.p+'</span></span>';
+  }).join('');
+  html = html+html;
+  var tk = document.getElementById('ticker');
+  if(tk) tk.innerHTML=html;
+  animateTicker();
+}
+
+function animateTicker(){
+  var tk = document.getElementById('ticker');
+  if(!tk) return;
+  tk.style.animation='none';
+  tk.style.display='flex';
+  tk.style.gap='3rem';
+  // CSS animation
+  tk.style.animation='tk 35s linear infinite';
+}
+
+// Add ticker keyframe via JS
+var tkStyle = document.createElement('style');
+tkStyle.textContent = '@keyframes tk{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}';
+document.head.appendChild(tkStyle);
+
+// ══════════════════════════════════════════
+// TRADINGVIEW CHARTS
+// ══════════════════════════════════════════
 function loadCharts(){
   if(typeof TradingView==='undefined') return;
   var cfg={interval:'60',timezone:'Asia/Dubai',theme:'dark',style:'1',locale:'en',toolbar_bg:'#0c1a2e',enable_publishing:false,save_image:false,height:220,autosize:true};
-  [{id:'tv1',sym:'FX:EURUSD'},{id:'tv2',sym:'FX:GBPUSD'},{id:'tv3',sym:'FX:GBPJPY'},{id:'tv4',sym:'OANDA:XAUUSD'},{id:'tv5',sym:'NYMEX:CL1!'},{id:'tv6',sym:'FX:USDJPY'}].forEach(function(p){
+  [{id:'tv1',sym:'FX:EURUSD'},{id:'tv2',sym:'FX:GBPUSD'},{id:'tv3',sym:'FX:GBPJPY'},
+   {id:'tv4',sym:'OANDA:XAUUSD'},{id:'tv5',sym:'NYMEX:CL1!'},{id:'tv6',sym:'FX:USDJPY'}
+  ].forEach(function(p){
     try{new TradingView.widget(Object.assign({},cfg,{symbol:p.sym,container_id:p.id}));}catch(e){}
   });
 }
 
-// ── INIT ──
+// ══════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════
+function toast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show')},3500);
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
 window.addEventListener('load',function(){
-  renderCards();
+  checkAuth();
+  loadAnalysis();
+  loadLivePrices();
   loadCharts();
+  setupRealtime();
+  // Refresh live prices every 30 seconds
+  setInterval(loadLivePrices, 30000);
 });
+
 document.addEventListener('click',function(e){
   var m=document.getElementById('mobnav');
-  if(m.classList.contains('on')&&!m.contains(e.target)&&!document.querySelector('.ham').contains(e.target)) closeMob();
+  if(m&&m.classList.contains('on')&&!m.contains(e.target)&&!document.querySelector('.ham').contains(e.target)) closeMob();
 });
 </script>
 </body>
