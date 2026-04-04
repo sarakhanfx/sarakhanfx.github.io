@@ -488,13 +488,13 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
       <p style="color:var(--wd);font-size:.88rem;margin-bottom:1.5rem;">Available across multiple channels.</p>
       <div class="citem"><div class="cicn">📍</div><div><div class="cilbl">Location</div><div class="cival">Abu Dhabi, United Arab Emirates</div></div></div>
       <div class="citem"><div class="cicn">📞</div><div><div class="cilbl">Phone (UAE)</div><div class="cival"><a href="tel:+971501234567">+971 50 123 4567</a></div></div></div>
-      <div class="citem"><div class="cicn">✉️</div><div><div class="cilbl">Email</div><div class="cival"><a href="mailto:sarakhanfx1@gmail.com">sarakhanfx1@gmail.com</a></div></div></div>
+      <div class="citem"><div class="cicn">✉️</div><div><div class="cilbl">Email</div><div class="cival"><a href="/cdn-cgi/l/email-protection#7300120112181b121d150b4233141e121a1f5d101c1e"><span class="__cf_email__" data-cfemail="97e4f6e5f6fcfff6f9f1efa6d7f0faf6fefbb9f4f8fa">[email&#160;protected]</span></a></div></div></div>
       <div class="citem"><div class="cicn">💬</div><div><div class="cilbl">WhatsApp Channel</div><div class="cival"><a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank">Join Our Group →</a></div></div></div>
       <div class="citem"><div class="cicn">📘</div><div><div class="cilbl">Facebook</div><div class="cival"><a href="https://www.facebook.com/amankhanfx1" target="_blank">@amankhanfx1</a></div></div></div>
       <div class="srow">
         <a href="https://www.facebook.com/amankhanfx1" target="_blank" class="sbtn">f</a>
         <a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank" class="sbtn">W</a>
-        <a href="mailto:sarakhanfx1@gmail.com" class="sbtn">@</a>
+        <a href="/cdn-cgi/l/email-protection#582b392a39333039363e2069183f35393134763b3735" class="sbtn">@</a>
       </div>
     </div>
     <div class="cfwrap">
@@ -521,7 +521,7 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
       <div class="srow">
         <a href="https://www.facebook.com/amankhanfx1" target="_blank" class="sbtn">f</a>
         <a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank" class="sbtn">W</a>
-        <a href="mailto:sarakhanfx1@gmail.com" class="sbtn">@</a>
+        <a href="/cdn-cgi/l/email-protection#77041605161c1f1619110f4637101a161e1b5914181a" class="sbtn">@</a>
       </div>
     </div>
     <div class="fcol">
@@ -540,7 +540,7 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
     </div>
     <div class="fcol">
       <div class="fch">Contact</div>
-      <a href="mailto:sarakhanfx1@gmail.com">sarakhanfx1@gmail.com</a>
+      <a href="/cdn-cgi/l/email-protection#9eedffecfff5f6fff0f8e6afdef9f3fff7f2b0fdf1f3"><span class="__cf_email__" data-cfemail="fe8d9f8c9f95969f909886cfbe99939f9792d09d9193">[email&#160;protected]</span></a>
       <a href="tel:+971501234567">+971 50 123 4567</a>
       <a>Abu Dhabi, UAE</a>
     </div>
@@ -624,6 +624,10 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
           <div class="ami" onclick="aTab('manage',this)">📋 Manage Posts</div>
           <div class="ami" onclick="aTab('inbox',this)">📨 Client Messages <span id="unread-badge" style="display:none;background:var(--g);color:#060e1c;font-size:.62rem;font-weight:700;padding:.1rem .42rem;border-radius:10px;margin-left:.3rem;"></span></div>
           <div class="ami" onclick="aTab('brokers-admin',this)">🏦 Manage Brokers</div>
+          <div class="ami" onclick="aTab('signals',this)">📈 Daily Signals</div>
+          <div class="ami" onclick="aTab('clients',this)">👥 Clients CRM</div>
+          <div class="ami" onclick="aTab('payments',this)">💳 Payments</div>
+          <div class="ami" onclick="aTab('funds',this)">💼 Fund Mgmt</div>
           <div class="ami" onclick="aTab('cfg',this)">🔧 Settings</div>
         </div>
         <div style="padding:1.3rem;border-top:1px solid var(--bdr);margin-top:1rem;">
@@ -751,6 +755,259 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
           </div>
         </div>
 
+        <!-- DAILY SIGNALS -->
+        <div class="asec" id="a-signals">
+          <div class="ahdr"><h2 class="atl">Daily Signals</h2></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-bottom:1.4rem;">
+            <div class="acard">
+              <div class="acardt">Add New Signal</div>
+              <div class="fg"><label>Currency Pair</label>
+                <select id="sig-pair">
+                  <option>EURUSD</option><option>GBPUSD</option><option>USDCHF</option><option>USDCAD</option>
+                  <option>XAUUSD (Gold)</option><option>GBPAUD</option><option>GBPNZD</option><option>GBPCAD</option>
+                  <option>AUDUSD</option><option>NZDUSD</option><option>EURAUD</option><option>CRUDE OIL</option>
+                  <option>BTCUSD</option><option>ETHUSD</option><option>BINANCE</option>
+                </select>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                <div class="fg"><label>Direction</label><select id="sig-dir"><option value="BUY">BUY</option><option value="SELL">SELL</option></select></div>
+                <div class="fg"><label>Pips (+/-)</label><input type="number" id="sig-pips" placeholder="e.g. 45 or -20"></div>
+                <div class="fg"><label>Risk (pips SL)</label><input type="number" id="sig-risk" placeholder="Stop loss pips"></div>
+                <div class="fg"><label>Reward (pips TP)</label><input type="number" id="sig-reward" placeholder="Take profit pips"></div>
+              </div>
+              <div class="fg"><label>Date</label><input type="date" id="sig-date"></div>
+              <div class="fg"><label>Notes (optional)</label><input type="text" id="sig-notes" placeholder="Brief note"></div>
+              <button class="btn bgold" onclick="addSignal()">Add Signal</button>
+            </div>
+            <div class="acard">
+              <div class="acardt">Win Rate Summary</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7rem;margin-bottom:1rem;">
+                <div style="background:var(--n3);border:1px solid var(--bdr);border-radius:6px;padding:.8rem;text-align:center;">
+                  <div style="font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--grn);" id="wr-rate">0%</div>
+                  <div style="font-size:.7rem;color:var(--wd);">Win Rate</div>
+                </div>
+                <div style="background:var(--n3);border:1px solid var(--bdr);border-radius:6px;padding:.8rem;text-align:center;">
+                  <div style="font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--g);" id="wr-rr">0</div>
+                  <div style="font-size:.7rem;color:var(--wd);">Avg R:R</div>
+                </div>
+                <div style="background:var(--n3);border:1px solid var(--bdr);border-radius:6px;padding:.8rem;text-align:center;">
+                  <div style="font-family:'Playfair Display',serif;font-size:1.4rem;" id="wr-pips">0</div>
+                  <div style="font-size:.7rem;color:var(--wd);">Net Pips</div>
+                </div>
+              </div>
+              <canvas id="sig-chart" style="width:100%;height:160px;"></canvas>
+            </div>
+          </div>
+          <div class="acard">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--bdr);">
+              <span style="font-weight:600;font-size:.9rem;color:var(--g);">Signal History</span>
+              <select id="sig-filter" onchange="renderSignalTable()" style="background:var(--n2);border:1px solid var(--bdr);color:var(--w);padding:.3rem .6rem;border-radius:4px;font-size:.8rem;">
+                <option value="all">All Pairs</option>
+                <option>EURUSD</option><option>GBPUSD</option><option>XAUUSD (Gold)</option><option>BTCUSD</option><option>CRUDE OIL</option>
+              </select>
+            </div>
+            <div style="overflow-x:auto;">
+              <table style="width:100%;border-collapse:collapse;font-size:.83rem;">
+                <thead><tr style="border-bottom:1px solid var(--bdr);">
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Date</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Pair</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Dir</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Pips</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Risk</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Reward</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">R:R</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Notes</th>
+                  <th></th>
+                </tr></thead>
+                <tbody id="sig-table"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- CLIENTS CRM -->
+        <div class="asec" id="a-clients">
+          <div class="ahdr"><h2 class="atl">Clients CRM</h2></div>
+          <div id="cl-alerts-box"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-bottom:1.4rem;">
+            <div class="acard">
+              <div class="acardt">Add New Client</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                <div class="fg"><label>Full Name *</label><input type="text" id="cl-name" placeholder="Client name"></div>
+                <div class="fg"><label>Country</label><input type="text" id="cl-country" placeholder="e.g. UAE"></div>
+                <div class="fg"><label>Email</label><input type="email" id="cl-email" placeholder="email@example.com"></div>
+                <div class="fg"><label>Phone</label><input type="text" id="cl-phone" placeholder="+971..."></div>
+                <div class="fg"><label>Service</label>
+                  <select id="cl-service"><option>Signal Service</option><option>Fund Management</option><option>Live Trading Classes</option></select></div>
+                <div class="fg"><label>Plan</label>
+                  <select id="cl-plan"><option>Monthly</option><option>Yearly</option></select></div>
+                <div class="fg"><label>Start Date</label><input type="date" id="cl-start"></div>
+                <div class="fg"><label>Amount Paid</label><input type="number" id="cl-payment" placeholder="0"></div>
+                <div class="fg"><label>Currency</label>
+                  <select id="cl-currency"><option>USD</option><option>GBP</option><option>PKR</option><option>EUR</option></select></div>
+                <div class="fg"><label>Payment Method</label>
+                  <select id="cl-method"><option>Skrill</option><option>Neteller</option><option>PayPal</option><option>Bank Transfer</option><option>Crypto</option></select></div>
+              </div>
+              <button class="btn bgold" onclick="addClient()" style="margin-top:.4rem;">Add Client</button>
+            </div>
+            <div class="acard">
+              <div class="acardt">⚠️ Expiry Alerts (Next 7 Days)</div>
+              <div id="cl-alerts-detail"><div style="color:var(--wd);font-size:.85rem;">No upcoming expirations</div></div>
+              <div style="margin-top:1.3rem;">
+                <div style="font-weight:600;font-size:.85rem;color:var(--g);margin-bottom:.7rem;">Payment Methods Accepted</div>
+                <div style="display:flex;flex-wrap:wrap;gap:.5rem;">
+                  <span style="padding:4px 12px;border:1px solid var(--bdr);border-radius:3px;font-size:.78rem;background:var(--n3);">Skrill</span>
+                  <span style="padding:4px 12px;border:1px solid var(--bdr);border-radius:3px;font-size:.78rem;background:var(--n3);">Neteller</span>
+                  <span style="padding:4px 12px;border:1px solid var(--bdr);border-radius:3px;font-size:.78rem;background:var(--n3);">PayPal</span>
+                  <span style="padding:4px 12px;border:1px solid var(--bdr);border-radius:3px;font-size:.78rem;background:var(--n3);">Bank Transfer</span>
+                  <span style="padding:4px 12px;border:1px solid var(--bdr);border-radius:3px;font-size:.78rem;background:var(--n3);">Crypto</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="acard">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--bdr);">
+              <span style="font-weight:600;font-size:.9rem;color:var(--g);">All Clients</span>
+              <input type="text" id="cl-search" oninput="renderClientTable()" placeholder="Search..." style="background:var(--n2);border:1px solid var(--bdr);color:var(--w);padding:.3rem .7rem;border-radius:4px;font-size:.8rem;width:160px;outline:none;">
+            </div>
+            <div style="overflow-x:auto;">
+              <table style="width:100%;border-collapse:collapse;font-size:.82rem;">
+                <thead><tr style="border-bottom:1px solid var(--bdr);">
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Name</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Country</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Service</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Plan</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Start</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Expiry</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Status</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Payment</th>
+                  <th></th>
+                </tr></thead>
+                <tbody id="cl-table"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAYMENTS -->
+        <div class="asec" id="a-payments">
+          <div class="ahdr"><h2 class="atl">Payments</h2></div>
+          <div class="astats" style="margin-bottom:1.4rem;">
+            <div class="astat"><div class="astn" style="color:var(--grn);" id="pay-total">$0</div><div class="astl">Total Received (USD)</div></div>
+            <div class="astat"><div class="astn" style="color:var(--red);" id="pay-refund">$0</div><div class="astl">Total Refunded</div></div>
+            <div class="astat"><div class="astn" style="color:var(--g);" id="pay-net">$0</div><div class="astl">Net Revenue</div></div>
+            <div class="astat"><div class="astn" id="pay-count">0</div><div class="astl">Transactions</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-bottom:1.4rem;">
+            <div class="acard">
+              <div class="acardt">Record Payment / Refund</div>
+              <div class="fg"><label>Client Name</label><input type="text" id="pay-client" placeholder="Client name"></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                <div class="fg"><label>Amount</label><input type="number" id="pay-amount" placeholder="0.00"></div>
+                <div class="fg"><label>Currency</label><select id="pay-currency"><option>USD</option><option>GBP</option><option>PKR</option><option>EUR</option></select></div>
+                <div class="fg"><label>Type</label><select id="pay-type"><option value="received">Received</option><option value="refund">Refund</option></select></div>
+                <div class="fg"><label>Method</label><select id="pay-method"><option>Skrill</option><option>Neteller</option><option>PayPal</option><option>Bank Transfer</option><option>Crypto</option></select></div>
+              </div>
+              <div class="fg"><label>Date</label><input type="date" id="pay-date"></div>
+              <button class="btn bgold" onclick="addPayment()">Record Payment</button>
+            </div>
+            <div class="acard">
+              <div class="acardt">Revenue by Method</div>
+              <canvas id="pay-chart" style="width:100%;height:180px;"></canvas>
+            </div>
+          </div>
+          <div class="acard">
+            <div class="acardt">Transaction History</div>
+            <div style="overflow-x:auto;">
+              <table style="width:100%;border-collapse:collapse;font-size:.82rem;">
+                <thead><tr style="border-bottom:1px solid var(--bdr);">
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Date</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Client</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Amount</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Currency</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Type</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Method</th>
+                  <th></th>
+                </tr></thead>
+                <tbody id="pay-table"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- FUND MANAGEMENT -->
+        <div class="asec" id="a-funds">
+          <div class="ahdr"><h2 class="atl">Fund Management</h2></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-bottom:1.4rem;">
+            <div class="acard">
+              <div class="acardt">Add Fund Client</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                <div class="fg"><label>Client Name *</label><input type="text" id="fm-name" placeholder="Name"></div>
+                <div class="fg"><label>Account Size (USD)</label><input type="number" id="fm-size" placeholder="e.g. 5000"></div>
+                <div class="fg"><label>Broker</label><input type="text" id="fm-broker" placeholder="Broker name"></div>
+                <div class="fg"><label>Start Date</label><input type="date" id="fm-start"></div>
+                <div class="fg"><label>Profit Share %</label><input type="number" id="fm-share" placeholder="e.g. 30"></div>
+                <div class="fg"><label>Risk Level</label><select id="fm-risk"><option>Low</option><option>Medium</option><option>High</option></select></div>
+              </div>
+              <button class="btn bgold" onclick="addFundClient()">Add Fund Client</button>
+            </div>
+            <div class="acard">
+              <div class="acardt">Portfolio Overview</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1rem;">
+                <div style="background:var(--n3);border:1px solid var(--bdr);border-radius:6px;padding:.8rem;text-align:center;">
+                  <div style="font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--g);" id="fm-aum">$0</div>
+                  <div style="font-size:.7rem;color:var(--wd);">Total AUM</div>
+                </div>
+                <div style="background:var(--n3);border:1px solid var(--bdr);border-radius:6px;padding:.8rem;text-align:center;">
+                  <div style="font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--w);" id="fm-count">0</div>
+                  <div style="font-size:.7rem;color:var(--wd);">Fund Clients</div>
+                </div>
+              </div>
+              <canvas id="fm-chart" style="width:100%;height:160px;"></canvas>
+            </div>
+          </div>
+          <div class="acard">
+            <div class="acardt">Fund Clients</div>
+            <div style="overflow-x:auto;">
+              <table style="width:100%;border-collapse:collapse;font-size:.82rem;">
+                <thead><tr style="border-bottom:1px solid var(--bdr);">
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Client</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Acc Size</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Broker</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Start</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Risk</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Profit Share</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Last P/L</th>
+                  <th></th>
+                </tr></thead>
+                <tbody id="fm-table"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="acard" id="fm-perf-card" style="display:none;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--bdr);">
+              <span style="font-weight:600;font-size:.9rem;color:var(--g);" id="fm-perf-title">Performance Log</span>
+              <button class="btn boutline" style="font-size:.75rem;padding:.3rem .7rem;" onclick="document.getElementById('fm-perf-card').style.display='none'">Close</button>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:.8rem;">
+              <div class="fg"><label>Date</label><input type="date" id="fmp-date"></div>
+              <div class="fg"><label>P/L (USD)</label><input type="number" id="fmp-pl" placeholder="e.g. 150 or -80"></div>
+            </div>
+            <button class="btn bgold" style="font-size:.8rem;padding:.4rem 1rem;margin-bottom:1rem;" onclick="addPerfEntry()">Add Entry</button>
+            <canvas id="fmp-chart" style="width:100%;height:160px;margin-bottom:1rem;"></canvas>
+            <div style="overflow-x:auto;">
+              <table style="width:100%;border-collapse:collapse;font-size:.82rem;">
+                <thead><tr style="border-bottom:1px solid var(--bdr);">
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Date</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">P/L (USD)</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">% of Acc</th>
+                </tr></thead>
+                <tbody id="fmp-table"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
         <!-- SETTINGS -->
         <div class="asec" id="a-cfg">
           <div class="ahdr"><h2 class="atl">Settings</h2></div>
@@ -808,7 +1065,7 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
 
 <div id="toast"></div>
 
-<script src="https://s3.tradingview.com/tv.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://s3.tradingview.com/tv.js"></script>
 <script>
 // ══════ CONFIG ══════
 var SUPA_URL='https://bfbnarzvocrvqwxqwumy.supabase.co';
@@ -1450,17 +1707,240 @@ window.addEventListener('load',function(){
   loadAnalysis();
   renderEdu('all');
   fetchLivePrices();
-  loadCharts();
+  setInterval(simulatePriceUpdate,2000);
+  setInterval(fetchLivePrices,300000);
+  setTimeout(loadCharts,1500);
   setupRealtime();
-  // Update prices every 3 seconds (simulation)
-  setInterval(simulatePriceUpdate,3000);
-  // Fetch real prices every 60 seconds
-  setInterval(fetchLivePrices,60000);
+  var td=new Date().toISOString().split('T')[0];
+  ['sig-date','cl-start','pay-date','fm-start','fmp-date'].forEach(function(id){var e=document.getElementById(id);if(e)e.value=td;});
 });
-document.addEventListener('click',function(e){
-  var m=document.getElementById('mobnav');
-  if(m&&m.classList.contains('on')&&!m.contains(e.target)&&!document.querySelector('.ham').contains(e.target))closeMob();
-});
+
+var _cjsLoaded=false;
+function loadChartJS(cb){
+  if(_cjsLoaded){cb();return;}
+  var s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js';
+  s.onload=function(){_cjsLoaded=true;cb();};
+  document.head.appendChild(s);
+}
+
+function lsGet(k){try{return JSON.parse(localStorage.getItem('sfx_'+k)||'[]');}catch(e){return[];}}
+function lsSet(k,v){try{localStorage.setItem('sfx_'+k,JSON.stringify(v));}catch(e){}}
+
+var signals=lsGet('signals');
+var clients=lsGet('clients');
+var payments=lsGet('payments');
+var fundClients=lsGet('funds');
+var activeFmIdx=null;
+var sigChart=null,payChart=null,fmpChart=null;
+
+function sfxToday(){return new Date().toISOString().split('T')[0];}
+
+function addSignal(){
+  var pair=document.getElementById('sig-pair').value;
+  var dir=document.getElementById('sig-dir').value;
+  var pips=parseFloat(document.getElementById('sig-pips').value)||0;
+  var risk=parseFloat(document.getElementById('sig-risk').value)||1;
+  var reward=parseFloat(document.getElementById('sig-reward').value)||1;
+  var date=document.getElementById('sig-date').value||sfxToday();
+  var notes=document.getElementById('sig-notes').value;
+  signals.unshift({pair:pair,dir:dir,pips:pips,risk:risk,reward:reward,date:date,notes:notes,id:Date.now()});
+  lsSet('signals',signals);renderSignalTable();updateSigChart();
+  document.getElementById('sig-pips').value='';document.getElementById('sig-notes').value='';
+  toast('Signal added!');
+}
+function delSignal(id){signals=signals.filter(function(s){return s.id!==id;});lsSet('signals',signals);renderSignalTable();updateSigChart();}
+
+function renderSignalTable(){
+  var fv=document.getElementById('sig-filter')?document.getElementById('sig-filter').value:'all';
+  var rows=signals.filter(function(s){return fv==='all'||s.pair===fv;});
+  var tb=document.getElementById('sig-table');if(!tb)return;
+  if(!rows.length){tb.innerHTML='<tr><td colspan="9" style="padding:1rem;text-align:center;color:var(--wd);">No signals yet</td></tr>';return;}
+  tb.innerHTML=rows.map(function(s){
+    var rr=s.risk?(s.reward/s.risk).toFixed(2):'-';
+    var pc=s.pips>=0?'color:var(--grn)':'color:var(--red)';
+    var dc=s.dir==='BUY'?'background:rgba(0,200,83,.14);color:var(--grn)':'background:rgba(229,57,53,.14);color:var(--red)';
+    return '<tr style="border-bottom:1px solid var(--bdr);"><td style="padding:7px 8px;font-size:.8rem;">'+s.date+'</td><td style="padding:7px 8px;font-family:monospace;color:var(--g);">'+s.pair+'</td><td style="padding:7px 8px;"><span style="'+dc+';padding:2px 7px;border-radius:2px;font-size:.72rem;font-weight:700;">'+s.dir+'</span></td><td style="padding:7px 8px;'+pc+';font-weight:600;">'+(s.pips>=0?'+':'')+s.pips+'</td><td style="padding:7px 8px;color:var(--wd);">'+s.risk+'</td><td style="padding:7px 8px;color:var(--wd);">'+s.reward+'</td><td style="padding:7px 8px;color:var(--g);">'+rr+'</td><td style="padding:7px 8px;font-size:.78rem;color:var(--wd);">'+(s.notes||'')+'</td><td style="padding:7px 8px;"><button onclick="delSignal('+s.id+')" style="background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.3);color:var(--red);border-radius:3px;padding:2px 8px;font-size:.72rem;cursor:pointer;">Del</button></td></tr>';
+  }).join('');
+  updateSigSummary();
+}
+
+function updateSigSummary(){
+  var wins=signals.filter(function(s){return s.pips>0;}).length;
+  var wr=signals.length?Math.round(wins/signals.length*100):0;
+  var avgRR=signals.length?(signals.reduce(function(a,s){return a+(s.risk?s.reward/s.risk:0);},0)/signals.length).toFixed(2):0;
+  var net=signals.reduce(function(a,s){return a+s.pips;},0);
+  var el=document.getElementById('wr-rate');if(el)el.textContent=wr+'%';
+  el=document.getElementById('wr-rr');if(el)el.textContent=avgRR;
+  el=document.getElementById('wr-pips');if(el){el.textContent=(net>=0?'+':'')+net;el.style.color=net>=0?'var(--grn)':'var(--red)';}
+}
+
+function updateSigChart(){
+  updateSigSummary();
+  loadChartJS(function(){
+    var ctx=document.getElementById('sig-chart');if(!ctx)return;
+    var months={};
+    signals.forEach(function(s){var m=s.date.substring(0,7);months[m]=(months[m]||0)+s.pips;});
+    var labels=Object.keys(months).sort().slice(-6);
+    var data=labels.map(function(m){return months[m];});
+    if(sigChart)sigChart.destroy();
+    sigChart=new Chart(ctx,{type:'bar',data:{labels:labels,datasets:[{label:'Pips',data:data,backgroundColor:data.map(function(d){return d>=0?'rgba(0,200,83,.7)':'rgba(229,57,53,.7)';}),borderRadius:3}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{grid:{color:'rgba(201,168,76,.08)'},ticks:{color:'#8a8070',font:{size:10}}},x:{ticks:{color:'#8a8070',font:{size:10}}}}}});
+  });
+}
+
+function getExpiry(start,plan){
+  var d=new Date(start);
+  if(plan==='Monthly')d.setMonth(d.getMonth()+1);else d.setFullYear(d.getFullYear()+1);
+  return d.toISOString().split('T')[0];
+}
+function daysUntil(ds){return Math.round((new Date(ds)-new Date(sfxToday()))/86400000);}
+
+function addClient(){
+  var name=document.getElementById('cl-name').value.trim();if(!name){toast('Enter client name');return;}
+  var start=document.getElementById('cl-start').value||sfxToday();
+  var plan=document.getElementById('cl-plan').value;
+  clients.unshift({name:name,country:document.getElementById('cl-country').value,email:document.getElementById('cl-email').value,phone:document.getElementById('cl-phone').value,service:document.getElementById('cl-service').value,plan:plan,start:start,expiry:getExpiry(start,plan),payment:parseFloat(document.getElementById('cl-payment').value)||0,currency:document.getElementById('cl-currency').value,method:document.getElementById('cl-method').value,id:Date.now()});
+  lsSet('clients',clients);renderClientTable();renderAlerts();
+  document.getElementById('cl-name').value='';document.getElementById('cl-email').value='';document.getElementById('cl-phone').value='';document.getElementById('cl-payment').value='';
+  toast('Client added!');
+}
+function delClient(id){clients=clients.filter(function(c){return c.id!==id;});lsSet('clients',clients);renderClientTable();renderAlerts();}
+
+function renderClientTable(){
+  var q=(document.getElementById('cl-search')?document.getElementById('cl-search').value:'').toLowerCase();
+  var rows=clients.filter(function(c){return c.name.toLowerCase().includes(q)||c.country.toLowerCase().includes(q);});
+  var tb=document.getElementById('cl-table');if(!tb)return;
+  if(!rows.length){tb.innerHTML='<tr><td colspan="9" style="padding:1rem;text-align:center;color:var(--wd);">No clients yet</td></tr>';return;}
+  tb.innerHTML=rows.map(function(c){
+    var days=daysUntil(c.expiry);
+    var badge=days<0?'<span style="background:rgba(229,57,53,.14);color:var(--red);padding:2px 7px;border-radius:2px;font-size:.7rem;font-weight:700;">Expired</span>':days<=7?'<span style="background:rgba(201,168,76,.14);color:var(--g);padding:2px 7px;border-radius:2px;font-size:.7rem;font-weight:700;">Expiring Soon</span>':'<span style="background:rgba(0,200,83,.14);color:var(--grn);padding:2px 7px;border-radius:2px;font-size:.7rem;font-weight:700;">Active</span>';
+    return '<tr style="border-bottom:1px solid var(--bdr);"><td style="padding:7px 8px;font-weight:600;">'+c.name+'</td><td style="padding:7px 8px;color:var(--wd);">'+c.country+'</td><td style="padding:7px 8px;font-size:.8rem;">'+c.service+'</td><td style="padding:7px 8px;color:var(--wd);">'+c.plan+'</td><td style="padding:7px 8px;font-size:.8rem;">'+c.start+'</td><td style="padding:7px 8px;font-size:.8rem;">'+c.expiry+(days<=7&&days>=0?'<br><span style="color:var(--red);font-size:.7rem;">'+days+'d left</span>':'')+'</td><td style="padding:7px 8px;">'+badge+'</td><td style="padding:7px 8px;font-size:.8rem;">'+c.payment+' '+c.currency+'<br><span style="color:var(--wd);font-size:.72rem;">'+c.method+'</span></td><td style="padding:7px 8px;"><button onclick="delClient('+c.id+')" style="background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.3);color:var(--red);border-radius:3px;padding:2px 8px;font-size:.72rem;cursor:pointer;">Del</button></td></tr>';
+  }).join('');
+}
+
+function renderAlerts(){
+  var expiring=clients.filter(function(c){var d=daysUntil(c.expiry);return d>=0&&d<=7;});
+  ['cl-alerts-detail','cl-alerts-box'].forEach(function(bid){
+    var el=document.getElementById(bid);if(!el)return;
+    if(!expiring.length){if(bid==='cl-alerts-detail')el.innerHTML='<div style="color:var(--wd);font-size:.85rem;">No upcoming expirations</div>';else el.innerHTML='';return;}
+    el.innerHTML=expiring.map(function(c){return '<div style="background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);border-left:3px solid var(--g);border-radius:5px;padding:.75rem 1rem;margin-bottom:.6rem;font-size:.85rem;"><strong style="color:var(--w);">'+c.name+'</strong> &mdash; '+c.service+' expires in <strong style="color:var(--g);">'+daysUntil(c.expiry)+' days</strong> ('+c.expiry+')</div>';}).join('');
+  });
+}
+
+function toUSD(amount,currency){var rates={USD:1,GBP:1.27,EUR:1.09,PKR:0.0036};return amount*(rates[currency]||1);}
+
+function addPayment(){
+  var client=document.getElementById('pay-client').value.trim();if(!client){toast('Enter client name');return;}
+  payments.unshift({client:client,amount:parseFloat(document.getElementById('pay-amount').value)||0,currency:document.getElementById('pay-currency').value,type:document.getElementById('pay-type').value,method:document.getElementById('pay-method').value,date:document.getElementById('pay-date').value||sfxToday(),id:Date.now()});
+  lsSet('payments',payments);renderPaymentTable();updatePayStats();updatePayChart();
+  document.getElementById('pay-client').value='';document.getElementById('pay-amount').value='';
+  toast('Payment recorded!');
+}
+function delPayment(id){payments=payments.filter(function(p){return p.id!==id;});lsSet('payments',payments);renderPaymentTable();updatePayStats();updatePayChart();}
+
+function renderPaymentTable(){
+  var tb=document.getElementById('pay-table');if(!tb)return;
+  if(!payments.length){tb.innerHTML='<tr><td colspan="7" style="padding:1rem;text-align:center;color:var(--wd);">No payments recorded</td></tr>';return;}
+  tb.innerHTML=payments.map(function(p){
+    var tc=p.type==='received'?'color:var(--grn)':'color:var(--red)';
+    var ts=p.type==='received'?'background:rgba(0,200,83,.14);color:var(--grn)':'background:rgba(229,57,53,.14);color:var(--red)';
+    return '<tr style="border-bottom:1px solid var(--bdr);"><td style="padding:7px 8px;font-size:.8rem;">'+p.date+'</td><td style="padding:7px 8px;">'+p.client+'</td><td style="padding:7px 8px;'+tc+';font-weight:600;">'+(p.type==='refund'?'-':'')+p.amount+'</td><td style="padding:7px 8px;color:var(--wd);">'+p.currency+'</td><td style="padding:7px 8px;"><span style="'+ts+';padding:2px 7px;border-radius:2px;font-size:.72rem;font-weight:700;">'+p.type+'</span></td><td style="padding:7px 8px;color:var(--wd);">'+p.method+'</td><td style="padding:7px 8px;"><button onclick="delPayment('+p.id+')" style="background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.3);color:var(--red);border-radius:3px;padding:2px 8px;font-size:.72rem;cursor:pointer;">Del</button></td></tr>';
+  }).join('');
+}
+
+function updatePayStats(){
+  var recv=payments.filter(function(p){return p.type==='received';}).reduce(function(a,p){return a+toUSD(p.amount,p.currency);},0);
+  var ref=payments.filter(function(p){return p.type==='refund';}).reduce(function(a,p){return a+toUSD(p.amount,p.currency);},0);
+  var el=document.getElementById('pay-total');if(el)el.textContent='$'+recv.toFixed(0);
+  el=document.getElementById('pay-refund');if(el)el.textContent='$'+ref.toFixed(0);
+  el=document.getElementById('pay-net');if(el)el.textContent='$'+(recv-ref).toFixed(0);
+  el=document.getElementById('pay-count');if(el)el.textContent=payments.length;
+}
+
+function updatePayChart(){
+  loadChartJS(function(){
+    var ctx=document.getElementById('pay-chart');if(!ctx)return;
+    var methods=['Skrill','Neteller','PayPal','Bank Transfer','Crypto'];
+    var data=methods.map(function(m){return payments.filter(function(p){return p.method===m&&p.type==='received';}).reduce(function(a,p){return a+toUSD(p.amount,p.currency);},0);});
+    if(payChart)payChart.destroy();
+    payChart=new Chart(ctx,{type:'bar',data:{labels:methods,datasets:[{label:'USD',data:data.map(function(d){return parseFloat(d.toFixed(2));}),backgroundColor:'rgba(201,168,76,.7)',borderRadius:3}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{grid:{color:'rgba(201,168,76,.08)'},ticks:{color:'#8a8070',font:{size:10}}},x:{ticks:{color:'#8a8070',font:{size:10}}}}}});
+  });
+}
+
+function addFundClient(){
+  var name=document.getElementById('fm-name').value.trim();if(!name){toast('Enter client name');return;}
+  fundClients.unshift({name:name,size:parseFloat(document.getElementById('fm-size').value)||0,broker:document.getElementById('fm-broker').value,start:document.getElementById('fm-start').value||sfxToday(),share:parseFloat(document.getElementById('fm-share').value)||30,risk:document.getElementById('fm-risk').value,perf:[],id:Date.now()});
+  lsSet('funds',fundClients);renderFundTable();updateFundStats();
+  document.getElementById('fm-name').value='';document.getElementById('fm-size').value='';
+  toast('Fund client added!');
+}
+function delFund(id){fundClients=fundClients.filter(function(f){return f.id!==id;});lsSet('funds',fundClients);renderFundTable();updateFundStats();}
+
+function renderFundTable(){
+  var tb=document.getElementById('fm-table');if(!tb)return;
+  if(!fundClients.length){tb.innerHTML='<tr><td colspan="8" style="padding:1rem;text-align:center;color:var(--wd);">No fund clients</td></tr>';return;}
+  tb.innerHTML=fundClients.map(function(f,i){
+    var lastPL=f.perf.length?f.perf[f.perf.length-1].pl:0;
+    var plcl=lastPL>=0?'color:var(--grn)':'color:var(--red)';
+    var rc=f.risk==='Low'?'background:rgba(0,200,83,.14);color:var(--grn)':f.risk==='High'?'background:rgba(229,57,53,.14);color:var(--red)':'background:rgba(201,168,76,.14);color:var(--g)';
+    return '<tr style="border-bottom:1px solid var(--bdr);"><td style="padding:7px 8px;font-weight:600;">'+f.name+'</td><td style="padding:7px 8px;color:var(--g);">$'+f.size.toLocaleString()+'</td><td style="padding:7px 8px;color:var(--wd);">'+f.broker+'</td><td style="padding:7px 8px;font-size:.8rem;">'+f.start+'</td><td style="padding:7px 8px;"><span style="'+rc+';padding:2px 7px;border-radius:2px;font-size:.72rem;font-weight:700;">'+f.risk+'</span></td><td style="padding:7px 8px;color:var(--wd);">'+f.share+'%</td><td style="padding:7px 8px;'+plcl+';font-weight:600;">'+(lastPL>=0?'+':'')+'$'+lastPL+'</td><td style="padding:7px 8px;display:flex;gap:.3rem;"><button onclick="openPerf('+i+')" style="background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);color:var(--g);border-radius:3px;padding:2px 8px;font-size:.72rem;cursor:pointer;">Log P/L</button> <button onclick="delFund('+f.id+')" style="background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.3);color:var(--red);border-radius:3px;padding:2px 8px;font-size:.72rem;cursor:pointer;">Del</button></td></tr>';
+  }).join('');
+}
+
+function updateFundStats(){
+  var aum=fundClients.reduce(function(a,f){return a+f.size;},0);
+  var el=document.getElementById('fm-aum');if(el)el.textContent='$'+aum.toLocaleString();
+  el=document.getElementById('fm-count');if(el)el.textContent=fundClients.length;
+}
+
+function openPerf(i){
+  activeFmIdx=i;
+  var f=fundClients[i];
+  var tt=document.getElementById('fm-perf-title');if(tt)tt.textContent=f.name+' Performance Log';
+  var pc=document.getElementById('fm-perf-card');if(pc)pc.style.display='block';
+  var fd=document.getElementById('fmp-date');if(fd)fd.value=sfxToday();
+  renderPerfTable();updateFmpChart(f);
+}
+
+function addPerfEntry(){
+  if(activeFmIdx===null)return;
+  var pl=parseFloat(document.getElementById('fmp-pl').value)||0;
+  var date=document.getElementById('fmp-date').value||sfxToday();
+  fundClients[activeFmIdx].perf.push({date:date,pl:pl,id:Date.now()});
+  lsSet('funds',fundClients);renderPerfTable();renderFundTable();updateFundStats();updateFmpChart(fundClients[activeFmIdx]);
+  document.getElementById('fmp-pl').value='';toast('Entry added!');
+}
+
+function renderPerfTable(){
+  if(activeFmIdx===null)return;
+  var f=fundClients[activeFmIdx];
+  var tb=document.getElementById('fmp-table');if(!tb)return;
+  if(!f.perf.length){tb.innerHTML='<tr><td colspan="3" style="padding:1rem;text-align:center;color:var(--wd);">No entries</td></tr>';return;}
+  tb.innerHTML=f.perf.slice().reverse().map(function(e){
+    var pc=e.pl>=0?'color:var(--grn)':'color:var(--red)';
+    var pct=f.size?((e.pl/f.size)*100).toFixed(2):'-';
+    return '<tr style="border-bottom:1px solid var(--bdr);"><td style="padding:7px 8px;font-size:.8rem;">'+e.date+'</td><td style="padding:7px 8px;'+pc+';font-weight:600;">'+(e.pl>=0?'+':'')+'$'+e.pl+'</td><td style="padding:7px 8px;'+pc+';">'+pct+'%</td></tr>';
+  }).join('');
+}
+
+function updateFmpChart(f){
+  loadChartJS(function(){
+    var ctx=document.getElementById('fmp-chart');if(!ctx)return;
+    var labels=f.perf.map(function(e){return e.date;});
+    var data=f.perf.map(function(e){return e.pl;});
+    if(fmpChart)fmpChart.destroy();
+    fmpChart=new Chart(ctx,{type:'line',data:{labels:labels,datasets:[{label:'P/L',data:data,borderColor:'rgba(201,168,76,1)',backgroundColor:'rgba(201,168,76,.08)',fill:true,tension:0.3,pointRadius:4}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{grid:{color:'rgba(201,168,76,.08)'},ticks:{color:'#8a8070',font:{size:10}}},x:{ticks:{color:'#8a8070',font:{size:10}}}}}});
+  });
+}
+
+var _origATab=aTab;
+aTab=function(n,el){
+  _origATab(n,el);
+  if(n==='signals'){renderSignalTable();updateSigChart();}
+  if(n==='clients'){renderClientTable();renderAlerts();}
+  if(n==='payments'){renderPaymentTable();updatePayStats();updatePayChart();}
+  if(n==='funds'){renderFundTable();updateFundStats();}
+};
 </script>
 </body>
 </html>
