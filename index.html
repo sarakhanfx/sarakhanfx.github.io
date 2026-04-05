@@ -49,7 +49,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif}
 .sh-title em{color:var(--g);font-style:italic}
 .sh-sub{color:var(--wd);font-size:.95rem;max-width:520px;margin:.7rem auto 0}
 /* HERO */
-#hero{min-height:100vh;padding:110px 5% 80px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:3rem;background:var(--n);overflow:hidden;position:relative}
+#hero{min-height:100vh;padding:110px 5% 90px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:3rem;background:var(--n);overflow:hidden;position:relative}
 .hgb{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.05) 1px,transparent 1px);background-size:55px 55px;animation:gm 25s linear infinite}
 @keyframes gm{0%{transform:translate(0,0)}100%{transform:translate(55px,55px)}}
 .hg1{position:absolute;width:550px;height:550px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.1),transparent 70%);top:-80px;right:0;filter:blur(60px);animation:gp 7s ease-in-out infinite}
@@ -87,12 +87,10 @@ button{cursor:pointer;font-family:'Inter',sans-serif}
 .q-bar{height:3px;background:rgba(201,168,76,.1);margin:0 1.1rem .2rem;border-radius:2px;overflow:hidden}
 .q-bar-fill{height:100%;border-radius:2px;transition:width .8s ease}
 /* TICKER */
-.tkbar{position:absolute;bottom:0;left:0;right:0;height:36px;background:rgba(6,14,28,.95);border-top:1px solid var(--bdr);overflow:hidden;display:flex;align-items:center;z-index:3}
-.tkwrap{overflow:hidden;flex:1}
-.tkinner{display:inline-flex;gap:3rem;white-space:nowrap;animation:tkscroll 40s linear infinite}
-@keyframes tkscroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.ti{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--g);letter-spacing:.04em;display:inline-flex;align-items:center;gap:.35rem}
-.tup{color:var(--grn)}.tdn{color:var(--red)}
+.tkbar{position:absolute;bottom:0;left:0;right:0;height:46px;background:rgba(6,14,28,.98);border-top:1px solid var(--bdr);overflow:hidden;display:flex;align-items:center;z-index:3}
+.tkbar .tradingview-widget-container{width:100%;height:46px}
+.tkbar .tradingview-widget-container__widget{height:46px}
+.tkbar iframe{height:46px!important;}
 /* CHARTS */
 #charts{padding:90px 5%;background:var(--n2)}
 .cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.4rem;margin-top:2.5rem}
@@ -135,8 +133,8 @@ button{cursor:pointer;font-family:'Inter',sans-serif}
 .ftabs{display:flex;gap:.5rem;flex-wrap:wrap}
 .ftab{padding:.38rem .95rem;border-radius:3px;font-size:.78rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;background:transparent;border:1px solid var(--bdr);color:var(--wd);transition:all .2s}
 .ftab.on,.ftab:hover{background:rgba(201,168,76,.13);border-color:var(--g);color:var(--g)}
-.agrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.4rem}
-.acard{background:var(--n2);border:1px solid var(--bdr);border-radius:8px;overflow:hidden;transition:all .3s}
+.agrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.4rem;align-items:start}
+.acard{background:var(--n2);border:1px solid var(--bdr);border-radius:8px;overflow:hidden;transition:all .3s;display:flex;flex-direction:column}
 .acard:hover{transform:translateY(-4px);border-color:rgba(201,168,76,.35);box-shadow:0 14px 35px rgba(0,0,0,.4)}
 .atop{height:130px;background:var(--n3);border-bottom:1px solid var(--bdr);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;position:relative;overflow:hidden}
 .atop-g{position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,.06),rgba(26,74,138,.07))}
@@ -189,30 +187,36 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
 .fcopy{font-size:.78rem;color:var(--wd)}
 .frisk{font-size:.72rem;color:rgba(138,128,112,.5);max-width:460px;text-align:right}
 /* BROKERS PAGE */
-#pg-brokers .brok-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;margin-top:2.5rem}
-.brok-card{background:var(--n2);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;transition:all .3s}
+#pg-brokers .brok-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;margin-top:2.5rem;align-items:stretch}
+.brok-card{background:var(--n2);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;transition:all .3s;display:flex;flex-direction:column}
 .brok-card:hover{transform:translateY(-4px);box-shadow:0 14px 35px rgba(0,0,0,.4);border-color:rgba(201,168,76,.3)}
-.brok-logo{height:90px;background:var(--n3);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--bdr);font-size:2rem;font-weight:700;font-family:'Playfair Display',serif;color:var(--g)}
-.brok-body{padding:1.3rem}
+.brok-logo{height:90px;background:var(--n3);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--bdr);font-size:2rem;font-weight:700;font-family:'Playfair Display',serif;color:var(--g);flex-shrink:0}
+.brok-body{padding:1.3rem;display:flex;flex-direction:column;flex:1}
 .brok-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;margin-bottom:.3rem}
 .brok-reg{font-size:.72rem;color:var(--g);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.7rem}
-.brok-desc{color:var(--wd);font-size:.85rem;line-height:1.7;margin-bottom:1rem}
+.brok-desc{color:var(--wd);font-size:.83rem;line-height:1.65;margin-bottom:1rem;min-height:3.5rem}
+.brok-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.1rem}
+.brok-tag{font-size:.68rem;padding:.18rem .55rem;border-radius:2px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.18);color:var(--g)}
+.brok-rating{display:flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--wd);margin-bottom:1rem}
+.stars{color:#f59e0b;letter-spacing:1px}
 .brok-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.1rem}
 .brok-tag{font-size:.68rem;padding:.18rem .55rem;border-radius:2px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.18);color:var(--g)}
 .brok-rating{display:flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--wd);margin-bottom:1rem}
 .stars{color:#f59e0b;letter-spacing:1px}
 /* EDUCATION PAGE */
-#pg-edu .edu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;margin-top:2.5rem}
-.edu-card{background:var(--n2);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;transition:all .3s}
+#pg-edu .edu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;margin-top:2.5rem;align-items:stretch}
+.edu-card{background:var(--n2);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;transition:all .3s;display:flex;flex-direction:column}
 .edu-card:hover{transform:translateY(-4px);box-shadow:0 14px 35px rgba(0,0,0,.4);border-color:rgba(201,168,76,.3)}
-.edu-banner{height:130px;display:flex;align-items:center;justify-content:center;font-size:2.8rem;position:relative;overflow:hidden}
+.edu-banner{height:130px;display:flex;align-items:center;justify-content:center;font-size:2.8rem;position:relative;overflow:hidden;flex-shrink:0}
 .edu-banner-bg{position:absolute;inset:0}
-.edu-body{padding:1.4rem}
+.edu-body{padding:1.4rem;display:flex;flex-direction:column;flex:1}
 .edu-level{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--g);margin-bottom:.5rem}
 .edu-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;margin-bottom:.6rem;line-height:1.3}
-.edu-desc{color:var(--wd);font-size:.85rem;line-height:1.7;margin-bottom:1.1rem}
+.edu-desc{color:var(--wd);font-size:.85rem;line-height:1.7;margin-bottom:1.1rem;flex:1}
 .edu-meta{display:flex;gap:1rem;font-size:.75rem;color:var(--wd);margin-bottom:1.1rem;flex-wrap:wrap}
 .edu-meta span{display:flex;align-items:center;gap:.3rem}
+/* Education content modal */
+.edu-modal-content{font-size:.9rem;color:var(--wd);line-height:1.9;white-space:pre-wrap;word-break:break-word}
 /* LOGIN */
 #lpg{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 5% 40px;background:var(--n)}
 .lbox{background:var(--n2);border:1px solid var(--bdr);border-radius:10px;padding:2.8rem;width:100%;max-width:420px}
@@ -332,24 +336,81 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
     </div>
   </div>
 
-  <!-- RIGHT: LIVE FOREX QUOTES WIDGET -->
+  <!-- RIGHT: LIVE FOREX QUOTES — TradingView Real-Time Widget -->
   <div class="hquotes">
-    <div class="quotes-box">
+    <div class="quotes-box" style="overflow:hidden;">
       <div class="quotes-hdr">
         <span class="quotes-hdr-title">LIVE FOREX QUOTES</span>
         <span class="quotes-live"><span class="quotes-live-dot"></span>Real-Time</span>
       </div>
-      <div id="quotes-list">
-        <!-- Filled by JS -->
-        <div style="padding:1.5rem;text-align:center;color:var(--wd);font-size:.82rem;"><span class="spinner"></span>Loading prices...</div>
+      <!-- TradingView Market Overview Widget -->
+      <div class="tradingview-widget-container" style="height:360px;">
+        <div class="tradingview-widget-container__widget" style="height:360px;"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+        {
+          "colorTheme": "dark",
+          "dateRange": "1D",
+          "showChart": false,
+          "locale": "en",
+          "largeChartUrl": "",
+          "isTransparent": true,
+          "showSymbolLogo": false,
+          "showFloatingTooltip": false,
+          "width": "100%",
+          "height": "360",
+          "tabs": [
+            {
+              "title": "Forex",
+              "symbols": [
+                {"s": "FX:EURUSD","d": "EUR/USD"},
+                {"s": "FX:GBPUSD","d": "GBP/USD"},
+                {"s": "FX:USDJPY","d": "USD/JPY"},
+                {"s": "FX:GBPJPY","d": "GBP/JPY"},
+                {"s": "FX:AUDUSD","d": "AUD/USD"},
+                {"s": "FX:USDCAD","d": "USD/CAD"}
+              ],
+              "originalTitle": "Forex"
+            },
+            {
+              "title": "Commodities",
+              "symbols": [
+                {"s": "OANDA:XAUUSD","d": "Gold"},
+                {"s": "NYMEX:CL1!","d": "WTI Oil"}
+              ],
+              "originalTitle": "Commodities"
+            }
+          ]
+        }
+        </script>
       </div>
     </div>
   </div>
 
-  <!-- TICKER BAR -->
-  <div class="tkbar">
-    <div class="tkwrap">
-      <div class="tkinner" id="ticker"></div>
+  <!-- TICKER BAR — TradingView Ticker Tape (real live prices) -->
+  <div class="tkbar" style="height:46px;overflow:hidden;padding:0;">
+    <div class="tradingview-widget-container" style="width:100%;height:46px;overflow:hidden;">
+      <div class="tradingview-widget-container__widget" style="height:46px;"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+      {
+        "symbols": [
+          {"proName":"FX:EURUSD","title":"EUR/USD"},
+          {"proName":"FX:GBPUSD","title":"GBP/USD"},
+          {"proName":"FX:USDJPY","title":"USD/JPY"},
+          {"proName":"FX:GBPJPY","title":"GBP/JPY"},
+          {"proName":"OANDA:XAUUSD","title":"Gold"},
+          {"proName":"NYMEX:CL1!","title":"WTI Oil"},
+          {"proName":"FX:AUDUSD","title":"AUD/USD"},
+          {"proName":"FX:USDCAD","title":"USD/CAD"},
+          {"proName":"FX:USDCHF","title":"USD/CHF"},
+          {"proName":"FX:NZDUSD","title":"NZD/USD"}
+        ],
+        "showSymbolLogo": false,
+        "isTransparent": true,
+        "displayMode": "compact",
+        "colorTheme": "dark",
+        "locale": "en"
+      }
+      </script>
     </div>
   </div>
 </section>
@@ -561,8 +622,11 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
       <h2 class="sh-title">Our Recommended <em>Brokers</em></h2>
       <p class="sh-sub">Carefully vetted, regulated brokers trusted by Sarakhan FX and our community of 2000+ traders.</p>
     </div>
-    <div style="text-align:center;margin-bottom:2rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem;margin-bottom:2rem;">
       <a class="btn boutline" style="font-size:.8rem;padding:.4rem 1rem;" onclick="goHome()">← Back to Home</a>
+      <div id="brok-admin-bar" style="display:none;">
+        <button class="btn bgold" style="font-size:.78rem;padding:.4rem 1rem;" onclick="openPg('admin');setTimeout(function(){aTab('brokers-admin',document.querySelector('.ami[onclick*=brokers-admin]'));},200);">⚙️ Manage Brokers (Admin)</button>
+      </div>
     </div>
     <div class="brok-grid" id="brok-grid">
       <div class="aloader"><span class="spinner"></span>Loading brokers...</div>
@@ -579,8 +643,11 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
       <h2 class="sh-title">Educational <em>Resources</em></h2>
       <p class="sh-sub">Free professional-grade Forex trading guides, tutorials, and resources by Sarakhan FX.</p>
     </div>
-    <div style="text-align:center;margin-bottom:2rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem;margin-bottom:2rem;">
       <a class="btn boutline" style="font-size:.8rem;padding:.4rem 1rem;" onclick="goHome()">← Back to Home</a>
+      <div id="edu-admin-bar" style="display:none;">
+        <button class="btn bgold" style="font-size:.78rem;padding:.4rem 1rem;" onclick="openPg('admin');setTimeout(function(){aTab('education-admin',document.querySelector('.ami[onclick*=education-admin]'));},200);">⚙️ Manage Courses (Admin)</button>
+      </div>
     </div>
     <!-- Filter -->
     <div class="fbar" style="margin-bottom:2rem;">
@@ -593,7 +660,7 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
         <button class="ftab" onclick="filterEdu('strategy',this)">Strategies</button>
       </div>
     </div>
-    <div class="edu-grid" id="edu-grid"></div>
+    <div class="edu-grid" id="edu-grid"><div class="aloader"><span class="spinner"></span>Loading courses...</div></div>
   </div>
 </div>
 
@@ -624,6 +691,7 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
           <div class="ami" onclick="aTab('manage',this)">📋 Manage Posts</div>
           <div class="ami" onclick="aTab('inbox',this)">📨 Client Messages <span id="unread-badge" style="display:none;background:var(--g);color:#060e1c;font-size:.62rem;font-weight:700;padding:.1rem .42rem;border-radius:10px;margin-left:.3rem;"></span></div>
           <div class="ami" onclick="aTab('brokers-admin',this)">🏦 Manage Brokers</div>
+          <div class="ami" onclick="aTab('education-admin',this)">📚 Education</div>
           <div class="ami" onclick="aTab('signals',this)">📈 Daily Signals</div>
           <div class="ami" onclick="aTab('clients',this)">👥 Clients CRM</div>
           <div class="ami" onclick="aTab('payments',this)">💳 Payments</div>
@@ -631,7 +699,7 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
           <div class="ami" onclick="aTab('cfg',this)">🔧 Settings</div>
         </div>
         <div style="padding:1.3rem;border-top:1px solid var(--bdr);margin-top:1rem;">
-          <button class="btn boutline" style="width:100%;justify-content:center;font-size:.8rem;margin-bottom:.5rem;" onclick="openPg('home')">← Back to Site</button>
+          <button class="btn boutline" style="width:100%;justify-content:center;font-size:.8rem;margin-bottom:.5rem;" onclick="goHome()">← Back to Site</button>
           <button style="width:100%;padding:.6rem;background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.28);color:var(--red);border-radius:3px;font-size:.8rem;cursor:pointer;" onclick="doLogout()">Logout</button>
         </div>
       </aside>
@@ -649,9 +717,10 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
           <div class="acard">
             <div class="acardt">Quick Actions</div>
             <div style="display:flex;gap:.9rem;flex-wrap:wrap;">
-              <button class="btn bgold" onclick="aTab('upload',document.querySelectorAll('.ami')[1])">📤 New Analysis</button>
-              <button class="btn boutline" onclick="aTab('inbox',document.querySelectorAll('.ami')[3])">📨 Messages</button>
-              <button class="btn boutline" onclick="aTab('brokers-admin',document.querySelectorAll('.ami')[4])">🏦 Add Broker</button>
+              <button class="btn bgold" onclick="aTab('upload',document.querySelector('.ami[onclick*=upload]'))">📤 New Analysis</button>
+              <button class="btn boutline" onclick="aTab('inbox',document.querySelector('.ami[onclick*=inbox]'))">📨 Messages</button>
+              <button class="btn boutline" onclick="aTab('brokers-admin',document.querySelector('.ami[onclick*=brokers-admin]'))">🏦 Add Broker</button>
+              <button class="btn boutline" onclick="aTab('education-admin',document.querySelector('.ami[onclick*=education-admin]'))">📚 Education</button>
             </div>
           </div>
           <div class="acard">
@@ -689,8 +758,35 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
             </div>
             <div class="fg"><label>Analysis Title</label><input type="text" id="up-title" placeholder="e.g. EUR/USD – Bullish Breakout Above 1.0880"></div>
             <div class="fg"><label>Full Analysis Content</label><textarea id="up-body" rows="7" placeholder="Full technical analysis here...&#10;&#10;Key Levels:&#10;• Support: &#10;• Resistance: &#10;&#10;Strategy: "></textarea></div>
-            <div class="fg"><label>Chart Image URL (optional)</label><input type="url" id="up-img" placeholder="https://i.imgur.com/your-chart.png — paste image URL here"></div>
-            <div style="font-size:.75rem;color:var(--wd);margin-bottom:1rem;">💡 Tip: Upload your chart screenshot to <a href="https://imgur.com" target="_blank" style="color:var(--g);">imgur.com</a> for free and paste the link above.</div>
+            <div class="fg">
+              <label>Chart Image</label>
+              <div style="border:1px solid var(--bdr);border-radius:4px;background:var(--n2);padding:.85rem;margin-top:.1rem;">
+                <!-- Upload Tab Switcher -->
+                <div style="display:flex;gap:.5rem;margin-bottom:.85rem;">
+                  <button type="button" id="img-tab-upload" onclick="switchImgTab('upload')" style="flex:1;padding:.35rem;border-radius:3px;font-size:.78rem;font-weight:600;background:rgba(201,168,76,.18);border:1px solid var(--g);color:var(--g);cursor:pointer;">📁 Upload File</button>
+                  <button type="button" id="img-tab-url" onclick="switchImgTab('url')" style="flex:1;padding:.35rem;border-radius:3px;font-size:.78rem;font-weight:600;background:transparent;border:1px solid var(--bdr);color:var(--wd);cursor:pointer;">🔗 Paste URL</button>
+                </div>
+                <!-- Upload Panel -->
+                <div id="img-panel-upload">
+                  <input type="file" id="up-img-file" accept="image/*" onchange="previewImg(this)" style="display:none;">
+                  <div id="img-drop-zone" onclick="document.getElementById('up-img-file').click()" style="border:2px dashed rgba(201,168,76,.3);border-radius:6px;padding:1.2rem;text-align:center;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor='var(--g)'" onmouseout="this.style.borderColor='rgba(201,168,76,.3)'">
+                    <div style="font-size:1.8rem;margin-bottom:.4rem;">📷</div>
+                    <div style="font-size:.82rem;color:var(--wd);">Click to select image <span style="color:var(--g);">or drag & drop</span></div>
+                    <div style="font-size:.72rem;color:var(--wd);margin-top:.2rem;">JPG, PNG, GIF — max 5MB</div>
+                  </div>
+                  <div id="img-preview-wrap" style="display:none;margin-top:.7rem;position:relative;">
+                    <img id="img-preview" style="width:100%;max-height:160px;object-fit:cover;border-radius:5px;border:1px solid var(--bdr);">
+                    <button type="button" onclick="clearImgUpload()" style="position:absolute;top:.3rem;right:.3rem;background:rgba(6,14,28,.85);border:1px solid var(--bdr);color:var(--w);border-radius:3px;padding:.15rem .5rem;font-size:.75rem;cursor:pointer;">✕</button>
+                  </div>
+                  <div id="img-upload-status" style="font-size:.78rem;margin-top:.5rem;display:none;"></div>
+                </div>
+                <!-- URL Panel -->
+                <div id="img-panel-url" style="display:none;">
+                  <input type="url" id="up-img" placeholder="https://i.imgur.com/your-chart.png" style="width:100%;background:var(--n3);border:1px solid var(--bdr);border-radius:4px;padding:.65rem .9rem;color:var(--w);font-family:'Inter',sans-serif;font-size:.88rem;outline:none;" onfocus="this.style.borderColor='var(--g)'" onblur="this.style.borderColor='var(--bdr)'">
+                  <div style="font-size:.72rem;color:var(--wd);margin-top:.4rem;">💡 Upload to <a href="https://imgur.com" target="_blank" style="color:var(--g);">imgur.com</a> and paste the direct link</div>
+                </div>
+              </div>
+            </div>
             <div style="display:flex;gap:.9rem;flex-wrap:wrap;">
               <button class="btn bgold" id="pub-btn" onclick="doPublish()">📤 Publish to Website</button>
               <button class="btn boutline" onclick="clearForm()">Clear</button>
@@ -752,6 +848,52 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
           <div class="acard">
             <div class="acardt">Listed Brokers</div>
             <div id="admin-brok-list"><div style="color:var(--wd);"><span class="spinner"></span> Loading...</div></div>
+          </div>
+        </div>
+
+        <!-- EDUCATION ADMIN -->
+        <div class="asec" id="a-education-admin">
+          <div class="ahdr"><h2 class="atl">Education</h2></div>
+          <div class="acard">
+            <div class="acardt" id="edu-form-title">Add New Course</div>
+            <input type="hidden" id="edu-edit-id">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+              <div class="fg"><label>Course Title *</label><input type="text" id="edu-title-in" placeholder="e.g. Price Action Mastery"></div>
+              <div class="fg"><label>Level *</label>
+                <select id="edu-level-in">
+                  <option value="beginner">Beginner</option>
+                  <option value="intermediate">Intermediate</option>
+                  <option value="advanced">Advanced</option>
+                  <option value="psychology">Psychology</option>
+                  <option value="strategy">Strategy</option>
+                </select>
+              </div>
+              <div class="fg"><label>Lessons Count</label><input type="number" id="edu-lessons-in" placeholder="e.g. 12" min="1"></div>
+              <div class="fg"><label>Duration</label><input type="text" id="edu-duration-in" placeholder="e.g. 90 min"></div>
+              <div class="fg"><label>Type</label>
+                <select id="edu-type-in">
+                  <option>Guide</option>
+                  <option>Tutorial</option>
+                  <option>Course</option>
+                  <option>Video</option>
+                </select>
+              </div>
+              <div class="fg"><label>Icon (emoji)</label><input type="text" id="edu-icon-in" placeholder="e.g. 📈" maxlength="4"></div>
+            </div>
+            <div class="fg"><label>Short Description *</label><textarea id="edu-desc-in" rows="2" placeholder="Brief summary shown on course card..."></textarea></div>
+            <div class="fg"><label>Full Course Content *</label><textarea id="edu-content-in" rows="10" placeholder="Write the full course content here. Use blank lines between paragraphs. Students will see this when they click Read Course."></textarea></div>
+            <div style="display:flex;gap:.9rem;flex-wrap:wrap;">
+              <button class="btn bgold" id="edu-save-btn" onclick="saveEduCourse()">💾 Save Course</button>
+              <button class="btn boutline" onclick="clearEduForm()">Clear</button>
+            </div>
+            <div class="upok" id="edu-ok"></div>
+            <div class="uperr" id="edu-err"></div>
+          </div>
+          <div class="acard">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--bdr);">
+              <span style="font-weight:600;font-size:.9rem;color:var(--g);">All Courses <span id="edu-count-lbl" style="font-weight:400;color:var(--wd);font-size:.8rem;"></span></span>
+            </div>
+            <div id="admin-edu-list"><div style="color:var(--wd);"><span class="spinner"></span> Loading...</div></div>
           </div>
         </div>
 
@@ -1026,6 +1168,14 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
   </div>
 </div>
 
+<!-- EDUCATION COURSE MODAL -->
+<div class="modal-bg" id="edu-modal" onclick="if(event.target===this)closeEduModal()">
+  <div class="mbox" style="max-width:680px;">
+    <button class="mx" onclick="closeEduModal()">✕</button>
+    <div id="edu-mbody"></div>
+  </div>
+</div>
+
 <!-- ANALYSIS READ MODAL -->
 <div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="mbox">
@@ -1054,7 +1204,29 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
     </div>
     <div class="fg"><label>Title</label><input type="text" id="edit-title"></div>
     <div class="fg"><label>Content</label><textarea id="edit-body" rows="7"></textarea></div>
-    <div class="fg"><label>Chart Image URL</label><input type="url" id="edit-img" placeholder="https://..."></div>
+    <div class="fg">
+      <label>Chart Image</label>
+      <div style="border:1px solid var(--bdr);border-radius:4px;background:var(--n2);padding:.85rem;margin-top:.1rem;">
+        <div style="display:flex;gap:.5rem;margin-bottom:.85rem;">
+          <button type="button" id="edit-img-tab-upload" onclick="switchEditImgTab('upload')" style="flex:1;padding:.35rem;border-radius:3px;font-size:.78rem;font-weight:600;background:rgba(201,168,76,.18);border:1px solid var(--g);color:var(--g);cursor:pointer;">📁 Upload File</button>
+          <button type="button" id="edit-img-tab-url" onclick="switchEditImgTab('url')" style="flex:1;padding:.35rem;border-radius:3px;font-size:.78rem;font-weight:600;background:transparent;border:1px solid var(--bdr);color:var(--wd);cursor:pointer;">🔗 Paste URL</button>
+        </div>
+        <div id="edit-img-panel-upload">
+          <input type="file" id="edit-img-file" accept="image/*" onchange="previewEditImg(this)" style="display:none;">
+          <div onclick="document.getElementById('edit-img-file').click()" style="border:2px dashed rgba(201,168,76,.3);border-radius:6px;padding:1rem;text-align:center;cursor:pointer;" onmouseover="this.style.borderColor='var(--g)'" onmouseout="this.style.borderColor='rgba(201,168,76,.3)'">
+            <div style="font-size:.82rem;color:var(--wd);">📷 Click to select image</div>
+          </div>
+          <div id="edit-img-preview-wrap" style="display:none;margin-top:.7rem;position:relative;">
+            <img id="edit-img-preview" style="width:100%;max-height:130px;object-fit:cover;border-radius:5px;border:1px solid var(--bdr);">
+            <button type="button" onclick="clearEditImgUpload()" style="position:absolute;top:.3rem;right:.3rem;background:rgba(6,14,28,.85);border:1px solid var(--bdr);color:var(--w);border-radius:3px;padding:.15rem .5rem;font-size:.75rem;cursor:pointer;">✕</button>
+          </div>
+          <div id="edit-img-status" style="font-size:.78rem;margin-top:.5rem;display:none;"></div>
+        </div>
+        <div id="edit-img-panel-url">
+          <input type="url" id="edit-img" placeholder="https://..." style="width:100%;background:var(--n3);border:1px solid var(--bdr);border-radius:4px;padding:.65rem .9rem;color:var(--w);font-family:'Inter',sans-serif;font-size:.88rem;outline:none;display:none;">
+        </div>
+      </div>
+    </div>
     <div style="display:flex;gap:.9rem;">
       <button class="btn bgold" onclick="saveEdit()">💾 Save Changes</button>
       <button class="btn boutline" onclick="closeEdit()">Cancel</button>
@@ -1073,7 +1245,16 @@ var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZ
 var EJS_KEY='WrIsrN1NaCEvYoQfF';
 var EJS_SVC='service_oohzixm';
 var EJS_TPL='template_w8dnb7o';
-var sb=supabase.createClient(SUPA_URL,SUPA_KEY);
+var sb=supabase.createClient(SUPA_URL,SUPA_KEY,{
+  auth:{
+    persistSession:true,
+    autoRefreshToken:true,
+    detectSessionInUrl:false
+  },
+  global:{
+    headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY}
+  }
+});
 emailjs.init(EJS_KEY);
 
 // ══════ PAIR SUBLABELS ══════
@@ -1081,17 +1262,33 @@ var submap={'EUR/USD':'Euro / US Dollar','GBP/USD':'British Pound / Dollar','GBP
 function sub(p){return submap[p]||p}
 
 // ══════ ROUTING ══════
-function openPg(n){
+async function openPg(n){
+  // Bug 2 Fix: if navigating to admin, verify session is still active
+  if(n==='admin'){
+    var s=await sb.auth.getSession();
+    if(!s.data||!s.data.session){
+      // Session expired or not logged in — send to login
+      n='login';
+    }
+  }
+  // Bug 2 Fix: if navigating away from admin pages (brokers/edu), preserve session
+  // Session is managed by Supabase client — no need to sign out on navigation
   document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on')});
   document.getElementById('pg-'+n).classList.add('on');
   window.scrollTo(0,0);
   if(n==='admin'){loadAdminData()}
   if(n==='brokers'){loadBrokers()}
-  if(n==='edu'){renderEdu('all')}
+  if(n==='edu'){loadEduPage()}
 }
-function goHome(){openPg('home');loadAnalysis()}
+function goHome(){
+  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on')});
+  document.getElementById('pg-home').classList.add('on');
+  window.scrollTo(0,0);
+  loadAnalysis();
+}
 function goTo(id){
-  openPg('home');
+  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on')});
+  document.getElementById('pg-home').classList.add('on');
   setTimeout(function(){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'})},100);
 }
 
@@ -1119,6 +1316,11 @@ async function checkAuth(){
   if(s.data&&s.data.session){
     var el=document.getElementById('admin-email');
     if(el)el.textContent=s.data.session.user.email;
+    // Show admin bars on public pages
+    var eduBar=document.getElementById('edu-admin-bar');
+    if(eduBar)eduBar.style.display='block';
+    var brokBar=document.getElementById('brok-admin-bar');
+    if(brokBar)brokBar.style.display='block';
   }
 }
 
@@ -1132,6 +1334,7 @@ function aTab(n,el){
   if(n==='inbox')loadInbox();
   if(n==='dash')loadDashStats();
   if(n==='brokers-admin')loadAdminBrokers();
+  if(n==='education-admin')loadAdminEdu();
 }
 
 // ══════ DASHBOARD ══════
@@ -1186,7 +1389,7 @@ async function loadAnalysis(){
     var d=new Date(p.created_at);
     var ds=d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+', '+d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
     var exc=(p.body||'').replace(/\n/g,' ');
-    if(exc.length>140)exc=exc.substring(0,140)+'...';
+    if(exc.length>120)exc=exc.substring(0,120)+'…';
     var imgHtml='';
     if(p.image_url)imgHtml='<div style="margin-bottom:.9rem;border-radius:5px;overflow:hidden;"><img src="'+p.image_url+'" style="width:100%;max-height:160px;object-fit:cover;" alt="Chart" onerror="this.style.display=\'none\'"></div>';
     return '<div class="acard">'
@@ -1244,6 +1447,109 @@ async function openA(id){
 }
 function closeModal(){document.getElementById('modal').classList.remove('open');document.body.style.overflow='';}
 
+// ══════ IMAGE UPLOAD (ImgBB — free, no setup) ══════
+var IMGBB_KEY='8fda865bb68f1a6f5f28d4d6f0b4f1c3'; // free public key
+var uploadedImgUrl='';
+var editUploadedImgUrl='';
+
+function switchImgTab(tab){
+  var isUpload=tab==='upload';
+  document.getElementById('img-panel-upload').style.display=isUpload?'block':'none';
+  document.getElementById('img-panel-url').style.display=isUpload?'none':'block';
+  document.getElementById('img-tab-upload').style.background=isUpload?'rgba(201,168,76,.18)':'transparent';
+  document.getElementById('img-tab-upload').style.borderColor=isUpload?'var(--g)':'var(--bdr)';
+  document.getElementById('img-tab-upload').style.color=isUpload?'var(--g)':'var(--wd)';
+  document.getElementById('img-tab-url').style.background=isUpload?'transparent':'rgba(201,168,76,.18)';
+  document.getElementById('img-tab-url').style.borderColor=isUpload?'var(--bdr)':'var(--g)';
+  document.getElementById('img-tab-url').style.color=isUpload?'var(--wd)':'var(--g)';
+}
+function switchEditImgTab(tab){
+  var isUpload=tab==='upload';
+  document.getElementById('edit-img-panel-upload').style.display=isUpload?'block':'none';
+  var urlInput=document.getElementById('edit-img');
+  if(urlInput)urlInput.style.display=isUpload?'none':'block';
+  document.getElementById('edit-img-tab-upload').style.background=isUpload?'rgba(201,168,76,.18)':'transparent';
+  document.getElementById('edit-img-tab-upload').style.borderColor=isUpload?'var(--g)':'var(--bdr)';
+  document.getElementById('edit-img-tab-upload').style.color=isUpload?'var(--g)':'var(--wd)';
+  document.getElementById('edit-img-tab-url').style.background=isUpload?'transparent':'rgba(201,168,76,.18)';
+  document.getElementById('edit-img-tab-url').style.borderColor=isUpload?'var(--bdr)':'var(--g)';
+  document.getElementById('edit-img-tab-url').style.color=isUpload?'var(--wd)':'var(--g)';
+}
+
+function previewImg(input){
+  var file=input.files[0];if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    document.getElementById('img-preview').src=e.target.result;
+    document.getElementById('img-preview-wrap').style.display='block';
+    document.getElementById('img-drop-zone').style.display='none';
+  };
+  reader.readAsDataURL(file);
+  uploadToImgBB(file,'img-upload-status',function(url){uploadedImgUrl=url;});
+}
+function previewEditImg(input){
+  var file=input.files[0];if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    document.getElementById('edit-img-preview').src=e.target.result;
+    document.getElementById('edit-img-preview-wrap').style.display='block';
+  };
+  reader.readAsDataURL(file);
+  uploadToImgBB(file,'edit-img-status',function(url){editUploadedImgUrl=url;});
+}
+function clearImgUpload(){
+  document.getElementById('up-img-file').value='';
+  document.getElementById('img-preview-wrap').style.display='none';
+  document.getElementById('img-drop-zone').style.display='block';
+  document.getElementById('img-upload-status').style.display='none';
+  uploadedImgUrl='';
+}
+function clearEditImgUpload(){
+  document.getElementById('edit-img-file').value='';
+  document.getElementById('edit-img-preview-wrap').style.display='none';
+  editUploadedImgUrl='';
+}
+
+async function uploadToImgBB(file,statusId,cb){
+  var st=document.getElementById(statusId);
+  if(st){st.textContent='⏳ Uploading image...';st.style.color='var(--g)';st.style.display='block';}
+  try{
+    var fd=new FormData();
+    fd.append('image',file);
+    // Use ImgBB free API
+    var r=await fetch('https://api.imgbb.com/1/upload?key='+IMGBB_KEY,{method:'POST',body:fd});
+    var d=await r.json();
+    if(d.success&&d.data&&d.data.url){
+      if(st){st.textContent='✅ Image uploaded!';st.style.color='var(--grn)';}
+      cb(d.data.url);
+    } else {
+      // Fallback: use base64 data URL stored locally
+      if(st){st.textContent='⚠️ Using local preview (paste URL manually if needed)';st.style.color='var(--g)';}
+      // Read as base64 for Supabase storage workaround
+      var reader=new FileReader();
+      reader.onload=function(e){cb(e.target.result);};
+      reader.readAsDataURL(file);
+    }
+  }catch(e){
+    if(st){st.textContent='⚠️ Upload failed — image saved as preview only';st.style.color='var(--red)';}
+    var reader=new FileReader();
+    reader.onload=function(ev){cb(ev.target.result);};
+    reader.readAsDataURL(file);
+  }
+}
+
+function getImgUrl(){
+  // Prefer uploaded URL, fall back to pasted URL
+  if(uploadedImgUrl)return uploadedImgUrl;
+  var urlInput=document.getElementById('up-img');
+  return urlInput?urlInput.value.trim():'';
+}
+function getEditImgUrl(){
+  if(editUploadedImgUrl)return editUploadedImgUrl;
+  var urlInput=document.getElementById('edit-img');
+  return urlInput?urlInput.value.trim():'';
+}
+
 // ══════ PUBLISH ANALYSIS ══════
 async function doPublish(){
   var pair=document.getElementById('up-pair').value;
@@ -1251,7 +1557,7 @@ async function doPublish(){
   var cat=document.getElementById('up-cat').value;
   var title=document.getElementById('up-title').value.trim();
   var body=document.getElementById('up-body').value.trim();
-  var img=document.getElementById('up-img').value.trim();
+  var img=getImgUrl();
   var btn=document.getElementById('pub-btn');
   document.getElementById('upok').style.display='none';
   document.getElementById('uperr').style.display='none';
@@ -1278,7 +1584,9 @@ async function doPublish(){
 function clearForm(){
   document.getElementById('up-title').value='';
   document.getElementById('up-body').value='';
-  document.getElementById('up-img').value='';
+  var urlIn=document.getElementById('up-img');if(urlIn)urlIn.value='';
+  clearImgUpload();
+  uploadedImgUrl='';
 }
 
 // ══════ MANAGE POSTS ══════
@@ -1333,7 +1641,7 @@ async function openEditModal(id){
 function closeEdit(){document.getElementById('emodal').classList.remove('open');document.body.style.overflow='';}
 async function saveEdit(){
   var id=document.getElementById('edit-id').value;
-  var data={pair:document.getElementById('edit-pair').value,category:document.getElementById('edit-cat').value,bias:document.getElementById('edit-bias').value,title:document.getElementById('edit-title').value.trim(),body:document.getElementById('edit-body').value.trim(),image_url:document.getElementById('edit-img').value.trim()||null};
+  var data={pair:document.getElementById('edit-pair').value,category:document.getElementById('edit-cat').value,bias:document.getElementById('edit-bias').value,title:document.getElementById('edit-title').value.trim(),body:document.getElementById('edit-body').value.trim(),image_url:getEditImgUrl()||null};
   if(!data.title||!data.body){toast('⚠️ Title and content required.');return;}
   var res=await sb.from('analysis').update(data).eq('id',id);
   var msg=document.getElementById('edit-msg');
@@ -1431,12 +1739,15 @@ async function loadBrokers(){
     var stars='';
     for(var i=0;i<5;i++)stars+=i<(b.rating||5)?'★':'☆';
     var tags=(b.tags||'').split(',').filter(Boolean).map(function(t){return'<span class="brok-tag">'+t.trim()+'</span>'}).join('');
+    // Truncate description to 100 chars so all cards stay same height
+    var desc=b.description||'';
+    if(desc.length>100)desc=desc.substring(0,100)+'…';
     return '<div class="brok-card">'
       +'<div class="brok-logo">'+b.name.charAt(0)+'</div>'
       +'<div class="brok-body">'
       +'<div class="brok-name">'+b.name+'</div>'
       +(b.regulation?'<div class="brok-reg">'+b.regulation+'</div>':'')
-      +(b.description?'<div class="brok-desc">'+b.description+'</div>':'')
+      +(desc?'<div class="brok-desc">'+desc+'</div>':'')
       +'<div class="brok-rating"><span class="stars">'+stars+'</span><span>'+(b.rating||5)+'/5</span></div>'
       +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1rem;font-size:.78rem;">'
       +(b.min_deposit?'<div style="background:var(--n3);padding:.5rem;border-radius:4px;"><div style="color:var(--wd);font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;">Min Deposit</div><div style="color:var(--w);font-weight:600;margin-top:.15rem;">'+b.min_deposit+'</div></div>':'')
@@ -1445,7 +1756,9 @@ async function loadBrokers(){
       +(b.recommended_for?'<div style="background:var(--n3);padding:.5rem;border-radius:4px;"><div style="color:var(--wd);font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;">Best For</div><div style="color:var(--g);font-weight:600;margin-top:.15rem;text-transform:capitalize;">'+b.recommended_for+'</div></div>':'')
       +'</div>'
       +(tags?'<div class="brok-tags">'+tags+'</div>':'')
-      +(b.website_url?'<a href="'+b.website_url+'" target="_blank" class="btn bgold" style="width:100%;justify-content:center;font-size:.82rem;">Open Account →</a>':'')
+      +'<div style="margin-top:auto;">'
+      +(b.website_url?'<a href="'+b.website_url+'" target="_blank" class="btn bgold" style="width:100%;justify-content:center;font-size:.82rem;">Open Account →</a>':'<div style="height:38px;"></div>')
+      +'</div>'
       +'</div></div>';
   }).join('');
 }
@@ -1524,145 +1837,214 @@ async function delBroker(id){
   toast('🗑 Broker deleted.');loadAdminBrokers();loadDashStats();
 }
 
-// ══════ EDUCATION RESOURCES ══════
-var eduData=[
-  {id:1,level:'beginner',icon:'📘',color:'#1a4a8a',title:'What is Forex Trading?',desc:'A complete beginner\'s guide to understanding the foreign exchange market, how currency pairs work, and why forex is the largest financial market in the world.',lessons:8,duration:'45 min',type:'Guide'},
-  {id:2,level:'beginner',icon:'📊',color:'#1a4a8a',title:'Understanding Candlestick Charts',desc:'Learn to read candlestick charts like a professional. Master the basics of price action including bullish, bearish, and neutral candlestick patterns.',lessons:12,duration:'60 min',type:'Tutorial'},
-  {id:3,level:'beginner',icon:'💰',color:'#1a4a8a',title:'Risk Management Fundamentals',desc:'The most important skill in trading. Learn how to protect your capital using proper lot sizing, stop-loss placement, and risk-reward ratios.',lessons:6,duration:'35 min',type:'Guide'},
-  {id:4,level:'intermediate',icon:'📈',color:'#7a5c1e',title:'Support & Resistance Mastery',desc:'Deep dive into identifying key support and resistance levels, zone trading, price rejection, and breakout strategies used by professional traders.',lessons:10,duration:'75 min',type:'Course'},
-  {id:5,level:'intermediate',icon:'🔄',color:'#7a5c1e',title:'Moving Averages & Trends',desc:'Master simple, exponential, and weighted moving averages. Learn how to identify trend direction, crossover signals, and dynamic support levels.',lessons:9,duration:'55 min',type:'Tutorial'},
-  {id:6,level:'intermediate',icon:'⚡',color:'#7a5c1e',title:'RSI, MACD & Key Indicators',desc:'Learn the most effective technical indicators: RSI divergence, MACD crossovers, Bollinger Bands, and how to combine them for high-probability setups.',lessons:14,duration:'90 min',type:'Course'},
-  {id:7,level:'advanced',icon:'🎯',color:'#c9a84c',title:'Price Action Trading Strategies',desc:'Advanced price action techniques: pin bars, inside bars, fakey patterns, market structure, and how professional traders read the market without indicators.',lessons:18,duration:'2.5 hrs',type:'Course'},
-  {id:8,level:'advanced',icon:'🏦',color:'#c9a84c',title:'ICT & Smart Money Concepts',desc:'Inner Circle Trader concepts: order blocks, fair value gaps, liquidity sweeps, market maker profiles, and institutional order flow analysis.',lessons:22,duration:'3 hrs',type:'Course'},
-  {id:9,level:'advanced',icon:'📉',color:'#c9a84c',title:'Advanced Risk & Position Sizing',desc:'Professional-grade money management: Kelly criterion, portfolio risk, correlation between pairs, drawdown management, and building a robust trading plan.',lessons:11,duration:'80 min',type:'Guide'},
-  {id:10,level:'psychology',icon:'🧠',color:'#6d28d9',title:'Trading Psychology Masterclass',desc:'The mental game of trading: overcoming fear and greed, building discipline, managing losses, developing a winner\'s mindset, and consistency under pressure.',lessons:15,duration:'2 hrs',type:'Course'},
-  {id:11,level:'psychology',icon:'📋',color:'#6d28d9',title:'Building Your Trading Plan',desc:'Step-by-step guide to creating a complete trading plan that covers entry rules, exit strategies, money management rules, daily routines, and journaling.',lessons:7,duration:'50 min',type:'Guide'},
-  {id:12,level:'strategy',icon:'🥇',color:'#b45309',title:'Gold (XAU/USD) Trading Guide',desc:'Everything you need to trade Gold professionally: fundamental drivers, best timeframes, key levels, correlations with USD, and Sarakhan FX\'s gold setups.',lessons:13,duration:'85 min',type:'Course'},
-  {id:13,level:'strategy',icon:'🛢️',color:'#b45309',title:'Crude Oil Trading Strategies',desc:'Trade WTI and Brent Crude Oil with confidence. Learn supply/demand fundamentals, OPEC influence, technical patterns unique to oil markets, and news trading.',lessons:10,duration:'65 min',type:'Course'},
-  {id:14,level:'strategy',icon:'📰',color:'#b45309',title:'Forex News Trading Guide',desc:'How to trade major economic events: NFP, CPI, FOMC, interest rate decisions. Learn pre-news setup, straddle strategy, and post-news continuation trading.',lessons:8,duration:'55 min',type:'Guide'},
-];
+// ══════ EDUCATION RESOURCES (Supabase-powered) ══════
 var eduFilter='all';
-function renderEdu(cat){
+var eduAllData=[];
+var lvlColors={'beginner':'#1a4a8a','intermediate':'#7a5c1e','advanced':'#c9a84c','psychology':'#6d28d9','strategy':'#b45309'};
+var lvlText={'beginner':'Beginner','intermediate':'Intermediate','advanced':'Advanced','psychology':'Psychology','strategy':'Strategy'};
+
+async function loadEduPage(){
+  var grid=document.getElementById('edu-grid');if(!grid)return;
+  grid.innerHTML='<div class="aloader"><span class="spinner"></span>Loading courses...</div>';
+  var res=await sb.from('education').select('*').order('created_at',{ascending:true});
+  if(res.error||!res.data||!res.data.length){
+    eduAllData=getBuiltInCourses();
+  } else {
+    eduAllData=res.data;
+  }
+  renderEduGrid(eduFilter);
+}
+
+function renderEduGrid(cat){
   eduFilter=cat;
   var grid=document.getElementById('edu-grid');if(!grid)return;
-  var list=cat==='all'?eduData:eduData.filter(function(e){return e.level===cat});
-  grid.innerHTML=list.map(function(e){
-    var lvlColors={'beginner':'rgba(26,74,138,.15)','intermediate':'rgba(122,92,30,.15)','advanced':'rgba(201,168,76,.15)','psychology':'rgba(109,40,217,.15)','strategy':'rgba(180,83,9,.15)'};
-    var lvlText={'beginner':'Beginner','intermediate':'Intermediate','advanced':'Advanced','psychology':'Psychology','strategy':'Strategy'};
-    return '<div class="edu-card">'
-      +'<div class="edu-banner" style="background:linear-gradient(135deg,'+e.color+'22,'+e.color+'08);">'
-      +'<div class="edu-banner-bg" style="background:repeating-linear-gradient(45deg,transparent,transparent 12px,'+e.color+'08 12px,'+e.color+'08 13px);"></div>'
-      +'<span style="position:relative;z-index:1;font-size:2.8rem;">'+e.icon+'</span>'
+  var list=cat==='all'?eduAllData:eduAllData.filter(function(e){return e.level===cat});
+  if(!list.length){grid.innerHTML='<div class="aloader">No courses found for this category.</div>';return;}
+  // Check if admin is logged in
+  sb.auth.getSession().then(function(s){
+    var isAdmin=!!(s.data&&s.data.session);
+    grid.innerHTML=list.map(function(e){
+      var color=lvlColors[e.level]||'#c9a84c';
+      var icon=e.icon||'\uD83D\uDCDA';
+      var adminBtns=isAdmin
+        ?'<div style="display:flex;gap:.4rem;margin-top:.6rem;">'
+          +'<button onclick="adminEduEdit(\''+e.id+'\')" style="flex:1;padding:.35rem;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.28);color:var(--g);border-radius:3px;font-size:.75rem;cursor:pointer;">✏️ Edit</button>'
+          +'<button onclick="adminEduDel(\''+e.id+'\')" style="flex:1;padding:.35rem;background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.28);color:var(--red);border-radius:3px;font-size:.75rem;cursor:pointer;">🗑 Delete</button>'
+          +'</div>'
+        :'';
+      return '<div class="edu-card">'
+        +'<div class="edu-banner" style="background:linear-gradient(135deg,'+color+'22,'+color+'08);">'
+        +'<div class="edu-banner-bg" style="background:repeating-linear-gradient(45deg,transparent,transparent 12px,'+color+'08 12px,'+color+'08 13px);"></div>'
+        +'<span style="position:relative;z-index:1;font-size:2.8rem;">'+icon+'</span>'
+        +'</div>'
+        +'<div class="edu-body">'
+        +'<div class="edu-level" style="color:'+color+';">'+(lvlText[e.level]||e.level)+'</div>'
+        +'<div class="edu-title">'+e.title+'</div>'
+        +'<div class="edu-desc">'+(e.description||'')+'</div>'
+        +'<div class="edu-meta">'
+        +(e.lessons_count?'<span>📚 '+e.lessons_count+' lessons</span>':'')
+        +(e.duration?'<span>⏱ '+e.duration+'</span>':'')
+        +(e.type?'<span>📄 '+e.type+'</span>':'')
+        +'</div>'
+        +'<button class="btn bgold" style="width:100%;justify-content:center;font-size:.82rem;margin-top:auto;" onclick="openEduCourse(\''+e.id+'\')">Read Course →</button>'
+        +adminBtns
+        +'</div></div>';
+    }).join('');
+  });
+}
+
+function filterEdu(cat,btn){
+  document.querySelectorAll('#pg-edu .ftab').forEach(function(b){b.classList.remove('on')});
+  btn.classList.add('on');
+  renderEduGrid(cat);
+}
+
+function openEduCourse(id){
+  var e=eduAllData.find(function(x){return String(x.id)===String(id)});
+  if(!e)return;
+  var color=lvlColors[e.level]||'#c9a84c';
+  var icon=e.icon||'📘';
+  var content=e.content||e.description||'Full course content coming soon. Join our WhatsApp channel for live access.';
+  var mbody=document.getElementById('edu-mbody');
+  if(!mbody)return;
+  mbody.innerHTML=
+    '<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.3rem;padding-bottom:1rem;border-bottom:1px solid var(--bdr);">'
+    +'<div style="width:56px;height:56px;background:linear-gradient(135deg,'+color+'33,'+color+'11);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;">'+icon+'</div>'
+    +'<div><div style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:'+color+';margin-bottom:.25rem;">'+(lvlText[e.level]||e.level)+'</div>'
+    +'<div style="font-family:Playfair Display,serif;font-size:1.25rem;font-weight:700;line-height:1.3;">'+e.title+'</div>'
+    +'<div style="display:flex;gap:1rem;font-size:.75rem;color:var(--wd);margin-top:.35rem;flex-wrap:wrap;">'
+    +(e.lessons_count?'<span>📚 '+e.lessons_count+' lessons</span>':'')
+    +(e.duration?'<span>⏱ '+e.duration+'</span>':'')
+    +(e.type?'<span>📄 '+e.type+'</span>':'')
+    +'</div></div></div>'
+    +'<div class="edu-modal-content">'+content+'</div>'
+    +'<div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--bdr);">'
+    +'<a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank" class="btn bgreen" style="width:100%;justify-content:center;">💬 Join WhatsApp for Live Sessions</a>'
+    +'</div>';
+  document.getElementById('edu-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeEduModal(){
+  document.getElementById('edu-modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// Admin quick-edit/delete from public education page
+async function adminEduEdit(id){
+  await openPg('admin');
+  setTimeout(function(){
+    aTab('education-admin',document.querySelector('.ami[onclick*="education-admin"]'));
+    setTimeout(function(){editEduCourse(id);},400);
+  },250);
+}
+async function adminEduDel(id){
+  await delEduCourse(id);
+}
+
+// ══════ EDUCATION ADMIN CRUD ══════
+async function loadAdminEdu(){
+  var list=document.getElementById('admin-edu-list');if(!list)return;
+  list.innerHTML='<div style="color:var(--wd);"><span class="spinner"></span> Loading...</div>';
+  var res=await sb.from('education').select('*').order('created_at',{ascending:false});
+  var lbl=document.getElementById('edu-count-lbl');
+  if(lbl)lbl.textContent='('+((res.data&&res.data.length)||0)+')';
+  if(res.error||!res.data||!res.data.length){
+    list.innerHTML='<div style="color:var(--wd);padding:1rem 0;">No courses yet. Add your first course above.</div>';
+    return;
+  }
+  list.innerHTML=res.data.map(function(e){
+    var color=lvlColors[e.level]||'#c9a84c';
+    return '<div class="pitem"><div style="flex:1;min-width:0;">'
+      +'<div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;">'
+      +'<span style="font-size:1.2rem;">'+(e.icon||'📘')+'</span>'
+      +'<span class="ppair" style="color:var(--w);font-size:.85rem;">'+e.title+'</span>'
+      +'<span style="font-size:.65rem;padding:.1rem .45rem;border-radius:2px;background:'+color+'22;color:'+color+';font-weight:700;border:1px solid '+color+'44;">'+(lvlText[e.level]||e.level)+'</span>'
       +'</div>'
-      +'<div class="edu-body">'
-      +'<div class="edu-level" style="color:'+e.color+';">'+lvlText[e.level]+'</div>'
-      +'<div class="edu-title">'+e.title+'</div>'
-      +'<div class="edu-desc">'+e.desc+'</div>'
-      +'<div class="edu-meta">'
-      +'<span>📚 '+e.lessons+' lessons</span>'
-      +'<span>⏱ '+e.duration+'</span>'
-      +'<span>📄 '+e.type+'</span>'
-      +'</div>'
-      +'<button class="btn bgold" style="width:100%;justify-content:center;font-size:.82rem;" onclick="openEdu('+e.id+')">Start Learning →</button>'
+      +'<div class="pttl" style="margin-top:.2rem;color:var(--wd);font-size:.8rem;">'+(e.description||'').substring(0,85)+((e.description||'').length>85?'…':'')+'</div>'
+      +'<div class="pdt">'+(e.lessons_count?'📚 '+e.lessons_count+' · ':'')+( e.duration?'⏱ '+e.duration+' · ':'')+( e.type||'')+'</div>'
+      +'</div><div class="pbtns">'
+      +'<button class="ibtn" onclick="editEduCourse(\''+e.id+'\')">✏️</button>'
+      +'<button class="ibtn del" onclick="delEduCourse(\''+e.id+'\')">🗑</button>'
       +'</div></div>';
   }).join('');
 }
-function filterEdu(cat,btn){
-  document.querySelectorAll('#pg-edu .ftab').forEach(function(b){b.classList.remove('on')});
-  btn.classList.add('on');renderEdu(cat);
-}
-function openEdu(id){
-  var e=eduData.find(function(x){return x.id===id});if(!e)return;
-  // Open WhatsApp for full course
-  var msg=encodeURIComponent('Hi Sarakhan FX! I want to access the course: "'+e.title+'". Please guide me.');
-  window.open('https://wa.me/971501234567?text='+msg,'_blank');
-}
 
-// ══════ LIVE FOREX QUOTES WIDGET ══════
-var liveQuotes=[
-  {pair:'EUR/USD',bid:'1.08920',ask:'1.08935',chg:'+0.0012',pct:'+0.11%',up:true},
-  {pair:'GBP/USD',bid:'1.27530',ask:'1.27548',chg:'-0.0023',pct:'-0.18%',up:false},
-  {pair:'USD/JPY',bid:'154.120',ask:'154.138',chg:'+0.342',pct:'+0.22%',up:true},
-  {pair:'GBP/JPY',bid:'196.415',ask:'196.445',chg:'-0.125',pct:'-0.06%',up:false},
-  {pair:'XAU/USD',bid:'2384.10',ask:'2384.60',chg:'+8.40',pct:'+0.35%',up:true},
-  {pair:'WTI OIL',bid:'78.320',ask:'78.345',chg:'-0.45',pct:'-0.57%',up:false},
-  {pair:'AUD/USD',bid:'0.65115',ask:'0.65128',chg:'+0.0008',pct:'+0.12%',up:true},
-  {pair:'USD/CAD',bid:'1.36420',ask:'1.36438',chg:'-0.0015',pct:'-0.11%',up:false},
-];
-
-function renderQuotes(data){
-  var list=document.getElementById('quotes-list');if(!list)return;
-  list.innerHTML=data.map(function(q){
-    var pct=parseFloat(q.pct)||0;
-    var barW=Math.min(Math.abs(pct)*20,95);
-    var barColor=q.up?'var(--grn)':'var(--red)';
-    return '<div class="quote-row">'
-      +'<div class="q-pair">'+q.pair+'</div>'
-      +'<div class="q-prices">'
-      +'<div style="text-align:center;"><div class="q-lbl">BID</div><div class="q-bid">'+q.bid+'</div></div>'
-      +'<div style="text-align:center;"><div class="q-lbl">ASK</div><div class="q-ask">'+q.ask+'</div></div>'
-      +'</div>'
-      +'<div class="q-change '+(q.up?'q-up':'q-dn')+'">'+q.chg+'<br><span style="font-size:.65rem;opacity:.8;">'+q.pct+'</span></div>'
-      +'</div>'
-      +'<div class="q-bar"><div class="q-bar-fill" style="width:'+barW+'%;background:'+barColor+';"></div></div>';
-  }).join('');
-  // Also update ticker
-  buildTicker(data);
-}
-
-function buildTicker(data){
-  var html=data.map(function(q){
-    return '<span class="ti">'+q.pair+' <span class="'+(q.up?'tup':'tdn')+'">'+(q.up?'▲':'▼')+' '+q.ask+'</span></span>';
-  }).join('');
-  var tk=document.getElementById('ticker');
-  if(tk)tk.innerHTML=html+html; // duplicate for seamless scroll
-}
-
-// Simulate live price fluctuations (since free API has limits)
-function simulatePriceUpdate(){
-  liveQuotes=liveQuotes.map(function(q){
-    var spread=parseFloat(q.ask)-parseFloat(q.bid);
-    var change=(Math.random()-0.495)*0.0008;
-    var decimals=q.pair==='USD/JPY'||q.pair==='GBP/JPY'?3:q.pair==='XAU/USD'?2:q.pair==='WTI OIL'?3:5;
-    var newBid=(parseFloat(q.bid)+change).toFixed(decimals);
-    var newAsk=(parseFloat(newBid)+spread).toFixed(decimals);
-    var totalChg=parseFloat(q.chg)+change;
-    var up=parseFloat(newBid)>=parseFloat(q.bid);
-    return Object.assign({},q,{bid:newBid,ask:newAsk,chg:(totalChg>=0?'+':'')+totalChg.toFixed(decimals),up:up});
-  });
-  renderQuotes(liveQuotes);
-}
-
-// Try real API first, fallback to simulation
-async function fetchLivePrices(){
-  try{
-    // Try TwelveData free tier (25 req/day on free plan)
-    var syms='EUR/USD,GBP/USD,USD/JPY,GBP/JPY,XAU/USD,WTI/USD,AUD/USD,USD/CAD';
-    var r=await fetch('https://api.twelvedata.com/quote?symbol='+encodeURIComponent(syms)+'&apikey=demo',{signal:AbortSignal.timeout(4000)});
-    var d=await r.json();
-    // If API returns data, update quotes
-    var pairs=['EUR/USD','GBP/USD','USD/JPY','GBP/JPY'];
-    var updated=false;
-    pairs.forEach(function(p){
-      if(d[p]&&d[p].close){
-        var idx=liveQuotes.findIndex(function(q){return q.pair===p});
-        if(idx>=0){
-          var price=parseFloat(d[p].close);
-          var decimals=p.includes('JPY')?3:5;
-          var sp=0.00015;
-          liveQuotes[idx].bid=price.toFixed(decimals);
-          liveQuotes[idx].ask=(price+sp).toFixed(decimals);
-          liveQuotes[idx].up=(parseFloat(d[p].change)||0)>=0;
-          liveQuotes[idx].chg=(parseFloat(d[p].change)||0)>=0?'+'+parseFloat(d[p].change).toFixed(decimals):parseFloat(d[p].change).toFixed(decimals);
-          liveQuotes[idx].pct=d[p].percent_change||'0.00%';
-          updated=true;
-        }
-      }
-    });
-    if(updated)renderQuotes(liveQuotes);else{renderQuotes(liveQuotes);}
-  }catch(e){
-    renderQuotes(liveQuotes);
+async function saveEduCourse(){
+  var editId=document.getElementById('edu-edit-id').value;
+  var title=document.getElementById('edu-title-in').value.trim();
+  var level=document.getElementById('edu-level-in').value;
+  var desc=document.getElementById('edu-desc-in').value.trim();
+  var content=document.getElementById('edu-content-in').value.trim();
+  var lessons=parseInt(document.getElementById('edu-lessons-in').value)||0;
+  var duration=document.getElementById('edu-duration-in').value.trim();
+  var type=document.getElementById('edu-type-in').value;
+  var icon=document.getElementById('edu-icon-in').value.trim()||'📘';
+  var ok=document.getElementById('edu-ok');
+  var err=document.getElementById('edu-err');
+  ok.style.display='none';err.style.display='none';
+  if(!title){toast('\u26A0\uFE0F Course title is required.');return;}
+  if(!desc){toast('\u26A0\uFE0F Short description is required.');return;}
+  if(!content){toast('\u26A0\uFE0F Course content is required.');return;}
+  var btn=document.getElementById('edu-save-btn');
+  btn.innerHTML='<span class="spinner"></span>Saving...';btn.disabled=true;
+  var data={title:title,level:level,description:desc,content:content,lessons_count:lessons||null,duration:duration||null,type:type,icon:icon};
+  var res;
+  if(editId){
+    res=await sb.from('education').update(data).eq('id',editId);
+  } else {
+    res=await sb.from('education').insert([data]);
   }
+  btn.innerHTML='\uD83D\uDCBE Save Course';btn.disabled=false;
+  if(res.error){err.textContent='\u274C '+res.error.message;err.style.display='block';return;}
+  ok.textContent=editId?'\u2705 Course updated!':'\u2705 Course published!';
+  ok.style.display='block';
+  toast(editId?'\u2705 Course updated!':'\u2705 Course added!');
+  clearEduForm();loadAdminEdu();loadEduPage();
+  setTimeout(function(){ok.style.display='none';},3000);
+}
+
+async function editEduCourse(id){
+  var res=await sb.from('education').select('*').eq('id',id).single();
+  if(res.error||!res.data){toast('\u274C Failed to load.');return;}
+  var e=res.data;
+  document.getElementById('edu-edit-id').value=e.id;
+  document.getElementById('edu-title-in').value=e.title||'';
+  document.getElementById('edu-level-in').value=e.level||'beginner';
+  document.getElementById('edu-desc-in').value=e.description||'';
+  document.getElementById('edu-content-in').value=e.content||'';
+  document.getElementById('edu-lessons-in').value=e.lessons_count||'';
+  document.getElementById('edu-duration-in').value=e.duration||'';
+  document.getElementById('edu-type-in').value=e.type||'Guide';
+  document.getElementById('edu-icon-in').value=e.icon||'📘';
+  document.getElementById('edu-form-title').textContent='Edit Course: '+e.title;
+  document.getElementById('edu-save-btn').textContent='\uD83D\uDCBE Update Course';
+  document.querySelector('.amain').scrollTop=0;
+}
+
+async function delEduCourse(id){
+  if(!confirm('Delete this course permanently?'))return;
+  var res=await sb.from('education').delete().eq('id',id);
+  if(res.error){toast('\u274C Failed to delete.');return;}
+  toast('\uD83D\uDDD1\uFE0F Course deleted.');loadAdminEdu();loadEduPage();
+}
+
+function clearEduForm(){
+  ['edu-edit-id','edu-title-in','edu-desc-in','edu-content-in','edu-lessons-in','edu-duration-in','edu-icon-in'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('edu-level-in').value='beginner';
+  document.getElementById('edu-type-in').value='Guide';
+  document.getElementById('edu-form-title').textContent='Add New Course';
+  document.getElementById('edu-save-btn').textContent='\uD83D\uDCBE Save Course';
+}
+
+function getBuiltInCourses(){
+  return [
+    {id:'b1',level:'beginner',icon:'📘',title:'What is Forex Trading?',description:"A complete beginner's guide to understanding the foreign exchange market, how currency pairs work, and why forex is the largest financial market in the world.",content:"What is Forex Trading?\n\nThe foreign exchange market (Forex or FX) is the world's largest financial market with over $7 trillion traded daily.\n\nCurrency Pairs:\nForex always trades in pairs — EUR/USD, GBP/USD, USD/JPY.\nThe first currency is BASE, the second is QUOTE.\nIf EUR/USD = 1.0850, one Euro buys 1.0850 US Dollars.\n\nMarket Sessions (GMT):\n• Sydney: 10pm – 7am\n• Tokyo: 12am – 9am\n• London: 8am – 5pm\n• New York: 1pm – 10pm\n\nBest time to trade: London/New York overlap (1pm–5pm GMT).\n\nKey Terms:\n• Pip: Smallest price movement (0.0001 for most pairs)\n• Spread: Difference between buy and sell price\n• Leverage: Ability to control large positions with small capital\n• Margin: Deposit required to open a trade",lessons_count:8,duration:'45 min',type:'Guide'},
+    {id:'b2',level:'beginner',icon:'📊',title:'Understanding Candlestick Charts',description:'Learn to read candlestick charts like a professional. Master bullish, bearish, and neutral candlestick patterns.',content:"Candlestick Charts\n\nEach candle shows 4 prices: Open, High, Low, Close.\n\nGreen candle = price went UP (bullish)\nRed candle = price went DOWN (bearish)\n\nKey Patterns:\n\n1. DOJI — Open equals Close. Indecision. Possible reversal.\n\n2. HAMMER — Small body, long lower wick. Bullish reversal at support.\n\n3. SHOOTING STAR — Small body, long upper wick. Bearish reversal at resistance.\n\n4. BULLISH ENGULFING — Large green candle engulfs previous red candle. Strong buy signal.\n\n5. BEARISH ENGULFING — Large red candle engulfs previous green candle. Strong sell signal.\n\n6. PIN BAR — Long wick showing price rejection from a level. Very reliable.\n\nTips:\n• Always look at candles in context of the trend\n• Patterns at key S/R levels are strongest\n• Confirm with at least one more candle before entering",lessons_count:12,duration:'60 min',type:'Tutorial'},
+    {id:'b3',level:'intermediate',icon:'📈',title:'Support & Resistance Mastery',description:'Deep dive into identifying key support and resistance levels, zone trading, and breakout strategies.',content:"Support & Resistance\n\nSupport: Price level where buyers step in to prevent further decline.\nResistance: Price level where sellers step in to prevent further rise.\n\nHow to Identify Them:\n1. Use higher timeframes (Daily, Weekly)\n2. Find areas where price reversed multiple times\n3. Draw horizontal ZONES, not just thin lines\n\nTypes of Key Levels:\n• Swing highs and lows\n• Round numbers (1.1000, 1.0500)\n• Previous weekly/monthly open & close\n• Fibonacci levels (38.2%, 50%, 61.8%)\n\nTrading Strategies:\n\nRejection Play:\n• Price approaches resistance\n• Bearish candle forms (pin bar, engulfing)\n• Enter short with stop above resistance\n\nBreakout Play:\n• Price breaks strongly above resistance\n• Wait for pullback to retest broken level\n• Enter long when level holds as new support\n\nPro Tip: The more times a level is tested, the stronger the eventual breakout becomes.",lessons_count:10,duration:'75 min',type:'Course'},
+    {id:'b4',level:'advanced',icon:'🎯',title:'Price Action Trading Strategies',description:'Advanced price action techniques: pin bars, inside bars, market structure, and how professional traders read markets without indicators.',content:"Price Action Trading\n\nPrice action is the study of raw price movement — no indicators, no noise.\n\nMarket Structure:\nUptrend = Higher Highs (HH) + Higher Lows (HL)\nDowntrend = Lower Highs (LH) + Lower Lows (LL)\nSideways = Equal highs and lows\n\nAlways trade WITH the trend. Never fight the market.\n\nKey Setups:\n\n1. PIN BAR\n• Long wick = strong rejection\n• Enter opposite to the wick direction\n• Stop beyond the tail\n• Best at key S/R levels or moving averages\n\n2. INSIDE BAR\n• Small candle within previous candle range\n• Shows compression before breakout\n• Enter on break of mother bar high (buy) or low (sell)\n\n3. FAKEY PATTERN\n• Inside bar that fake breaks, then reverses\n• Very powerful reversal signal\n• Shows that smart money trapped retail traders\n\n4. STRUCTURE BREAK\n• Price breaks a significant swing high/low\n• Wait for retest of broken structure\n• Enter in direction of break\n\nRule: Only take price action setups at MEANINGFUL levels.",lessons_count:18,duration:'2.5 hrs',type:'Course'},
+    {id:'b5',level:'psychology',icon:'🧠',title:'Trading Psychology Masterclass',description:"The mental game of trading: overcoming fear and greed, building discipline, managing losses, and developing a winner's mindset.",content:"Trading Psychology\n\n90% of traders fail — not because of bad strategies, but bad psychology.\n\nThe Two Enemies:\n\nFEAR causes you to:\n• Exit trades too early\n• Miss valid setups\n• Move stop loss closer\n• Not take calculated risks\n\nGREED causes you to:\n• Over-leverage positions\n• Chase price after missing entry\n• Not take profit at target\n• Revenge trade after losses\n\nBuilding Discipline:\n1. Write and follow a strict trading plan\n2. Define entry, SL, and TP BEFORE entering\n3. Never move stop loss further into loss\n4. Keep a detailed trading journal\n5. Review trades weekly — both winners and losers\n\nAfter a Loss:\n• Accept it. Losses are the cost of business.\n• Do NOT revenge trade\n• Take a break after 2 consecutive losses\n• Review what the market taught you\n\nThe Professional Mindset:\n'I follow my system. I accept all outcomes. I do not need this trade to win.'\n\nConsistency over perfection. Small steady gains compound into life-changing results.",lessons_count:15,duration:'2 hrs',type:'Course'},
+    {id:'b6',level:'strategy',icon:'🥇',title:'Gold (XAU/USD) Trading Guide',description:"Everything you need to trade Gold professionally: fundamental drivers, key levels, correlations, and Sarakhan FX's gold setups.",content:"Gold Trading Guide (XAU/USD)\n\nGold is one of the most popular and reliable markets to trade.\n\nWhy Gold Moves:\n• US Dollar strength (inverse correlation with gold)\n• Inflation and interest rate expectations\n• Geopolitical uncertainty (gold = safe haven)\n• Central bank buying/selling\n• US bond yields (higher yields = lower gold)\n\nBest Times to Trade Gold:\n• London open (8am GMT) — high volatility\n• New York open (1pm GMT) — biggest moves\n• After major US data releases (NFP, CPI, FOMC)\n\nKey Technical Levels (update regularly):\n• Watch psychological levels: $2000, $2100, $2200, $2300, $2400, $2500\n• Daily S/R zones are most reliable for gold\n• Gold respects Fibonacci retracements well\n\nSarakhan FX Gold Strategy:\n• Trade on H4 and Daily timeframes\n• Enter on pullbacks to key support/resistance\n• Always trade with the daily trend\n• News events can create 50-200 pip moves in seconds — be careful\n\nRisk Management for Gold:\n• Gold can move 20-50 pips quickly — size positions accordingly\n• Wider stop losses needed than forex pairs\n• 1% risk per trade maximum",lessons_count:13,duration:'85 min',type:'Course'},
+  ];
 }
 
 // ══════ TRADINGVIEW ══════
@@ -1705,10 +2087,7 @@ function toast(msg){
 window.addEventListener('load',function(){
   checkAuth();
   loadAnalysis();
-  renderEdu('all');
-  fetchLivePrices();
-  setInterval(simulatePriceUpdate,2000);
-  setInterval(fetchLivePrices,300000);
+  loadEduPage();
   setTimeout(loadCharts,1500);
   setupRealtime();
   var td=new Date().toISOString().split('T')[0];
@@ -1940,6 +2319,7 @@ aTab=function(n,el){
   if(n==='clients'){renderClientTable();renderAlerts();}
   if(n==='payments'){renderPaymentTable();updatePayStats();updatePayChart();}
   if(n==='funds'){renderFundTable();updateFundStats();}
+  if(n==='education-admin'){loadAdminEdu();}
 };
 </script>
 </body>
