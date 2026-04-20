@@ -296,6 +296,7 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
     <a onclick="goTo('analysis')">Analysis</a>
     <a onclick="openPg('brokers')">Brokers</a>
     <a onclick="openPg('edu')">Education</a>
+    <a onclick="openPg('signals')">Signals</a>
     <a onclick="goTo('contact')">Contact</a>
     <a class="nbtn" onclick="openPg('login')">Admin</a>
   </div>
@@ -309,6 +310,7 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
   <a onclick="goTo('analysis');closeMob()">Analysis</a>
   <a onclick="openPg('brokers');closeMob()">Brokers</a>
   <a onclick="openPg('edu');closeMob()">Education</a>
+  <a onclick="openPg('signals');closeMob()">Signals</a>
   <a onclick="goTo('contact');closeMob()">Contact</a>
   <a onclick="openPg('login');closeMob()">Admin Login</a>
 </div>
@@ -597,6 +599,7 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
       <a onclick="goTo('about')">About Us</a>
       <a onclick="openPg('brokers')">Brokers</a>
       <a onclick="openPg('edu')">Education</a>
+      <a onclick="openPg('signals')">Daily Signals</a>
       <a onclick="goTo('contact')">Contact</a>
     </div>
     <div class="fcol">
@@ -630,6 +633,91 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
     </div>
     <div class="brok-grid" id="brok-grid">
       <div class="aloader"><span class="spinner"></span>Loading brokers...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= SIGNALS PAGE ======= -->
+<div id="pg-signals" class="pg">
+  <div style="padding:100px 5% 80px;min-height:100vh;background:var(--n);">
+    <div class="sh">
+      <div class="sh-tag">Live Trading</div>
+      <div class="sh-line"></div>
+      <h2 class="sh-title">Daily <em>Signals</em></h2>
+      <p class="sh-sub">Professional Forex signals with full trade history — entry, result, pips, and close type. Updated after every trade.</p>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem;margin-bottom:2rem;">
+      <a class="btn boutline" style="font-size:.8rem;padding:.4rem 1rem;" onclick="goHome()">&#8592; Back to Home</a>
+      <div id="sig-admin-bar" style="display:none;">
+        <button class="btn bgold" style="font-size:.78rem;padding:.4rem 1rem;" onclick="openPg('admin');setTimeout(function(){aTab('signals',document.querySelector('.ami[onclick*=signals]'));},200);">&#9881;&#65039; Manage Signals (Admin)</button>
+      </div>
+    </div>
+    <!-- Stats bar -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.9rem;margin-bottom:2.5rem;">
+      <div style="background:var(--n2);border:1px solid var(--bdr);border-radius:8px;padding:1.2rem;text-align:center;">
+        <div style="font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;color:var(--grn);" id="pub-wr">–</div>
+        <div style="font-size:.7rem;color:var(--wd);text-transform:uppercase;letter-spacing:.07em;margin-top:.2rem;">Win Rate</div>
+      </div>
+      <div style="background:var(--n2);border:1px solid var(--bdr);border-radius:8px;padding:1.2rem;text-align:center;">
+        <div style="font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;" id="pub-netpips">–</div>
+        <div style="font-size:.7rem;color:var(--wd);text-transform:uppercase;letter-spacing:.07em;margin-top:.2rem;">Net Pips</div>
+      </div>
+      <div style="background:var(--n2);border:1px solid var(--bdr);border-radius:8px;padding:1.2rem;text-align:center;">
+        <div style="font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;color:var(--g);" id="pub-rr">–</div>
+        <div style="font-size:.7rem;color:var(--wd);text-transform:uppercase;letter-spacing:.07em;margin-top:.2rem;">Avg R:R</div>
+      </div>
+      <div style="background:var(--n2);border:1px solid var(--bdr);border-radius:8px;padding:1.2rem;text-align:center;">
+        <div style="font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;color:var(--w);" id="pub-total">–</div>
+        <div style="font-size:.7rem;color:var(--wd);text-transform:uppercase;letter-spacing:.07em;margin-top:.2rem;">Total Signals</div>
+      </div>
+    </div>
+    <!-- Active Signals -->
+    <div style="margin-bottom:2.5rem;">
+      <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:1.2rem;">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--grn);box-shadow:0 0 7px var(--grn);animation:bk 1.6s ease infinite;"></span>
+        <span style="font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;">Active Signals</span>
+        <span style="font-size:.72rem;color:var(--wd);">Currently open trades</span>
+      </div>
+      <div id="pub-active-signals" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;">
+        <div class="aloader"><span class="spinner"></span>Loading...</div>
+      </div>
+    </div>
+    <!-- Filter + History -->
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem;margin-bottom:1.3rem;">
+      <div style="font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;">Signal History</div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+        <button class="ftab on" onclick="pubSigFilter('all',this)">All</button>
+        <button class="ftab" onclick="pubSigFilter('win',this)">Wins</button>
+        <button class="ftab" onclick="pubSigFilter('loss',this)">Losses</button>
+      </div>
+    </div>
+    <div style="background:var(--n2);border:1px solid var(--bdr);border-radius:8px;overflow:hidden;">
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:.84rem;">
+          <thead>
+            <tr style="background:var(--n3);border-bottom:1px solid var(--bdr);">
+              <th style="padding:10px 12px;text-align:left;color:var(--g);font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;">Date / Time</th>
+              <th style="padding:10px 12px;text-align:left;color:var(--g);font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;">Pair</th>
+              <th style="padding:10px 12px;text-align:left;color:var(--g);font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;">Dir</th>
+              <th style="padding:10px 12px;text-align:left;color:var(--g);font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;">Entry</th>
+              <th style="padding:10px 12px;text-align:left;color:var(--g);font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;">SL</th>
+              <th style="padding:10px 12px;text-align:left;color:var(--g);font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;">TP</th>
+              <th style="padding:10px 12px;text-align:left;color:var(--g);font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;">Pips</th>
+              <th style="padding:10px 12px;text-align:left;color:var(--g);font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;">Close Type</th>
+              <th style="padding:10px 12px;text-align:left;color:var(--g);font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;">Result</th>
+            </tr>
+          </thead>
+          <tbody id="pub-sig-tbody">
+            <tr><td colspan="9" style="padding:2.5rem;text-align:center;color:var(--wd);"><span class="spinner"></span> Loading signals...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- CTA -->
+    <div style="margin-top:3rem;background:var(--n2);border:1px solid var(--bdr);border-radius:10px;padding:2rem;text-align:center;">
+      <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:.5rem;">Get Signals <em style="color:var(--g);">Before They Post</em></div>
+      <p style="color:var(--wd);font-size:.9rem;margin-bottom:1.3rem;">Join our WhatsApp channel to receive live signals instantly — with chart screenshots and full analysis.</p>
+      <a href="https://whatsapp.com/channel/0029Vb7ynnYDDmFc9DZYg91F" target="_blank" class="btn bgreen" style="display:inline-flex;">&#128172; Join WhatsApp Channel</a>
     </div>
   </div>
 </div>
@@ -902,24 +990,40 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
           <div class="ahdr"><h2 class="atl">Daily Signals</h2></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-bottom:1.4rem;">
             <div class="acard">
-              <div class="acardt">Add New Signal</div>
-              <div class="fg"><label>Currency Pair</label>
-                <select id="sig-pair">
-                  <option>EURUSD</option><option>GBPUSD</option><option>USDCHF</option><option>USDCAD</option>
-                  <option>XAUUSD (Gold)</option><option>GBPAUD</option><option>GBPNZD</option><option>GBPCAD</option>
-                  <option>AUDUSD</option><option>NZDUSD</option><option>EURAUD</option><option>CRUDE OIL</option>
-                  <option>BTCUSD</option><option>ETHUSD</option><option>BINANCE</option>
-                </select>
-              </div>
+              <div class="acardt" id="sig-form-title">Add New Signal</div>
+              <input type="hidden" id="sig-edit-id">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                <div class="fg"><label>Currency Pair</label>
+                  <select id="sig-pair">
+                    <option>EURUSD</option><option>GBPUSD</option><option>USDCHF</option><option>USDCAD</option>
+                    <option>XAUUSD (Gold)</option><option>GBPAUD</option><option>GBPNZD</option><option>GBPCAD</option>
+                    <option>AUDUSD</option><option>NZDUSD</option><option>EURAUD</option><option>CRUDE OIL</option>
+                    <option>BTCUSD</option><option>ETHUSD</option><option>USDJPY</option>
+                  </select>
+                </div>
                 <div class="fg"><label>Direction</label><select id="sig-dir"><option value="BUY">BUY</option><option value="SELL">SELL</option></select></div>
-                <div class="fg"><label>Pips (+/-)</label><input type="number" id="sig-pips" placeholder="e.g. 45 or -20"></div>
-                <div class="fg"><label>Risk (pips SL)</label><input type="number" id="sig-risk" placeholder="Stop loss pips"></div>
-                <div class="fg"><label>Reward (pips TP)</label><input type="number" id="sig-reward" placeholder="Take profit pips"></div>
+                <div class="fg"><label>Entry Price</label><input type="number" id="sig-entry" step="any" placeholder="e.g. 1.0850"></div>
+                <div class="fg"><label>Stop Loss (SL)</label><input type="number" id="sig-sl" step="any" placeholder="e.g. 1.0800"></div>
+                <div class="fg"><label>Take Profit (TP)</label><input type="number" id="sig-tp" step="any" placeholder="e.g. 1.0920"></div>
+                <div class="fg"><label>Status</label>
+                  <select id="sig-status">
+                    <option value="active">Active (Open)</option>
+                    <option value="tp_hit">TP Hit (Win)</option>
+                    <option value="sl_hit">SL Hit (Loss)</option>
+                    <option value="manual">Manual Close</option>
+                  </select>
+                </div>
+                <div class="fg"><label>Pips Result (+/-)</label><input type="number" id="sig-pips" placeholder="e.g. 55 or -20"></div>
+                <div class="fg"><label>Date</label><input type="date" id="sig-date"></div>
+                <div class="fg"><label>Time</label><input type="time" id="sig-time" value="09:00"></div>
+                <div class="fg"><label>Notes (optional)</label><input type="text" id="sig-notes" placeholder="Brief note"></div>
               </div>
-              <div class="fg"><label>Date</label><input type="date" id="sig-date"></div>
-              <div class="fg"><label>Notes (optional)</label><input type="text" id="sig-notes" placeholder="Brief note"></div>
-              <button class="btn bgold" onclick="addSignal()">Add Signal</button>
+              <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:.4rem;">
+                <button class="btn bgold" id="sig-save-btn" onclick="saveSignalSB()">&#128229; Publish Signal</button>
+                <button class="btn boutline" onclick="clearSigForm()">Clear</button>
+              </div>
+              <div class="upok" id="sig-ok"></div>
+              <div class="uperr" id="sig-err"></div>
             </div>
             <div class="acard">
               <div class="acardt">Win Rate Summary</div>
@@ -942,23 +1046,23 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
           </div>
           <div class="acard">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--bdr);">
-              <span style="font-weight:600;font-size:.9rem;color:var(--g);">Signal History</span>
-              <select id="sig-filter" onchange="renderSignalTable()" style="background:var(--n2);border:1px solid var(--bdr);color:var(--w);padding:.3rem .6rem;border-radius:4px;font-size:.8rem;">
+              <span style="font-weight:600;font-size:.9rem;color:var(--g);">Signal History <span id="sig-count-lbl" style="font-weight:400;color:var(--wd);font-size:.8rem;"></span></span>
+              <select id="sig-filter" onchange="loadAdminSignals()" style="background:var(--n2);border:1px solid var(--bdr);color:var(--w);padding:.3rem .6rem;border-radius:4px;font-size:.8rem;">
                 <option value="all">All Pairs</option>
-                <option>EURUSD</option><option>GBPUSD</option><option>XAUUSD (Gold)</option><option>BTCUSD</option><option>CRUDE OIL</option>
+                <option>EURUSD</option><option>GBPUSD</option><option>XAUUSD (Gold)</option><option>CRUDE OIL</option><option>USDJPY</option>
               </select>
             </div>
             <div style="overflow-x:auto;">
               <table style="width:100%;border-collapse:collapse;font-size:.83rem;">
                 <thead><tr style="border-bottom:1px solid var(--bdr);">
-                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Date</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Date/Time</th>
                   <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Pair</th>
                   <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Dir</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Entry</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">SL</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">TP</th>
                   <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Pips</th>
-                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Risk</th>
-                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Reward</th>
-                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">R:R</th>
-                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Notes</th>
+                  <th style="padding:7px 8px;text-align:left;color:var(--wd);font-weight:500;font-size:.75rem;">Status</th>
                   <th></th>
                 </tr></thead>
                 <tbody id="sig-table"></tbody>
@@ -1240,8 +1344,8 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://s3.tradingview.com/tv.js"></script>
 <script>
 // ══════ CONFIG ══════
-var SUPA_URL='https://bfbnarzvocrvqwxqwumy.supabase.co';
-var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmYm5hcnp2b2NydnF3eHF3dW15Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyNzg1NDIsImV4cCI6MjA5MDg1NDU0Mn0.IPUwg0-IhVhudinVYC3iAy_OP1oL545uLJSkIGbdfeU';
+var SUPA_URL='https://nyhptofxsiznabwkhpcj.supabase.co';
+var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im55aHB0b2Z4c2l6bmFid2tocGNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2NjY4MTAsImV4cCI6MjA5MjI0MjgxMH0.mg1IwF3zDrhFxfiMCtXbGOfyGz5p7lxsXXyVzX22t2E';
 var EJS_KEY='WrIsrN1NaCEvYoQfF';
 var EJS_SVC='service_oohzixm';
 var EJS_TPL='template_w8dnb7o';
@@ -1279,6 +1383,7 @@ async function openPg(n){
   if(n==='admin'){loadAdminData()}
   if(n==='brokers'){loadBrokers()}
   if(n==='edu'){loadEduPage()}
+  if(n==='signals'){loadPubSignals();checkAuth()}
 }
 function goHome(){
   document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on')});
@@ -1321,6 +1426,8 @@ async function checkAuth(){
     if(eduBar)eduBar.style.display='block';
     var brokBar=document.getElementById('brok-admin-bar');
     if(brokBar)brokBar.style.display='block';
+    var sigBar=document.getElementById('sig-admin-bar');
+    if(sigBar)sigBar.style.display='block';
   }
 }
 
@@ -1335,6 +1442,7 @@ function aTab(n,el){
   if(n==='dash')loadDashStats();
   if(n==='brokers-admin')loadAdminBrokers();
   if(n==='education-admin')loadAdminEdu();
+  if(n==='signals')loadAdminSignals();
 }
 
 // ══════ DASHBOARD ══════
@@ -2106,7 +2214,233 @@ function loadChartJS(cb){
 function lsGet(k){try{return JSON.parse(localStorage.getItem('sfx_'+k)||'[]');}catch(e){return[];}}
 function lsSet(k,v){try{localStorage.setItem('sfx_'+k,JSON.stringify(v));}catch(e){}}
 
-var signals=lsGet('signals');
+// ══════ SIGNALS — SUPABASE POWERED ══════
+var sbSignalsAll=[];
+var pubSigAllData=[];
+var pubSigFilterMode='all';
+
+function sigStatusLabel(s){
+  if(s==='active')return'<span style="background:rgba(0,200,83,.14);color:var(--grn);padding:2px 8px;border-radius:2px;font-size:.72rem;font-weight:700;">ACTIVE</span>';
+  if(s==='tp_hit')return'<span style="background:rgba(0,200,83,.14);color:var(--grn);padding:2px 8px;border-radius:2px;font-size:.72rem;font-weight:700;">TP HIT</span>';
+  if(s==='sl_hit')return'<span style="background:rgba(229,57,53,.14);color:var(--red);padding:2px 8px;border-radius:2px;font-size:.72rem;font-weight:700;">SL HIT</span>';
+  if(s==='manual')return'<span style="background:rgba(201,168,76,.14);color:var(--g);padding:2px 8px;border-radius:2px;font-size:.72rem;font-weight:700;">MANUAL</span>';
+  return'<span style="color:var(--wd);">'+s+'</span>';
+}
+function sigCloseLabel(s){
+  if(s==='tp_hit')return'TP Hit';
+  if(s==='sl_hit')return'SL Hit';
+  if(s==='manual')return'Manual Close';
+  if(s==='active')return'Open';
+  return s||'–';
+}
+
+async function saveSignalSB(){
+  var editId=document.getElementById('sig-edit-id').value;
+  var pair=document.getElementById('sig-pair').value;
+  var dir=document.getElementById('sig-dir').value;
+  var entry=parseFloat(document.getElementById('sig-entry').value)||null;
+  var sl=parseFloat(document.getElementById('sig-sl').value)||null;
+  var tp=parseFloat(document.getElementById('sig-tp').value)||null;
+  var status=document.getElementById('sig-status').value;
+  var pips=parseFloat(document.getElementById('sig-pips').value)||0;
+  var date=document.getElementById('sig-date').value||sfxToday();
+  var time=document.getElementById('sig-time').value||'09:00';
+  var notes=document.getElementById('sig-notes').value.trim();
+  var ok=document.getElementById('sig-ok');
+  var err=document.getElementById('sig-err');
+  ok.style.display='none';err.style.display='none';
+  if(!pair){toast('Select a pair.');return;}
+  var btn=document.getElementById('sig-save-btn');
+  btn.innerHTML='<span class="spinner"></span>Saving...';btn.disabled=true;
+  var data={pair:pair,direction:dir,entry_price:entry,sl:sl,tp:tp,status:status,pips:pips,signal_date:date,signal_time:time,notes:notes};
+  var res=editId
+    ?await sb.from('signals').update(data).eq('id',editId)
+    :await sb.from('signals').insert([data]);
+  btn.innerHTML='&#128229; Publish Signal';btn.disabled=false;
+  if(res.error){err.textContent='Error: '+res.error.message;err.style.display='block';return;}
+  ok.textContent=editId?'Signal updated!':'Signal published!';ok.style.display='block';
+  toast(editId?'Signal updated!':'Signal published!');
+  clearSigForm();loadAdminSignals();loadPubSignals();
+  setTimeout(function(){ok.style.display='none';},2500);
+}
+
+function clearSigForm(){
+  document.getElementById('sig-edit-id').value='';
+  document.getElementById('sig-entry').value='';
+  document.getElementById('sig-sl').value='';
+  document.getElementById('sig-tp').value='';
+  document.getElementById('sig-pips').value='';
+  document.getElementById('sig-notes').value='';
+  document.getElementById('sig-status').value='active';
+  document.getElementById('sig-form-title').textContent='Add New Signal';
+  document.getElementById('sig-save-btn').textContent='&#128229; Publish Signal';
+  var td=sfxToday();
+  var ts=document.getElementById('sig-date');if(ts)ts.value=td;
+  var tt=document.getElementById('sig-time');if(tt)tt.value='09:00';
+}
+
+async function loadAdminSignals(){
+  var tb=document.getElementById('sig-table');if(!tb)return;
+  tb.innerHTML='<tr><td colspan="9" style="padding:1rem;text-align:center;color:var(--wd);"><span class="spinner"></span></td></tr>';
+  var fv=document.getElementById('sig-filter')?document.getElementById('sig-filter').value:'all';
+  var q=sb.from('signals').select('*').order('signal_date',{ascending:false}).order('signal_time',{ascending:false});
+  var res=await q;
+  if(res.error||!res.data){tb.innerHTML='<tr><td colspan="9" style="padding:1rem;text-align:center;color:var(--red);">Failed to load.</td></tr>';return;}
+  sbSignalsAll=res.data;
+  var rows=fv==='all'?sbSignalsAll:sbSignalsAll.filter(function(s){return s.pair===fv;});
+  var lbl=document.getElementById('sig-count-lbl');if(lbl)lbl.textContent='('+rows.length+')';
+  if(!rows.length){tb.innerHTML='<tr><td colspan="9" style="padding:1.5rem;text-align:center;color:var(--wd);">No signals yet.</td></tr>';updateSigSummaryFromData(sbSignalsAll);return;}
+  tb.innerHTML=rows.map(function(s){
+    var dc=s.direction==='BUY'?'background:rgba(0,200,83,.14);color:var(--grn)':'background:rgba(229,57,53,.14);color:var(--red)';
+    var pc=s.pips>=0?'color:var(--grn)':'color:var(--red)';
+    return '<tr style="border-bottom:1px solid var(--bdr);">'
+      +'<td style="padding:7px 8px;font-size:.8rem;color:var(--wd);">'+s.signal_date+(s.signal_time?' '+s.signal_time:'')+'</td>'
+      +'<td style="padding:7px 8px;font-family:monospace;color:var(--g);font-weight:700;">'+s.pair+'</td>'
+      +'<td style="padding:7px 8px;"><span style="'+dc+';padding:2px 7px;border-radius:2px;font-size:.72rem;font-weight:700;">'+s.direction+'</span></td>'
+      +'<td style="padding:7px 8px;color:var(--w);">'+(s.entry_price||'–')+'</td>'
+      +'<td style="padding:7px 8px;color:var(--red);">'+(s.sl||'–')+'</td>'
+      +'<td style="padding:7px 8px;color:var(--grn);">'+(s.tp||'–')+'</td>'
+      +'<td style="padding:7px 8px;'+pc+';font-weight:600;">'+(s.pips>=0?'+':'')+s.pips+'</td>'
+      +'<td style="padding:7px 8px;">'+sigStatusLabel(s.status)+'</td>'
+      +'<td style="padding:7px 8px;display:flex;gap:.3rem;">'
+      +'<button onclick="editSignalSB(\''+s.id+'\')" style="background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.28);color:var(--g);border-radius:3px;padding:2px 7px;font-size:.72rem;cursor:pointer;">Edit</button>'
+      +'<button onclick="delSignalSB(\''+s.id+'\')" style="background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.3);color:var(--red);border-radius:3px;padding:2px 7px;font-size:.72rem;cursor:pointer;">Del</button>'
+      +'</td></tr>';
+  }).join('');
+  updateSigSummaryFromData(sbSignalsAll);
+  updateSigChart();
+}
+
+function editSignalSB(id){
+  var s=sbSignalsAll.find(function(x){return String(x.id)===String(id);});
+  if(!s)return;
+  document.getElementById('sig-edit-id').value=s.id;
+  document.getElementById('sig-pair').value=s.pair;
+  document.getElementById('sig-dir').value=s.direction;
+  document.getElementById('sig-entry').value=s.entry_price||'';
+  document.getElementById('sig-sl').value=s.sl||'';
+  document.getElementById('sig-tp').value=s.tp||'';
+  document.getElementById('sig-status').value=s.status||'active';
+  document.getElementById('sig-pips').value=s.pips||0;
+  document.getElementById('sig-date').value=s.signal_date||sfxToday();
+  document.getElementById('sig-time').value=s.signal_time||'09:00';
+  document.getElementById('sig-notes').value=s.notes||'';
+  document.getElementById('sig-form-title').textContent='Edit Signal: '+s.pair;
+  document.getElementById('sig-save-btn').textContent='Update Signal';
+  document.querySelector('#a-signals').scrollTop=0;
+  document.querySelector('.amain').scrollTop=0;
+}
+
+async function delSignalSB(id){
+  if(!confirm('Delete this signal?'))return;
+  await sb.from('signals').delete().eq('id',id);
+  toast('Deleted.');loadAdminSignals();loadPubSignals();
+}
+
+function updateSigSummaryFromData(data){
+  var closed=data.filter(function(s){return s.status!=='active';});
+  var wins=data.filter(function(s){return s.pips>0&&s.status!=='active';}).length;
+  var wr=closed.length?Math.round(wins/closed.length*100):0;
+  var net=data.reduce(function(a,s){return a+(s.pips||0);},0);
+  var el=document.getElementById('wr-rate');if(el)el.textContent=wr+'%';
+  el=document.getElementById('wr-pips');if(el){el.textContent=(net>=0?'+':'')+net;el.style.color=net>=0?'var(--grn)':'var(--red)';}
+}
+
+// ══════ PUBLIC SIGNALS PAGE ══════
+async function loadPubSignals(){
+  var res=await sb.from('signals').select('*').order('signal_date',{ascending:false}).order('signal_time',{ascending:false});
+  if(res.error||!res.data){
+    var tb=document.getElementById('pub-sig-tbody');
+    if(tb)tb.innerHTML='<tr><td colspan="9" style="padding:2rem;text-align:center;color:var(--wd);">Failed to load. Please refresh.</td></tr>';
+    return;
+  }
+  pubSigAllData=res.data;
+  renderPubActiveSignals();
+  renderPubSigTable(pubSigFilterMode);
+  renderPubSigStats();
+}
+
+function renderPubSigStats(){
+  var data=pubSigAllData;
+  var closed=data.filter(function(s){return s.status!=='active';});
+  var wins=data.filter(function(s){return s.pips>0&&s.status!=='active';}).length;
+  var wr=closed.length?Math.round(wins/closed.length*100):0;
+  var net=data.reduce(function(a,s){return a+(s.pips||0);},0);
+  var elWr=document.getElementById('pub-wr');
+  if(elWr){elWr.textContent=closed.length?wr+'%':'–';elWr.style.color=wr>=50?'var(--grn)':'var(--red)';}
+  var elNet=document.getElementById('pub-netpips');
+  if(elNet){elNet.textContent=data.length?(net>=0?'+':'')+net+'':'–';elNet.style.color=net>=0?'var(--grn)':'var(--red)';}
+  var elRR=document.getElementById('pub-rr');
+  if(elRR)elRR.textContent=data.length?'1:'+(wins&&closed.length?(closed.reduce(function(a,s){return a+Math.abs(s.pips||0);},0)/closed.length/Math.max(1,wins)).toFixed(1):'–'):'–';
+  var elTot=document.getElementById('pub-total');
+  if(elTot)elTot.textContent=data.length||'–';
+}
+
+function renderPubActiveSignals(){
+  var box=document.getElementById('pub-active-signals');if(!box)return;
+  var active=pubSigAllData.filter(function(s){return s.status==='active';});
+  if(!active.length){
+    box.innerHTML='<div style="grid-column:1/-1;padding:1.5rem;background:var(--n2);border:1px solid var(--bdr);border-radius:8px;color:var(--wd);font-size:.9rem;">No active signals right now. Check back soon or join WhatsApp for instant alerts.</div>';
+    return;
+  }
+  box.innerHTML=active.map(function(s){
+    var dc=s.direction==='BUY'?'var(--grn)':'var(--red)';
+    var topBg=s.direction==='BUY'?'rgba(0,200,83,.07)':'rgba(229,57,53,.07)';
+    return '<div style="background:var(--n2);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;">'
+      +'<div style="background:'+topBg+';padding:.9rem 1.1rem;border-bottom:1px solid var(--bdr);display:flex;justify-content:space-between;align-items:center;">'
+      +'<div style="font-family:\'Space Mono\',monospace;font-size:1rem;font-weight:700;color:var(--g);">'+s.pair+'</div>'
+      +'<span style="background:'+topBg+';border:1px solid '+dc+';color:'+dc+';padding:.18rem .6rem;border-radius:2px;font-size:.75rem;font-weight:700;">'+s.direction+'</span>'
+      +'</div>'
+      +'<div style="padding:1rem 1.1rem;">'
+      +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem;margin-bottom:.8rem;">'
+      +'<div style="background:var(--n3);padding:.55rem;border-radius:4px;text-align:center;"><div style="font-size:.62rem;color:var(--wd);margin-bottom:.15rem;text-transform:uppercase;letter-spacing:.05em;">Entry</div><div style="font-size:.88rem;font-weight:600;color:var(--w);">'+(s.entry_price||'–')+'</div></div>'
+      +'<div style="background:var(--n3);padding:.55rem;border-radius:4px;text-align:center;"><div style="font-size:.62rem;color:var(--red);margin-bottom:.15rem;text-transform:uppercase;letter-spacing:.05em;">SL</div><div style="font-size:.88rem;font-weight:600;color:var(--red);">'+(s.sl||'–')+'</div></div>'
+      +'<div style="background:var(--n3);padding:.55rem;border-radius:4px;text-align:center;"><div style="font-size:.62rem;color:var(--grn);margin-bottom:.15rem;text-transform:uppercase;letter-spacing:.05em;">TP</div><div style="font-size:.88rem;font-weight:600;color:var(--grn);">'+(s.tp||'–')+'</div></div>'
+      +'</div>'
+      +'<div style="display:flex;justify-content:space-between;align-items:center;">'
+      +'<span style="font-size:.75rem;color:var(--wd);">'+s.signal_date+(s.signal_time?' · '+s.signal_time:'')+'</span>'
+      +'<span style="background:rgba(0,200,83,.14);color:var(--grn);padding:2px 8px;border-radius:2px;font-size:.7rem;font-weight:700;">ACTIVE</span>'
+      +'</div>'
+      +(s.notes?'<div style="margin-top:.6rem;font-size:.78rem;color:var(--wd);border-top:1px solid var(--bdr);padding-top:.5rem;">'+s.notes+'</div>':'')
+      +'</div></div>';
+  }).join('');
+}
+
+function pubSigFilter(mode,btn){
+  pubSigFilterMode=mode;
+  document.querySelectorAll('#pg-signals .ftab').forEach(function(b){b.classList.remove('on');});
+  if(btn)btn.classList.add('on');
+  renderPubSigTable(mode);
+}
+
+function renderPubSigTable(mode){
+  var tb=document.getElementById('pub-sig-tbody');if(!tb)return;
+  var closed=pubSigAllData.filter(function(s){return s.status!=='active';});
+  var rows=closed;
+  if(mode==='win')rows=closed.filter(function(s){return s.pips>0;});
+  else if(mode==='loss')rows=closed.filter(function(s){return s.pips<=0;});
+  if(!rows.length){
+    tb.innerHTML='<tr><td colspan="9" style="padding:2rem;text-align:center;color:var(--wd);">No closed signals in this filter.</td></tr>';
+    return;
+  }
+  tb.innerHTML=rows.map(function(s,i){
+    var dc=s.direction==='BUY'?'background:rgba(0,200,83,.14);color:var(--grn)':'background:rgba(229,57,53,.14);color:var(--red)';
+    var pc=s.pips>=0?'color:var(--grn);font-weight:600':'color:var(--red);font-weight:600';
+    var rowBg=i%2===0?'':'background:rgba(201,168,76,.02);';
+    return '<tr style="border-bottom:1px solid var(--bdr);'+rowBg+'">'
+      +'<td style="padding:9px 12px;font-size:.8rem;color:var(--wd);">'+s.signal_date+(s.signal_time?'<br><span style="font-size:.72rem;">'+s.signal_time+'</span>':'')+'</td>'
+      +'<td style="padding:9px 12px;font-family:\'Space Mono\',monospace;color:var(--g);font-weight:700;font-size:.84rem;">'+s.pair+'</td>'
+      +'<td style="padding:9px 12px;"><span style="'+dc+';padding:2px 7px;border-radius:2px;font-size:.72rem;font-weight:700;">'+s.direction+'</span></td>'
+      +'<td style="padding:9px 12px;color:var(--w);font-size:.82rem;">'+(s.entry_price||'–')+'</td>'
+      +'<td style="padding:9px 12px;color:var(--red);font-size:.82rem;">'+(s.sl||'–')+'</td>'
+      +'<td style="padding:9px 12px;color:var(--grn);font-size:.82rem;">'+(s.tp||'–')+'</td>'
+      +'<td style="padding:9px 12px;'+pc+'">'+(s.pips>=0?'+':'')+s.pips+' pips</td>'
+      +'<td style="padding:9px 12px;font-size:.8rem;color:var(--wd);">'+sigCloseLabel(s.status)+'</td>'
+      +'<td style="padding:9px 12px;">'+sigStatusLabel(s.status)+'</td>'
+      +'</tr>';
+  }).join('');
+}
+
 var clients=lsGet('clients');
 var payments=lsGet('payments');
 var fundClients=lsGet('funds');
@@ -2115,51 +2449,14 @@ var sigChart=null,payChart=null,fmpChart=null;
 
 function sfxToday(){return new Date().toISOString().split('T')[0];}
 
-function addSignal(){
-  var pair=document.getElementById('sig-pair').value;
-  var dir=document.getElementById('sig-dir').value;
-  var pips=parseFloat(document.getElementById('sig-pips').value)||0;
-  var risk=parseFloat(document.getElementById('sig-risk').value)||1;
-  var reward=parseFloat(document.getElementById('sig-reward').value)||1;
-  var date=document.getElementById('sig-date').value||sfxToday();
-  var notes=document.getElementById('sig-notes').value;
-  signals.unshift({pair:pair,dir:dir,pips:pips,risk:risk,reward:reward,date:date,notes:notes,id:Date.now()});
-  lsSet('signals',signals);renderSignalTable();updateSigChart();
-  document.getElementById('sig-pips').value='';document.getElementById('sig-notes').value='';
-  toast('Signal added!');
-}
-function delSignal(id){signals=signals.filter(function(s){return s.id!==id;});lsSet('signals',signals);renderSignalTable();updateSigChart();}
-
-function renderSignalTable(){
-  var fv=document.getElementById('sig-filter')?document.getElementById('sig-filter').value:'all';
-  var rows=signals.filter(function(s){return fv==='all'||s.pair===fv;});
-  var tb=document.getElementById('sig-table');if(!tb)return;
-  if(!rows.length){tb.innerHTML='<tr><td colspan="9" style="padding:1rem;text-align:center;color:var(--wd);">No signals yet</td></tr>';return;}
-  tb.innerHTML=rows.map(function(s){
-    var rr=s.risk?(s.reward/s.risk).toFixed(2):'-';
-    var pc=s.pips>=0?'color:var(--grn)':'color:var(--red)';
-    var dc=s.dir==='BUY'?'background:rgba(0,200,83,.14);color:var(--grn)':'background:rgba(229,57,53,.14);color:var(--red)';
-    return '<tr style="border-bottom:1px solid var(--bdr);"><td style="padding:7px 8px;font-size:.8rem;">'+s.date+'</td><td style="padding:7px 8px;font-family:monospace;color:var(--g);">'+s.pair+'</td><td style="padding:7px 8px;"><span style="'+dc+';padding:2px 7px;border-radius:2px;font-size:.72rem;font-weight:700;">'+s.dir+'</span></td><td style="padding:7px 8px;'+pc+';font-weight:600;">'+(s.pips>=0?'+':'')+s.pips+'</td><td style="padding:7px 8px;color:var(--wd);">'+s.risk+'</td><td style="padding:7px 8px;color:var(--wd);">'+s.reward+'</td><td style="padding:7px 8px;color:var(--g);">'+rr+'</td><td style="padding:7px 8px;font-size:.78rem;color:var(--wd);">'+(s.notes||'')+'</td><td style="padding:7px 8px;"><button onclick="delSignal('+s.id+')" style="background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.3);color:var(--red);border-radius:3px;padding:2px 8px;font-size:.72rem;cursor:pointer;">Del</button></td></tr>';
-  }).join('');
-  updateSigSummary();
-}
-
-function updateSigSummary(){
-  var wins=signals.filter(function(s){return s.pips>0;}).length;
-  var wr=signals.length?Math.round(wins/signals.length*100):0;
-  var avgRR=signals.length?(signals.reduce(function(a,s){return a+(s.risk?s.reward/s.risk:0);},0)/signals.length).toFixed(2):0;
-  var net=signals.reduce(function(a,s){return a+s.pips;},0);
-  var el=document.getElementById('wr-rate');if(el)el.textContent=wr+'%';
-  el=document.getElementById('wr-rr');if(el)el.textContent=avgRR;
-  el=document.getElementById('wr-pips');if(el){el.textContent=(net>=0?'+':'')+net;el.style.color=net>=0?'var(--grn)':'var(--red)';}
-}
+function updateSigSummary(){updateSigSummaryFromData(sbSignalsAll);}
 
 function updateSigChart(){
-  updateSigSummary();
+  updateSigSummaryFromData(sbSignalsAll);
   loadChartJS(function(){
     var ctx=document.getElementById('sig-chart');if(!ctx)return;
     var months={};
-    signals.forEach(function(s){var m=s.date.substring(0,7);months[m]=(months[m]||0)+s.pips;});
+    sbSignalsAll.forEach(function(s){var m=(s.signal_date||'').substring(0,7);if(m)months[m]=(months[m]||0)+(s.pips||0);});
     var labels=Object.keys(months).sort().slice(-6);
     var data=labels.map(function(m){return months[m];});
     if(sigChart)sigChart.destroy();
