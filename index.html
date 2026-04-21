@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sara Khan FX</title>
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X58S1407PY"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-X58S1407PY');
-  </script>
-
-</head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WallStreetCapital – Trade with Confidence</title>
@@ -1008,9 +995,10 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
                 <div class="fg"><label>Currency Pair</label>
                   <select id="sig-pair">
-                    <option>EURUSD</option><option>GBPUSD</option><option>USDCHF</option><option>USDCAD</option>
+                    <option>EURUSD</option><option>GBPUSD</option><option>GBPJPY</option><option>USDCHF</option><option>USDCAD</option>
                     <option>XAUUSD (Gold)</option><option>GBPAUD</option><option>GBPNZD</option><option>GBPCAD</option>
-                    <option>AUDUSD</option><option>NZDUSD</option><option>EURAUD</option><option>CRUDE OIL</option>
+                    <option>AUDUSD</option><option>NZDUSD</option><option>EURAUD</option><option>EURCAD</option>
+                    <option>EURJPY</option><option>AUDJPY</option><option>CADJPY</option><option>CRUDE OIL</option>
                     <option>BTCUSD</option><option>ETHUSD</option><option>USDJPY</option>
                   </select>
                 </div>
@@ -1062,7 +1050,11 @@ footer{background:var(--n2);border-top:1px solid var(--bdr);padding:3.5rem 5% 1.
               <span style="font-weight:600;font-size:.9rem;color:var(--g);">Signal History <span id="sig-count-lbl" style="font-weight:400;color:var(--wd);font-size:.8rem;"></span></span>
               <select id="sig-filter" onchange="loadAdminSignals()" style="background:var(--n2);border:1px solid var(--bdr);color:var(--w);padding:.3rem .6rem;border-radius:4px;font-size:.8rem;">
                 <option value="all">All Pairs</option>
-                <option>EURUSD</option><option>GBPUSD</option><option>XAUUSD (Gold)</option><option>CRUDE OIL</option><option>USDJPY</option>
+                <option>EURUSD</option><option>GBPUSD</option><option>GBPJPY</option><option>USDCHF</option><option>USDCAD</option>
+                <option>XAUUSD (Gold)</option><option>GBPAUD</option><option>GBPNZD</option><option>GBPCAD</option>
+                <option>AUDUSD</option><option>NZDUSD</option><option>EURAUD</option><option>EURCAD</option>
+                <option>EURJPY</option><option>AUDJPY</option><option>CADJPY</option><option>CRUDE OIL</option>
+                <option>BTCUSD</option><option>ETHUSD</option><option>USDJPY</option>
               </select>
             </div>
             <div style="overflow-x:auto;">
@@ -2389,10 +2381,100 @@ function renderPubSigStats(){
   if(elTot)elTot.textContent=data.length||'–';
 }
 
+// ══════ LIVE PRICE SYSTEM FOR ACTIVE SIGNALS ══════
+var livePrices={};
+var livePriceInterval=null;
+
+// Map pair names to Twelve Data symbols
+function pairToSymbol(pair){
+  var map={
+    'EURUSD':'EUR/USD','GBPUSD':'GBP/USD','GBPJPY':'GBP/JPY','USDJPY':'USD/JPY',
+    'USDCHF':'USD/CHF','USDCAD':'USD/CAD','GBPAUD':'GBP/AUD','GBPNZD':'GBP/NZD',
+    'GBPCAD':'GBP/CAD','AUDUSD':'AUD/USD','NZDUSD':'NZD/USD','EURAUD':'EUR/AUD',
+    'EURCAD':'EUR/CAD','EURJPY':'EUR/JPY','AUDJPY':'AUD/JPY','CADJPY':'CAD/JPY',
+    'XAUUSD (Gold)':'XAU/USD','CRUDE OIL':'WTI/USD','BTCUSD':'BTC/USD','ETHUSD':'ETH/USD'
+  };
+  return map[pair]||pair;
+}
+
+// Calculate pip size for each pair
+function pipSize(pair){
+  if(pair==='USDJPY'||pair==='GBPJPY'||pair==='EURJPY'||pair==='AUDJPY'||pair==='CADJPY')return 0.01;
+  if(pair==='XAUUSD (Gold)')return 0.1;
+  if(pair==='CRUDE OIL')return 0.01;
+  if(pair==='BTCUSD'||pair==='ETHUSD')return 1;
+  return 0.0001;
+}
+
+// Calculate running pips
+function calcRunningPips(s,livePrice){
+  if(!livePrice||!s.entry_price)return null;
+  var entry=parseFloat(s.entry_price);
+  var pip=pipSize(s.pair);
+  var diff=s.direction==='BUY'?(livePrice-entry):(entry-livePrice);
+  return Math.round(diff/pip);
+}
+
+async function fetchLivePrices(pairs){
+  if(!pairs||!pairs.length)return;
+  var symbols=pairs.map(pairToSymbol).join(',');
+  try{
+    // Use Twelve Data free API (no key needed for basic quote)
+    var res=await fetch('https://api.twelvedata.com/price?symbol='+encodeURIComponent(symbols)+'&apikey=demo');
+    var data=await res.json();
+    pairs.forEach(function(pair){
+      var sym=pairToSymbol(pair);
+      // Response can be flat if single symbol, or keyed by symbol if multiple
+      var priceData=data[sym]||data;
+      if(priceData&&priceData.price){
+        livePrices[pair]=parseFloat(priceData.price);
+      }
+    });
+    updateActiveLivePrices();
+  }catch(e){
+    // Silently fail — prices won't show but page still works
+  }
+}
+
+function updateActiveLivePrices(){
+  var active=pubSigAllData.filter(function(s){return s.status==='active';});
+  active.forEach(function(s){
+    var lp=livePrices[s.pair];
+    var liveEl=document.getElementById('live-price-'+s.id);
+    var pipsEl=document.getElementById('live-pips-'+s.id);
+    var pipsWrap=document.getElementById('live-pips-wrap-'+s.id);
+    if(liveEl&&lp){
+      // Format price properly
+      var decimals=(s.pair==='USDJPY'||s.pair==='GBPJPY'||s.pair==='EURJPY'||s.pair==='AUDJPY'||s.pair==='CADJPY')?3:(s.pair==='XAUUSD (Gold)')?2:(s.pair==='CRUDE OIL')?2:(s.pair==='BTCUSD'||s.pair==='ETHUSD')?0:5;
+      liveEl.textContent=lp.toFixed(decimals);
+      liveEl.style.color='var(--g)';
+    }
+    if(pipsEl&&lp&&pipsWrap){
+      var pips=calcRunningPips(s,lp);
+      if(pips!==null){
+        pipsEl.textContent=(pips>=0?'+':'')+pips+' pips';
+        pipsEl.style.color=pips>=0?'var(--grn)':'var(--red)';
+        pipsWrap.style.background=pips>=0?'rgba(0,200,83,.1)':'rgba(229,57,53,.1)';
+        pipsWrap.style.border='1px solid '+(pips>=0?'rgba(0,200,83,.3)':'rgba(229,57,53,.3)');
+      }
+    }
+  });
+}
+
+function startLivePriceUpdates(){
+  if(livePriceInterval)clearInterval(livePriceInterval);
+  var active=pubSigAllData.filter(function(s){return s.status==='active';});
+  if(!active.length)return;
+  var pairs=active.map(function(s){return s.pair;}).filter(function(p,i,a){return a.indexOf(p)===i;});
+  fetchLivePrices(pairs);
+  livePriceInterval=setInterval(function(){fetchLivePrices(pairs);},15000); // update every 15 seconds
+}
+
 function renderPubActiveSignals(){
   var box=document.getElementById('pub-active-signals');if(!box)return;
   var active=pubSigAllData.filter(function(s){return s.status==='active';});
   if(!active.length){
+    if(livePriceInterval){clearInterval(livePriceInterval);livePriceInterval=null;}
     box.innerHTML='<div style="grid-column:1/-1;padding:1.5rem;background:var(--n2);border:1px solid var(--bdr);border-radius:8px;color:var(--wd);font-size:.9rem;">No active signals right now. Check back soon or join WhatsApp for instant alerts.</div>';
     return;
   }
@@ -2402,21 +2484,38 @@ function renderPubActiveSignals(){
     return '<div style="background:var(--n2);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;">'
       +'<div style="background:'+topBg+';padding:.9rem 1.1rem;border-bottom:1px solid var(--bdr);display:flex;justify-content:space-between;align-items:center;">'
       +'<div style="font-family:\'Space Mono\',monospace;font-size:1rem;font-weight:700;color:var(--g);">'+s.pair+'</div>'
+      +'<div style="display:flex;align-items:center;gap:.5rem;">'
       +'<span style="background:'+topBg+';border:1px solid '+dc+';color:'+dc+';padding:.18rem .6rem;border-radius:2px;font-size:.75rem;font-weight:700;">'+s.direction+'</span>'
+      +'<span style="background:rgba(0,200,83,.14);color:var(--grn);padding:2px 8px;border-radius:2px;font-size:.7rem;font-weight:700;display:flex;align-items:center;gap:.3rem;"><span style="width:5px;height:5px;border-radius:50%;background:var(--grn);display:inline-block;animation:bk 1.4s ease infinite;"></span>LIVE</span>'
+      +'</div>'
       +'</div>'
       +'<div style="padding:1rem 1.1rem;">'
-      +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem;margin-bottom:.8rem;">'
+      // Entry / SL / TP row
+      +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem;margin-bottom:.7rem;">'
       +'<div style="background:var(--n3);padding:.55rem;border-radius:4px;text-align:center;"><div style="font-size:.62rem;color:var(--wd);margin-bottom:.15rem;text-transform:uppercase;letter-spacing:.05em;">Entry</div><div style="font-size:.88rem;font-weight:600;color:var(--w);">'+(s.entry_price||'–')+'</div></div>'
       +'<div style="background:var(--n3);padding:.55rem;border-radius:4px;text-align:center;"><div style="font-size:.62rem;color:var(--red);margin-bottom:.15rem;text-transform:uppercase;letter-spacing:.05em;">SL</div><div style="font-size:.88rem;font-weight:600;color:var(--red);">'+(s.sl||'–')+'</div></div>'
       +'<div style="background:var(--n3);padding:.55rem;border-radius:4px;text-align:center;"><div style="font-size:.62rem;color:var(--grn);margin-bottom:.15rem;text-transform:uppercase;letter-spacing:.05em;">TP</div><div style="font-size:.88rem;font-weight:600;color:var(--grn);">'+(s.tp||'–')+'</div></div>'
       +'</div>'
+      // Live price + running pips row
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.8rem;">'
+      +'<div style="background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.2);padding:.55rem;border-radius:4px;text-align:center;">'
+      +'<div style="font-size:.62rem;color:var(--g);margin-bottom:.15rem;text-transform:uppercase;letter-spacing:.05em;">Live Price</div>'
+      +'<div id="live-price-'+s.id+'" style="font-family:\'Space Mono\',monospace;font-size:.9rem;font-weight:700;color:var(--wd);">Loading...</div>'
+      +'</div>'
+      +'<div id="live-pips-wrap-'+s.id+'" style="background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.2);padding:.55rem;border-radius:4px;text-align:center;">'
+      +'<div style="font-size:.62rem;color:var(--wd);margin-bottom:.15rem;text-transform:uppercase;letter-spacing:.05em;">Running P/L</div>'
+      +'<div id="live-pips-'+s.id+'" style="font-family:\'Space Mono\',monospace;font-size:.9rem;font-weight:700;color:var(--wd);">– pips</div>'
+      +'</div>'
+      +'</div>'
       +'<div style="display:flex;justify-content:space-between;align-items:center;">'
       +'<span style="font-size:.75rem;color:var(--wd);">'+s.signal_date+(s.signal_time?' · '+s.signal_time:'')+'</span>'
-      +'<span style="background:rgba(0,200,83,.14);color:var(--grn);padding:2px 8px;border-radius:2px;font-size:.7rem;font-weight:700;">ACTIVE</span>'
+      +'<span style="font-size:.68rem;color:var(--wd);">🔄 Updates every 15s</span>'
       +'</div>'
       +(s.notes?'<div style="margin-top:.6rem;font-size:.78rem;color:var(--wd);border-top:1px solid var(--bdr);padding-top:.5rem;">'+s.notes+'</div>':'')
       +'</div></div>';
   }).join('');
+  // Start live price updates after rendering
+  startLivePriceUpdates();
 }
 
 function pubSigFilter(mode,btn){
@@ -2630,6 +2729,13 @@ aTab=function(n,el){
   if(n==='payments'){renderPaymentTable();updatePayStats();updatePayChart();}
   if(n==='funds'){renderFundTable();updateFundStats();}
   if(n==='education-admin'){loadAdminEdu();}
+};
+
+// Stop live price updates when leaving signals public page
+var _origOpenPg=openPg;
+openPg=function(name){
+  if(name!=='signals'&&livePriceInterval){clearInterval(livePriceInterval);livePriceInterval=null;}
+  _origOpenPg(name);
 };
 </script>
 </body>
